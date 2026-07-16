@@ -1,0 +1,107 @@
+/* ============================================================
+   GridWatch Indiana — design tokens
+   "Grid Intelligence Console": deep blue-black spec-ops base,
+   night-vision phosphor-green chrome, load-severity data ramp.
+   ============================================================ */
+:root {
+  /* base surfaces */
+  --void:        #070B10;   /* near-black, cool blue-black */
+  --void-2:      #0A0E14;
+  --panel:       rgba(14, 20, 28, 0.82);
+  --panel-solid: #0E141C;
+  --panel-2:     #11161F;
+  --panel-line:  #1E2733;
+  --panel-line-2:#2A3746;
+  --grid-dim:    #131C26;   /* map landmass */
+  --grid-line:   #243343;   /* county hairlines */
+
+  /* text */
+  --text-hi:  #E6EDF3;
+  --text-mid: #93A1B0;
+  --text-dim: #566573;
+  --text-faint: #3A4553;
+
+  /* night-vision phosphor — primary accent / chrome */
+  --phosphor:        #3FB950;
+  --phosphor-bright: #56E06A;
+  --phosphor-dim:    #1F7A32;
+  --phosphor-glow:   rgba(63, 185, 80, 0.45);
+
+  /* load severity ramp (data centers by MW) */
+  --load-low:  #3FB950;   /* < 50 MW  */
+  --load-med:  #E3A72B;   /* 50–250   */
+  --load-high: #F85149;   /* 250–500  */
+  --load-mega: #FF6BFF;   /* > 500 MW — hyperscalers, off-scale */
+
+  /* grid infrastructure */
+  --transmission: #58A6FF;
+  --transmission-hi: #7CC0FF;
+  --water:        #39C5CF;
+  --accent:       #58A6FF;
+  --warning:      #F85149;
+  --warning-glow: rgba(248, 81, 73, 0.22);
+
+  /* fuel colors (existing generation) */
+  --fuel-coal:    #B24A45;
+  --fuel-gas:     #E3862B;
+  --fuel-solar:   #EBCB3E;
+  --fuel-wind:    #47C7B0;
+  --fuel-nuclear: #B06BE0;
+  --fuel-hydro:   #3D9BE0;
+  --fuel-battery: #3FB950;
+  --fuel-oil:     #8A6A55;
+  --fuel-biomass: #7F9A4E;
+  --fuel-other:   #6B7684;
+
+  /* utility brand tints (territory fills) */
+  --util-aes:    #4E7BE8;
+  --util-duke:   #4F9E6B;
+  --util-im:     #C7743A;
+  --util-nipsco: #9A5BD0;
+  --util-cp:     #C74A78;
+  --util-other:  #46586B;
+
+  /* type */
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", "Inter", Roboto, Helvetica, Arial, sans-serif;
+
+  /* geometry */
+  --r-sm: 4px;
+  --r-md: 7px;
+  --r-lg: 11px;
+  --hair: 1px solid var(--panel-line);
+  --hair-2: 1px solid var(--panel-line-2);
+
+  /* elevation */
+  --shadow-panel: 0 12px 40px -12px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.02);
+  --shadow-card:  0 24px 70px -20px rgba(0,0,0,0.85);
+
+  /* motion */
+  --ease: cubic-bezier(0.4, 0.14, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fast: 140ms;
+  --t-med: 260ms;
+  --t-slow: 520ms;
+
+  /* layout */
+  --topbar-h: 54px;
+  --console-w: 372px;
+  --timeline-h: 118px;
+  --rail-w: 214px;
+
+  color-scheme: dark;
+}
+
+/* severity helpers usable from JS-set classes */
+.sev-low  { --sev: var(--load-low); }
+.sev-med  { --sev: var(--load-med); }
+.sev-high { --sev: var(--load-high); }
+.sev-mega { --sev: var(--load-mega); }
+
+@media (max-width: 820px) {
+  :root {
+    --console-w: 100vw;
+    --rail-w: 148px;
+    --timeline-h: 104px;
+  }
+}
