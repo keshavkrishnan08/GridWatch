@@ -1,0 +1,35 @@
+{
+  "name": "gridwatch-indiana",
+  "version": "1.0.0",
+  "description": "Interactive atlas mapping every proposed and existing data center in Indiana against the state power grid, sourced from public IURC filings and county records.",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/gridwatch/gridwatch-indiana",
+  "keywords": [
+    "indiana",
+    "data-centers",
+    "grid",
+    "iurc",
+    "civic-tech",
+    "energy",
+    "maplibre"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173 --host",
+    "typecheck": "tsc --noEmit",
+    "data": "python3 pipeline/build_dataset.py",
+    "validate": "python3 pipeline/validate.py"
+  },
+  "dependencies": {
+    "d3": "^7.9.0",
+    "maplibre-gl": "^4.7.1"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "playwright": "^1.61.1",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
+  }
+}
