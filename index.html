@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#070B10" />
+    <title>GridWatch Indiana — Data Center & Grid Impact Atlas</title>
+    <meta name="description" content="An interactive atlas mapping every proposed and existing data center in Indiana against the state power grid — megawatts, water, dockets, and projected bill impact, sourced from public IURC filings." />
+    <meta property="og:title" content="GridWatch Indiana" />
+    <meta property="og:description" content="Every proposed data center in Indiana, mapped against the grid. Sourced from public IURC filings." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="GridWatch Indiana" />
+    <meta name="twitter:description" content="Every proposed data center in Indiana, mapped against the grid — MW, water, dockets, bill impact. From public records." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23070B10'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%233FB950' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%2356E06A'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- MAP CANVAS -->
+      <div id="map" role="application" aria-label="Map of Indiana data centers and power grid"></div>
+
+      <!-- ambient console texture -->
+      <div class="fx-scanlines" aria-hidden="true"></div>
+      <div class="fx-vignette" aria-hidden="true"></div>
+
+      <!-- TOP BAR -->
+      <header id="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <div class="brand-text">
+            <span class="brand-title">GRIDWATCH<span class="brand-sub"> / INDIANA</span></span>
+            <span class="brand-tag">DATA CENTER &amp; GRID IMPACT ATLAS</span>
+          </div>
+        </div>
+        <div class="topbar-status" id="topbar-status">
+          <span class="pill live"><span class="dot"></span> LIVE DATASET</span>
+          <span class="pill" id="pill-updated">UPD ——</span>
+        </div>
+        <div class="topbar-actions">
+          <button class="tb-btn" id="btn-about" title="About &amp; methodology">ABOUT</button>
+          <button class="tb-btn" id="btn-share" title="Copy link">SHARE</button>
+        </div>
+      </header>
+
+      <!-- LEFT COMMAND CONSOLE -->
+      <aside id="console" aria-label="Command console"></aside>
+
+      <!-- RIGHT: layers + legend -->
+      <aside id="rail" aria-label="Layers and legend"></aside>
+
+      <!-- hover telemetry / reticle -->
+      <div id="reticle" aria-hidden="true"></div>
+      <div id="telemetry" aria-hidden="true"></div>
+
+      <!-- facility detail card -->
+      <section id="card" aria-live="polite"></section>
+
+      <!-- bottom timeline scrubber -->
+      <footer id="timeline" aria-label="Grid load timeline 2020 to 2035"></footer>
+
+      <!-- modal host (about, bill calc, action layer) -->
+      <div id="modal-root" hidden></div>
+
+      <!-- first-run hint -->
+      <div id="hint" hidden></div>
+
+      <!-- intro sequence -->
+      <div id="intro">
+        <div class="intro-inner">
+          <div class="intro-mark"></div>
+          <div class="intro-title">GRIDWATCH INDIANA</div>
+          <div class="intro-sub">INITIALIZING GRID INTELLIGENCE CONSOLE</div>
+          <div class="intro-bar"><span></span></div>
+          <div class="intro-boot" id="intro-boot"></div>
+          <button id="intro-skip">SKIP ▸</button>
+        </div>
+      </div>
+
+      <!-- no-JS / load failure fallback -->
+      <noscript><div class="fatal">GridWatch requires JavaScript. Source data is browsable in <code>/public/data</code>.</div></noscript>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

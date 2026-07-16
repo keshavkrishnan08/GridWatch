@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+dist-ssr/
+*.local
+
+# Vite
+.vite/
+
+# Python pipeline
+__pycache__/
+*.pyc
+.venv/
+venv/
+pipeline/.cache/
+
+# Editor / OS
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Env / secrets (never commit)
+.env
+.env.*
+!.env.example
+
+# Scratch
+*.bak
+scratch/
+smoke.mjs
+verify.mjs
