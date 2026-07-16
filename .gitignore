@@ -41,3 +41,4 @@ yarn-error.log*
 scratch/
 smoke.mjs
 verify.mjs
+a11y-check.mjs
