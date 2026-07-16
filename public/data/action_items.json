@@ -1,0 +1,77 @@
+{
+  "last_updated": "2026-07-16",
+  "intro": "GridWatch is nonpartisan: it shows the process, not a position. Below are the real, public ways a Hoosier can weigh in on data-center and grid decisions.",
+  "items": [
+    {
+      "type": "comment",
+      "title": "Submit a comment on an IURC case",
+      "org": "Office of Utility Consumer Counselor (OUCC)",
+      "detail": "The OUCC represents ratepayers and collects public comments on active IURC cases. Reference the Cause number (e.g., 46394 for Google/AES).",
+      "action": "File a consumer comment",
+      "url": "https://www.in.gov/oucc/2504.htm",
+      "deadline": "Ongoing; before each case's order date",
+      "priority": 1
+    },
+    {
+      "type": "decision",
+      "title": "Google / AES decision — Cause 46394",
+      "org": "Indiana Utility Regulatory Commission",
+      "detail": "The IURC's full order on the 1,200 MW Google Monrovia agreement is expected September 2026. This is the highest-attention case in the state.",
+      "action": "Track the docket",
+      "url": "https://iurc.portal.in.gov/",
+      "deadline": "2026-09",
+      "priority": 1
+    },
+    {
+      "type": "org",
+      "title": "Citizens Action Coalition",
+      "org": "CAC",
+      "detail": "The consumer-advocacy group intervening in IURC data-center cases. Sign up for alerts, or contact staff to get involved.",
+      "action": "Join / get alerts",
+      "url": "https://www.citact.org/cac-email-sign-up",
+      "phone": "(317) 205-3535",
+      "deadline": null,
+      "priority": 2
+    },
+    {
+      "type": "campaign",
+      "title": "Indianapolis data-center moratorium",
+      "org": "CAC / local coalition",
+      "detail": "Advocacy for a moratorium while Indianapolis writes data-center zoning rules (Martindale-Brightwood, Decatur Township).",
+      "action": "Learn / act",
+      "url": "https://www.citact.org/ai-data-centers",
+      "deadline": null,
+      "priority": 2
+    },
+    {
+      "type": "campaign",
+      "title": "Southwest Indiana — no data center",
+      "org": "CAC / local coalition",
+      "detail": "Opposition to proposals in CenterPoint (SW Indiana) territory, incl. the Gibson/Posey proposal.",
+      "action": "Learn / act",
+      "url": "https://www.citact.org/ai-data-centers",
+      "deadline": null,
+      "priority": 3
+    },
+    {
+      "type": "meeting",
+      "title": "County plan-commission meetings",
+      "org": "Your county",
+      "detail": "Rezonings and variances for data centers are decided by county/city plan commissions and councils — usually monthly, open to public comment. Check your county's plan-commission calendar.",
+      "action": "Find your county meeting",
+      "url": "https://www.in.gov/iurc/",
+      "deadline": "Varies by county",
+      "priority": 3
+    },
+    {
+      "type": "howto",
+      "title": "Read the filings yourself",
+      "org": "IURC Electronic Docket",
+      "detail": "Every megawatt figure and cost claim on this map traces to a public filing. Search any Cause number to read the source documents (note: utilities frequently redact detail).",
+      "action": "Open the docket portal",
+      "url": "https://iurc.portal.in.gov/",
+      "deadline": null,
+      "priority": 2
+    }
+  ]
+}
