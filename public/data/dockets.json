@@ -1,0 +1,60 @@
+{
+  "last_updated": "2026-07-16",
+  "portal": "https://iurc.portal.in.gov/",
+  "note": "IURC 'Cause' numbers are the case IDs under which utilities file. Search any cause number at the IURC portal to read the underlying filings. Ratepayer cost figures are as characterized by the Citizens Action Coalition and news reporting; utilities frequently redact detail.",
+  "dockets": [
+    {
+      "cause": "46394",
+      "title": "AES Indiana large-load agreement (Google Monrovia)",
+      "utility": "AES Indiana",
+      "filed": "2026-04-22",
+      "status": "pending",
+      "decision_expected": "2026-09",
+      "ratepayer_note": "AES claims the deal saves customers $770M over 15 years; Google pays 100% of its power + new infrastructure. CAC contests the savings framing.",
+      "sources": [
+        { "label": "AES Indiana — Data centers", "url": "https://www.aesindiana.com/data-centers" },
+        { "label": "CAC response", "url": "https://www.citact.org/news/iurc-must-prioritize-public-interest-aes-indiana-data-center-proposal" }
+      ]
+    },
+    {
+      "cause": "45647",
+      "title": "Duke Energy TDSIC-5 (incl. Meta Jeffersonville upgrades)",
+      "utility": "Duke Energy Indiana",
+      "filed": "2025",
+      "status": "approved",
+      "decision_expected": null,
+      "ratepayer_note": "$216M in network upgrades tied to Meta shifted to all Indiana customers (per CAC).",
+      "sources": [ { "label": "CAC: AI Data Centers", "url": "https://www.citact.org/ai-data-centers" } ]
+    },
+    {
+      "cause": "46301",
+      "title": "I&M interconnection (Google Fort Wayne + Amazon New Carlisle)",
+      "utility": "Indiana Michigan Power",
+      "filed": "2025",
+      "status": "pending",
+      "decision_expected": "2026",
+      "ratepayer_note": "More than $400M in interconnection/upgrade costs tied to two hyperscale loads.",
+      "sources": [ { "label": "Utility Dive", "url": "https://www.utilitydive.com/news/indiana-iurc-large-load-interconnection-data-center-aep-amazon-google/740452/" } ]
+    },
+    {
+      "cause": "46097",
+      "title": "I&M large-load / rate proceeding",
+      "utility": "Indiana Michigan Power",
+      "filed": "2025",
+      "status": "pending",
+      "decision_expected": null,
+      "ratepayer_note": "A single 1,000 MW data center implies ~$492.6M annual power purchases and ~$34.5M/yr foregone sales-tax revenue (>$1.7B over 50 years) per CAC analysis.",
+      "sources": [ { "label": "CAC: AI Data Centers", "url": "https://www.citact.org/ai-data-centers" } ]
+    },
+    {
+      "cause": "45164-RA5",
+      "title": "I&M coal contract cost recovery",
+      "utility": "Indiana Michigan Power",
+      "filed": "2024",
+      "status": "approved",
+      "decision_expected": null,
+      "ratepayer_note": "Shifts uneconomic coal contract costs through 2040 onto Indiana customers.",
+      "sources": [ { "label": "CAC: AI Data Centers", "url": "https://www.citact.org/ai-data-centers" } ]
+    }
+  ]
+}

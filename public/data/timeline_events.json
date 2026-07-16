@@ -1,0 +1,62 @@
+{
+  "last_updated": "2026-07-16",
+  "range": { "start": 2020, "end": 2035 },
+  "now": 2026.54,
+  "events": [
+    {
+      "date": 2019.4, "label": "HEA 1405 enacted",
+      "detail": "Sales-tax exemption for data centers, up to 50 years. Sets the incentive backdrop.",
+      "kind": "policy", "off_scale": true
+    },
+    {
+      "date": 2024.4, "label": "Amazon + Meta land in Indiana",
+      "detail": "AWS announces New Carlisle (Project Rainier); Meta announces Jeffersonville. The hyperscale wave begins.",
+      "kind": "project"
+    },
+    {
+      "date": 2025.35, "label": "HEA 1007 passed",
+      "detail": "Large-load law: purports to make data centers pay 80%+ of new power-plant costs; shortens IURC timelines and reduces oversight.",
+      "kind": "policy"
+    },
+    {
+      "date": 2026.12, "label": "Meta Lebanon milestone",
+      "detail": "Meta confirms its $10B, 1.5 GW LEAP campus in Boone County.",
+      "kind": "project"
+    },
+    {
+      "date": 2026.31, "label": "AES files Cause 46394",
+      "detail": "AES Indiana files the Google Monrovia large-load agreement with the IURC (Apr 22, 2026).",
+      "kind": "docket"
+    },
+    {
+      "date": 2026.53, "label": "IURC OKs Monrovia energy project",
+      "detail": "Regulators approve the energy project tied to Google's Morgan County data center (July 2026). AES rate increase phase 1 takes effect.",
+      "kind": "docket"
+    },
+    {
+      "date": 2026.7, "label": "IURC decision window",
+      "detail": "Full IURC order expected on the Google/AES agreement — the moment public attention peaks.",
+      "kind": "decision", "highlight": true
+    },
+    {
+      "date": 2027.05, "label": "AES rate increase phase 2",
+      "detail": "Second phase of AES Indiana's approved 3.7% base-rate increase.",
+      "kind": "rate"
+    },
+    {
+      "date": 2028.0, "label": "First hyperscale energization",
+      "detail": "Projected: earliest large campuses (Amazon, Meta, Google phase 1) begin drawing significant load.",
+      "kind": "projection"
+    },
+    {
+      "date": 2030.0, "label": "5.6 GW new gas planned",
+      "detail": "I&M + NIPSCO plan 5.6 GW of new gas-fired capacity by 2030 to serve the load.",
+      "kind": "projection"
+    },
+    {
+      "date": 2035.0, "label": "Full buildout horizon",
+      "detail": "Projected: 7.8 GW of new gas by 2035; statewide data-center load at multiples of today.",
+      "kind": "projection"
+    }
+  ]
+}

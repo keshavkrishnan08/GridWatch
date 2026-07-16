@@ -1,0 +1,232 @@
+{
+  "last_updated": "2026-07-16",
+  "state_peak_mw": 35000,
+  "counts": {
+    "facilities_curated": 27,
+    "facilities_tracked_statewide": 46,
+    "by_status": {
+      "construction": 5,
+      "approved": 2,
+      "proposed": 15,
+      "withdrawn": 5
+    },
+    "counties_with_projects": 15,
+    "power_plants": 205,
+    "transmission_lines": 1237,
+    "utility_territories": 114,
+    "substations": 0
+  },
+  "load_mw": {
+    "committed": 6847,
+    "proposed": 5737,
+    "active_total": 12584,
+    "withdrawn_avoided": 2880,
+    "pct_of_state_peak": 36.0
+  },
+  "mega_facilities": [
+    {
+      "name": "Amazon (AWS) New Carlisle Campus",
+      "mw": 2250,
+      "county": "St. Joseph"
+    },
+    {
+      "name": "Meta LEAP Campus (Lebanon)",
+      "mw": 1540,
+      "county": "Boone"
+    },
+    {
+      "name": "Takanock Goshen Data Center",
+      "mw": 1500,
+      "county": "Elkhart"
+    },
+    {
+      "name": "Google Monrovia Data Center",
+      "mw": 1200,
+      "county": "Morgan"
+    },
+    {
+      "name": "Google Fort Wayne Campus",
+      "mw": 1200,
+      "county": "Allen"
+    },
+    {
+      "name": "Microsoft Granger Campus",
+      "mw": 1000,
+      "county": "St. Joseph"
+    },
+    {
+      "name": "Unnamed Data Center (Gibson/Posey)",
+      "mw": 600,
+      "county": "Gibson"
+    },
+    {
+      "name": "Microsoft La Porte Campus",
+      "mw": 538,
+      "county": "LaPorte"
+    },
+    {
+      "name": "Sentinel Hebron Data Center",
+      "mw": 504,
+      "county": "Porter"
+    }
+  ],
+  "generation_mix": [
+    {
+      "fuel": "coal",
+      "mw": 27702,
+      "pct": 60.6
+    },
+    {
+      "fuel": "gas",
+      "mw": 14071,
+      "pct": 30.8
+    },
+    {
+      "fuel": "wind",
+      "mw": 3101,
+      "pct": 6.8
+    },
+    {
+      "fuel": "hydro",
+      "mw": 311,
+      "pct": 0.7
+    },
+    {
+      "fuel": "solar",
+      "mw": 257,
+      "pct": 0.6
+    },
+    {
+      "fuel": "biomass",
+      "mw": 178,
+      "pct": 0.4
+    },
+    {
+      "fuel": "oil",
+      "mw": 51,
+      "pct": 0.1
+    },
+    {
+      "fuel": "battery",
+      "mw": 9,
+      "pct": 0.0
+    }
+  ],
+  "total_generation_mw": 45679,
+  "top_counties": [
+    {
+      "county": "St. Joseph",
+      "count": 2,
+      "mw": 3250,
+      "utility": "Indiana Michigan Power (I&M)"
+    },
+    {
+      "county": "Allen",
+      "count": 2,
+      "mw": 1700,
+      "utility": "Indiana Michigan Power (I&M)"
+    },
+    {
+      "county": "Boone",
+      "count": 1,
+      "mw": 1540,
+      "utility": "Duke Energy Indiana / WVPA (LEAP district)"
+    },
+    {
+      "county": "Elkhart",
+      "count": 1,
+      "mw": 1500,
+      "utility": null
+    },
+    {
+      "county": "Morgan",
+      "count": 1,
+      "mw": 1200,
+      "utility": "AES Indiana"
+    },
+    {
+      "county": "Gibson",
+      "count": 1,
+      "mw": 600,
+      "utility": "CenterPoint Energy"
+    },
+    {
+      "county": "LaPorte",
+      "count": 2,
+      "mw": 538,
+      "utility": "NIPSCO"
+    },
+    {
+      "county": "Porter",
+      "count": 2,
+      "mw": 504,
+      "utility": "NIPSCO"
+    },
+    {
+      "county": "Clark",
+      "count": 1,
+      "mw": 407,
+      "utility": "Duke Energy Indiana"
+    },
+    {
+      "county": "Clay",
+      "count": 1,
+      "mw": 400,
+      "utility": "WVPA / Parke County REMC"
+    }
+  ],
+  "utilities": [
+    {
+      "utility": "Indiana Michigan Power (I&M)",
+      "count": 4,
+      "mw": 4950
+    },
+    {
+      "utility": "Duke Energy Indiana / WVPA (LEAP district)",
+      "count": 1,
+      "mw": 1540
+    },
+    {
+      "utility": "AES Indiana",
+      "count": 3,
+      "mw": 1525
+    },
+    {
+      "utility": "NIPSCO",
+      "count": 7,
+      "mw": 1302
+    },
+    {
+      "utility": "CenterPoint Energy",
+      "count": 1,
+      "mw": 600
+    },
+    {
+      "utility": "Duke Energy Indiana",
+      "count": 2,
+      "mw": 457
+    },
+    {
+      "utility": "WVPA / Parke County REMC",
+      "count": 1,
+      "mw": 400
+    },
+    {
+      "utility": "Hoosier Energy",
+      "count": 1,
+      "mw": 310
+    },
+    {
+      "utility": "Hoosier Energy / South Central REMC",
+      "count": 1,
+      "mw": 0
+    }
+  ],
+  "sources": {
+    "counties": "US Census (plotly mirror)",
+    "power_plants": "WRI Global Power Plant Database v1.3.0 (~2021)",
+    "territories": "HIFLD Electric Retail Service Territories",
+    "transmission": "HIFLD Electric Power Transmission Lines (>=138 kV)",
+    "facilities": "Curated from IURC filings, utility filings, county records, AI Law Tracker, and news reporting (cited per record)"
+  }
+}
