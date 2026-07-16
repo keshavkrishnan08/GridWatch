@@ -1,0 +1,23 @@
+name: Validate data
+
+on:
+  push:
+    paths: ["public/data/**", "pipeline/**"]
+  pull_request:
+    paths: ["public/data/**", "pipeline/**"]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Rebuild roll-ups
+        run: python3 pipeline/build_dataset.py
+      - name: Schema + sanity checks
+        run: python3 pipeline/validate.py
+      - name: Fail if meta.json drifted from committed data
+        run: git diff --exit-code public/data/meta.json || (echo "::error::meta.json is stale — run pipeline/build_dataset.py and commit" && exit 1)
