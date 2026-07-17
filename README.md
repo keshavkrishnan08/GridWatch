@@ -42,7 +42,7 @@ The full sourcing method — including what's verified versus estimated versus r
 
 Deliberately boring and forkable:
 
-- **[MapLibre GL JS](https://maplibre.org/)** renders a keyless dark vector map. Indiana is drawn straight from GeoJSON — no tile server, no Mapbox/Google key, works offline.
+- **[MapLibre GL JS](https://maplibre.org/) v5** renders a 3D globe with a keyless dark vector basemap ([CARTO](https://carto.com/basemaps) dark-matter) — streets, water, labels, and 3D building extrusions. No Mapbox/Google key. The facility, grid, and territory overlays are self-hosted GeoJSON.
 - **[Vite](https://vitejs.dev/)** + **TypeScript**, hand-written CSS design tokens, **[D3](https://d3js.org/)** for scales.
 - **[Python](pipeline/)** pipeline fetches and simplifies the geodata into static files.
 - Ships as static files. Host it free on Vercel, Netlify, or GitHub Pages, forever.

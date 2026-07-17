@@ -8,6 +8,7 @@ import {
 // snug to the state so the whole outline fills the frame
 const INDIANA_BOUNDS: LngLatBoundsLike = [[-88.12, 37.74], [-84.74, 41.79]];
 const INDIANA_CENTER: [number, number] = [-86.3, 39.9];
+const UPCOMING = new Set(["proposed", "approved", "rumored"]); // get dashed "targeting" rings
 
 export interface MapHandlers {
   onSelect: (id: string | null) => void;
@@ -75,32 +76,26 @@ export class GridMap {
 
     this.map = new maplibregl.Map({
       container,
-      style: {
-        version: 8,
-        name: "gridwatch-void",
-        sources: {},
-        layers: [{ id: "bg", type: "background", paint: { "background-color": "#070B10" } }],
-      },
+      // keyless dark vector basemap: roads, water, labels, building footprints
+      style: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
       center: INDIANA_CENTER,
-      zoom: this.reduceMotion ? 6.4 : 3.4,
-      minZoom: 5.2,
-      maxZoom: 14,
-      pitch: this.reduceMotion ? 0 : 34,
-      bearing: this.reduceMotion ? 0 : -18,
+      zoom: this.reduceMotion ? 6.2 : 2.6, // start far out for the globe fly-in
+      minZoom: 3.2,
+      maxZoom: 17.5, // deep zoom for 3D buildings
+      pitch: this.reduceMotion ? 0 : 46,
+      bearing: 0,
       attributionControl: false,
-      dragRotate: false,
-      renderWorldCopies: false,
+      maxPitch: 72,
     });
-    this.map.touchZoomRotate.disableRotation();
     this.map.addControl(
       new maplibregl.AttributionControl({
         compact: true,
         customAttribution:
-          "Data: IURC filings · HIFLD · WRI GPPD · US Census · AI Law Tracker · CAC",
+          "© OpenStreetMap · © CARTO · Data: IURC · HIFLD · WRI · US Census · AI Law Tracker · CAC",
       }),
       "bottom-right"
     );
-    this.map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
+    this.map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), "bottom-right");
 
     const host = document.createElement("div");
     host.id = "map-labels";
@@ -113,10 +108,32 @@ export class GridMap {
 
   private init() {
     const m = this.map;
+    if (!location.search.includes("noglobe")) {
+      try { m.setProjection({ type: "globe" }); } catch { /* older renderer */ }
+    }
     this.computeCentroids();
 
+    // darken the CARTO base toward the console void
+    try {
+      m.setPaintProperty("background", "background-color", "#080c12");
+      if (m.getLayer("water")) m.setPaintProperty("water", "fill-color", "#0a1622");
+    } catch { /* layer names vary between styles */ }
+    const firstLabel = (m.getStyle().layers || []).find((l) => l.type === "symbol")?.id;
+
+    // 3D buildings — extrude as you zoom into a site
+    m.addLayer({
+      id: "building-3d", type: "fill-extrusion", source: "carto", "source-layer": "building",
+      minzoom: 12.5,
+      paint: {
+        "fill-extrusion-color": ["interpolate", ["linear"], ["zoom"], 12.5, "#12202c", 16.5, "#25405a"],
+        "fill-extrusion-height": ["interpolate", ["linear"], ["zoom"], 12.5, 0, 15,
+          ["coalesce", ["get", "render_height"], ["get", "height"], 14]],
+        "fill-extrusion-base": ["coalesce", ["get", "render_min_height"], ["get", "min_height"], 0],
+        "fill-extrusion-opacity": 0.9,
+      },
+    }, firstLabel);
+
     /* ---- sources ---- */
-    m.addSource("counties", { type: "geojson", data: this.data.counties });
     m.addSource("territories", {
       type: "geojson",
       data: enrich(this.data.territories, (p) => (p._c = utilColor(p.utility))),
@@ -131,38 +148,34 @@ export class GridMap {
     });
     m.addSource("fac", { type: "geojson", data: buildFacFC(this.data.facilities.facilities, this.year, this.filters) });
 
-    /* ---- county landmass ---- */
-    m.addLayer({ id: "county-fill", type: "fill", source: "counties",
-      paint: { "fill-color": "#131C26", "fill-opacity": 0.92 } });
+    /* ---- utility territories (beneath labels) ---- */
     m.addLayer({ id: "terr-fill", type: "fill", source: "territories",
       layout: { visibility: "none" },
-      paint: { "fill-color": ["get", "_c"], "fill-opacity": 0.14 } });
-    m.addLayer({ id: "county-line", type: "line", source: "counties",
-      paint: { "line-color": "#243343", "line-width": 0.6, "line-opacity": 0.9 } });
+      paint: { "fill-color": ["get", "_c"], "fill-opacity": 0.16 } }, firstLabel);
     m.addLayer({ id: "terr-line", type: "line", source: "territories",
       layout: { visibility: "none" },
-      paint: { "line-color": ["get", "_c"], "line-width": 1, "line-opacity": 0.4 } });
+      paint: { "line-color": ["get", "_c"], "line-width": 1, "line-opacity": 0.45 } }, firstLabel);
 
-    /* ---- transmission ---- */
+    /* ---- transmission (beneath labels) ---- */
     m.addLayer({ id: "trans-base", type: "line", source: "trans",
       layout: { "line-cap": "round", "line-join": "round" },
       paint: {
         "line-color": "#58A6FF",
-        "line-opacity": ["interpolate", ["linear"], ["coalesce", ["get", "kv"], 138], 138, 0.06, 345, 0.15, 765, 0.3],
+        "line-opacity": ["interpolate", ["linear"], ["coalesce", ["get", "kv"], 138], 138, 0.1, 345, 0.22, 765, 0.42],
         "line-width": ["interpolate", ["linear"], ["coalesce", ["get", "kv"], 138], 138, 0.4, 345, 1.0, 765, 2.0],
-      } });
+      } }, firstLabel);
     m.addLayer({ id: "trans-flow", type: "line", source: "trans",
       filter: [">=", ["coalesce", ["get", "kv"], 0], 345],
       layout: { "line-cap": "round" },
-      paint: { "line-color": "#7CC0FF", "line-width": 1.2, "line-opacity": 0.32, "line-dasharray": [0, 4, 3] } });
+      paint: { "line-color": "#7CC0FF", "line-width": 1.2, "line-opacity": 0.4, "line-dasharray": [0, 4, 3] } }, firstLabel);
 
-    /* ---- power plants ---- */
+    /* ---- power plants (beneath labels) ---- */
     m.addLayer({ id: "plants", type: "circle", source: "plants",
       paint: {
         "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, ["*", ["get", "_r"], 0.7], 9, ["get", "_r"], 13, ["*", ["get", "_r"], 1.7]],
-        "circle-color": ["get", "_c"], "circle-opacity": 0.55,
-        "circle-stroke-color": ["get", "_c"], "circle-stroke-width": 0.8, "circle-stroke-opacity": 0.5,
-      } });
+        "circle-color": ["get", "_c"], "circle-opacity": 0.6,
+        "circle-stroke-color": ["get", "_c"], "circle-stroke-width": 0.8, "circle-stroke-opacity": 0.55,
+      } }, firstLabel);
 
     /* ---- data center ghosts (withdrawn) ---- */
     m.addLayer({ id: "dc-ghost", type: "circle", source: "fac",
@@ -211,6 +224,7 @@ export class GridMap {
         "circle-stroke-opacity": 0.9,
       } });
 
+    (window as any).__gwmap = this.map; // exposed for power users / debugging
     this.applyPadding();
     window.addEventListener("resize", this.onResize);
     this.wireEvents();
@@ -219,9 +233,10 @@ export class GridMap {
     this.startLoop();
     const cam = this.homeCamera();
     if (!this.reduceMotion) {
-      setTimeout(() => m.flyTo({ ...cam, pitch: 0, bearing: 0, duration: 2600, essential: true }), 120);
+      // dramatic globe-to-state descent
+      setTimeout(() => m.flyTo({ ...cam, pitch: 34, bearing: -8, duration: 3600, essential: true }), 220);
     } else {
-      m.jumpTo(cam as any);
+      m.jumpTo({ ...cam, pitch: 0, bearing: 0 } as any);
     }
   }
 
@@ -235,10 +250,21 @@ export class GridMap {
 
   applyPadding() { this.map.setPadding(this.pad()); }
 
-  /** Camera that fits the whole state into the current clear zone. */
+  /** Camera that fits the whole state into the current clear zone.
+   *  cameraForBounds can return an implausible zoom before layout settles, so
+   *  we sanity-check and fall back to a fixed Indiana framing. */
   private homeCamera(): { center: [number, number]; zoom: number } {
-    const cam = this.map.cameraForBounds(INDIANA_BOUNDS, { padding: this.pad(), maxZoom: 7.6 });
-    return (cam as any) ?? { center: INDIANA_CENTER, zoom: 6 };
+    const fixed = {
+      center: [-86.15, 39.77] as [number, number],
+      zoom: window.innerWidth > 820 ? 6.6 : 5.9,
+    };
+    try {
+      const cam: any = this.map.cameraForBounds(INDIANA_BOUNDS, { padding: this.pad(), maxZoom: 7.6 });
+      if (cam && typeof cam.zoom === "number" && cam.zoom >= 5.5) {
+        return { center: cam.center, zoom: cam.zoom };
+      }
+    } catch { /* fall through */ }
+    return fixed;
   }
 
   /** Re-fit the state after a panel is collapsed/expanded. */
@@ -364,6 +390,34 @@ export class GridMap {
     this.labelHost.querySelectorAll<HTMLElement>("[data-lid]").forEach((el) => {
       if (!seen.has(el.dataset.lid!)) el.remove();
     });
+
+    // dashed, rotating "targeting" rings on upcoming projects
+    const ringSeen = new Set<string>();
+    for (const f of this.data.facilities.facilities) {
+      if (!UPCOMING.has(f.status)) continue;
+      const s = computeState(f, this.year);
+      if (!s.visible || !matchFacility(f, this.filters)) continue;
+      ringSeen.add(f.id);
+      const mw = f.mw_full ?? f.mw_phase1 ?? 0;
+      let el = this.labelHost.querySelector<HTMLElement>(`[data-ring="${f.id}"]`);
+      if (!el) {
+        el = document.createElement("div");
+        el.dataset.ring = f.id;
+        el.className = "dc-ring";
+        el.style.setProperty("--rc", mw > 0 ? sevColor(mw) : "#6B7684");
+        this.labelHost.appendChild(el);
+      }
+      const p = m.project([f.lng, f.lat]);
+      const rNode = clamp(5 + Math.sqrt(mw) * 0.95, 6, 30) * (z >= 7 ? (z >= 11 ? 1.8 : 1) : 0.7);
+      const d = Math.max(24, rNode * 2.7 + 8);
+      el.style.left = `${p.x}px`;
+      el.style.top = `${p.y}px`;
+      el.style.width = el.style.height = `${d}px`;
+      el.style.opacity = String(0.45 + 0.45 * s.ramp);
+    }
+    this.labelHost.querySelectorAll<HTMLElement>("[data-ring]").forEach((el) => {
+      if (!ringSeen.has(el.dataset.ring!)) el.remove();
+    });
   }
 
   /* ---------- public API ---------- */
@@ -420,7 +474,12 @@ export class GridMap {
     try { this.map.setFilter("dc-selected", ["==", ["get", "id"], id ?? "__none__"]); } catch {}
     if (id && fly) {
       const f = this.facById(id);
-      if (f) this.map.flyTo({ center: [f.lng, f.lat], zoom: Math.max(this.map.getZoom(), 9.2), duration: 1400, essential: true });
+      // fly in low and tilted so local roads + 3D buildings resolve around the site
+      if (f) this.map.flyTo({
+        center: [f.lng, f.lat], zoom: 13.7,
+        pitch: this.reduceMotion ? 0 : 58, bearing: -14,
+        duration: 2400, essential: true,
+      });
     }
   }
 
