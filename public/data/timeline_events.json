@@ -39,6 +39,21 @@
       "kind": "decision", "highlight": true
     },
     {
+      "date": 2026.3, "label": "Marshall County bans data centers",
+      "detail": "Marshall County enacts Indiana's first permanent data-center ban (Apr 2026); Cass County follows. County moratoriums spread — nearly a third of Indiana counties now restrict them.",
+      "kind": "policy"
+    },
+    {
+      "date": 2026.55, "label": "OpenAI evaluating Indiana",
+      "detail": "OpenAI names Indiana among states under evaluation for a ~1 GW Stargate campus — no site selected yet.",
+      "kind": "project"
+    },
+    {
+      "date": 2026.6, "label": "Indianapolis moratorium advances",
+      "detail": "A moratorium on new data centers through end-2027 clears committee 10-3; the full City-County Council votes Aug 10, 2026.",
+      "kind": "policy"
+    },
+    {
       "date": 2027.05, "label": "AES rate increase phase 2",
       "detail": "Second phase of AES Indiana's approved 3.7% base-rate increase.",
       "kind": "rate"

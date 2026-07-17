@@ -2,27 +2,27 @@
   "last_updated": "2026-07-16",
   "state_peak_mw": 35000,
   "counts": {
-    "facilities_curated": 42,
+    "facilities_curated": 44,
     "facilities_tracked_statewide": 46,
     "by_status": {
-      "construction": 5,
+      "construction": 6,
       "approved": 2,
-      "proposed": 21,
+      "proposed": 22,
       "withdrawn": 10,
       "rumored": 4
     },
-    "counties_with_projects": 20,
+    "counties_with_projects": 21,
     "power_plants": 205,
     "transmission_lines": 1237,
     "utility_territories": 114,
     "substations": 0
   },
   "load_mw": {
-    "committed": 6847,
-    "proposed": 5737,
-    "active_total": 12584,
+    "committed": 7385,
+    "proposed": 6549,
+    "active_total": 13934,
     "withdrawn_avoided": 2880,
-    "pct_of_state_peak": 36.0
+    "pct_of_state_peak": 39.8
   },
   "mega_facilities": [
     {
@@ -54,6 +54,11 @@
       "name": "Microsoft Granger Campus",
       "mw": 1000,
       "county": "St. Joseph"
+    },
+    {
+      "name": "Prologis Shelbyville Campus",
+      "mw": 900,
+      "county": "Shelby"
     },
     {
       "name": "Unnamed Data Center (Gibson/Posey)",
@@ -146,6 +151,18 @@
       "utility": "AES Indiana"
     },
     {
+      "county": "Shelby",
+      "count": 1,
+      "mw": 900,
+      "utility": "Duke Energy Indiana"
+    },
+    {
+      "county": "Lake",
+      "count": 7,
+      "mw": 710,
+      "utility": "NIPSCO"
+    },
+    {
       "county": "Gibson",
       "count": 1,
       "mw": 600,
@@ -162,18 +179,6 @@
       "count": 2,
       "mw": 504,
       "utility": "NIPSCO"
-    },
-    {
-      "county": "Clark",
-      "count": 1,
-      "mw": 407,
-      "utility": "Duke Energy Indiana"
-    },
-    {
-      "county": "Clay",
-      "count": 1,
-      "mw": 400,
-      "utility": "WVPA / Parke County REMC"
     }
   ],
   "utilities": [
@@ -181,6 +186,11 @@
       "utility": "Indiana Michigan Power (I&M)",
       "count": 5,
       "mw": 4950
+    },
+    {
+      "utility": "NIPSCO",
+      "count": 14,
+      "mw": 1752
     },
     {
       "utility": "Duke Energy Indiana / WVPA (LEAP district)",
@@ -193,19 +203,14 @@
       "mw": 1525
     },
     {
-      "utility": "NIPSCO",
-      "count": 13,
-      "mw": 1302
+      "utility": "Duke Energy Indiana",
+      "count": 4,
+      "mw": 1357
     },
     {
       "utility": "CenterPoint Energy",
       "count": 1,
       "mw": 600
-    },
-    {
-      "utility": "Duke Energy Indiana",
-      "count": 3,
-      "mw": 457
     },
     {
       "utility": "WVPA / Parke County REMC",
