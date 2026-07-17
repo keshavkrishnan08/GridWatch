@@ -10,6 +10,12 @@ const INDIANA_BOUNDS: LngLatBoundsLike = [[-88.12, 37.74], [-84.74, 41.79]];
 const INDIANA_CENTER: [number, number] = [-86.3, 39.9];
 const UPCOMING = new Set(["proposed", "approved", "rumored"]); // get dashed "targeting" rings
 
+/** Base pixel radius of a facility node, by megawatts. Kept small so nodes
+ *  don't swamp the state. */
+function nodeRadius(mw: number): number {
+  return clamp(3 + Math.sqrt(mw) * 0.55, 4, 16);
+}
+
 export interface MapHandlers {
   onSelect: (id: string | null) => void;
   onHover: (f: Facility | null, pt: { x: number; y: number } | null) => void;
@@ -22,7 +28,7 @@ function buildFacFC(facilities: Facility[], year: number, filters: Filters): Geo
     const mw = f.mw_full ?? f.mw_phase1 ?? 0;
     const ghost = f.status === "withdrawn";
     const match = s.visible && matchFacility(f, filters);
-    const r = clamp(5 + Math.sqrt(mw) * 0.95, 6, 30);
+    const r = nodeRadius(mw);
     const coreOp = !match || ghost ? 0 : s.online ? 0.95 : 0.5 + 0.4 * s.ramp;
     const glowOp = !match || ghost ? 0 : 0.12 + 0.34 * s.ramp;
     const ghostOp = match && ghost ? 0.5 : 0;
@@ -92,13 +98,13 @@ export class GridMap {
       // keyless dark vector basemap: roads, water, labels, building footprints
       style: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
       center: INDIANA_CENTER,
-      zoom: this.reduceMotion ? 6.2 : 2.6, // start far out for the globe fly-in
-      minZoom: 3.2,
-      maxZoom: 17.5, // deep zoom for 3D buildings
-      pitch: this.reduceMotion ? 0 : 46,
+      zoom: this.reduceMotion ? 7.2 : 4.6, // flat top-down; brief zoom-in
+      minZoom: 3.5,
+      maxZoom: 16,
+      pitch: 0,
       bearing: 0,
+      dragRotate: false,
       attributionControl: false,
-      maxPitch: 72,
     });
     this.map.addControl(
       new maplibregl.AttributionControl({
@@ -121,9 +127,6 @@ export class GridMap {
 
   private init() {
     const m = this.map;
-    if (!location.search.includes("noglobe")) {
-      try { m.setProjection({ type: "globe" }); } catch { /* older renderer */ }
-    }
     this.computeCentroids();
 
     // darken the CARTO base toward the console void
@@ -132,19 +135,6 @@ export class GridMap {
       if (m.getLayer("water")) m.setPaintProperty("water", "fill-color", "#0a1622");
     } catch { /* layer names vary between styles */ }
     const firstLabel = (m.getStyle().layers || []).find((l) => l.type === "symbol")?.id;
-
-    // 3D buildings — extrude as you zoom into a site
-    m.addLayer({
-      id: "building-3d", type: "fill-extrusion", source: "carto", "source-layer": "building",
-      minzoom: 12.5,
-      paint: {
-        "fill-extrusion-color": ["interpolate", ["linear"], ["zoom"], 12.5, "#12202c", 16.5, "#25405a"],
-        "fill-extrusion-height": ["interpolate", ["linear"], ["zoom"], 12.5, 0, 15,
-          ["coalesce", ["get", "render_height"], ["get", "height"], 14]],
-        "fill-extrusion-base": ["coalesce", ["get", "render_min_height"], ["get", "min_height"], 0],
-        "fill-extrusion-opacity": 0.9,
-      },
-    }, firstLabel);
 
     /* ---- sources ---- */
     m.addSource("territories", {
@@ -194,7 +184,7 @@ export class GridMap {
 
     /* ---- spotlight: mask everything outside Indiana ---- */
     m.addLayer({ id: "state-mask", type: "fill", source: "mask",
-      paint: { "fill-color": "#06090e", "fill-opacity": 0.975 } });
+      paint: { "fill-color": "#070b11", "fill-opacity": 1 } });
     m.addLayer({ id: "state-glow", type: "line", source: "state",
       paint: { "line-color": "#3FB950", "line-width": 7, "line-opacity": 0.16, "line-blur": 5 } });
     m.addLayer({ id: "state-border", type: "line", source: "state",
@@ -256,8 +246,7 @@ export class GridMap {
     this.startLoop();
     const cam = this.homeCamera();
     if (!this.reduceMotion) {
-      // dramatic globe-to-state descent
-      setTimeout(() => m.flyTo({ ...cam, pitch: 34, bearing: -8, duration: 3600, essential: true }), 220);
+      setTimeout(() => m.flyTo({ ...cam, pitch: 0, bearing: 0, duration: 2400, essential: true }), 180);
     } else {
       m.jumpTo({ ...cam, pitch: 0, bearing: 0 } as any);
     }
@@ -266,9 +255,9 @@ export class GridMap {
   /** Padding that keeps the fit clear of whichever panels are open. */
   private pad() {
     if (window.innerWidth <= 820)
-      return { top: Math.round(window.innerHeight * 0.34), bottom: 96, left: 12, right: 12 };
+      return { top: Math.round(window.innerHeight * 0.3), bottom: 70, left: 10, right: 10 };
     const open = !document.getElementById("controls")?.classList.contains("collapsed");
-    return { top: 66, bottom: 106, left: open ? 324 : 30, right: 30 };
+    return { top: 58, bottom: 94, left: open ? 304 : 16, right: 16 };
   }
 
   applyPadding() { this.map.setPadding(this.pad()); }
@@ -277,17 +266,17 @@ export class GridMap {
    *  cameraForBounds can return an implausible zoom before layout settles, so
    *  we sanity-check and fall back to a fixed Indiana framing. */
   private homeCamera(): { center: [number, number]; zoom: number } {
-    const fixed = {
-      center: [-86.15, 39.77] as [number, number],
-      zoom: window.innerWidth > 820 ? 6.6 : 5.9,
-    };
+    // fixed geographic center of the state; setPadding handles the offset for
+    // the filter panel, so Indiana stays balanced in the clear area.
+    const center: [number, number] = [-86.43, 39.76];
+    let zoom = window.innerWidth > 820 ? 6.4 : 5.8;
     try {
-      const cam: any = this.map.cameraForBounds(INDIANA_BOUNDS, { padding: this.pad(), maxZoom: 7.6 });
+      const cam: any = this.map.cameraForBounds(INDIANA_BOUNDS, { padding: this.pad(), maxZoom: 9 });
       if (cam && typeof cam.zoom === "number" && cam.zoom >= 5.5) {
-        return { center: cam.center, zoom: cam.zoom };
+        zoom = Math.min(9, cam.zoom + 0.28);
       }
-    } catch { /* fall through */ }
-    return fixed;
+    } catch { /* keep fallback zoom */ }
+    return { center, zoom };
   }
 
   /** Re-fit the state after a panel is collapsed/expanded. */
@@ -405,7 +394,7 @@ export class GridMap {
         this.labelHost.appendChild(el);
       }
       const p = m.project([f.lng, f.lat]);
-      const r = clamp(5 + Math.sqrt(f.mw_full ?? 0) * 0.95, 6, 30) * (z >= 7 ? (z >= 11 ? 1.8 : 1) : 0.7);
+      const r = nodeRadius(f.mw_full ?? 0) * (z >= 7 ? (z >= 11 ? 1.8 : 1) : 0.7);
       el.style.left = `${p.x}px`;
       el.style.top = `${p.y - r - 11}px`;
       el.style.opacity = f.id === this.selectedId ? "1" : z < 6 ? "0" : "0.82";
@@ -431,8 +420,8 @@ export class GridMap {
         this.labelHost.appendChild(el);
       }
       const p = m.project([f.lng, f.lat]);
-      const rNode = clamp(5 + Math.sqrt(mw) * 0.95, 6, 30) * (z >= 7 ? (z >= 11 ? 1.8 : 1) : 0.7);
-      const d = Math.max(24, rNode * 2.7 + 8);
+      const rNode = nodeRadius(mw) * (z >= 7 ? (z >= 11 ? 1.8 : 1) : 0.7);
+      const d = Math.max(20, rNode * 2.8 + 7);
       el.style.left = `${p.x}px`;
       el.style.top = `${p.y}px`;
       el.style.width = el.style.height = `${d}px`;
@@ -497,12 +486,8 @@ export class GridMap {
     try { this.map.setFilter("dc-selected", ["==", ["get", "id"], id ?? "__none__"]); } catch {}
     if (id && fly) {
       const f = this.facById(id);
-      // fly in low and tilted so local roads + 3D buildings resolve around the site
-      if (f) this.map.flyTo({
-        center: [f.lng, f.lat], zoom: 13.7,
-        pitch: this.reduceMotion ? 0 : 58, bearing: -14,
-        duration: 2400, essential: true,
-      });
+      // fly in to reveal local roads around the site (flat, top-down)
+      if (f) this.map.flyTo({ center: [f.lng, f.lat], zoom: 12.5, pitch: 0, bearing: 0, duration: 1600, essential: true });
     }
   }
 
