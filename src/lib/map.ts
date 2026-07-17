@@ -16,9 +16,9 @@ function nodeRadius(mw: number): number {
   return clamp(3 + Math.sqrt(mw) * 0.55, 4, 16);
 }
 
-/* Circle radius vs zoom: roughly constant, then SHRINKS as you zoom in so the
- * node marks the precise center and reveals the roads/town beneath it. */
-const R_STOPS: [number, number][] = [[5, 0.7], [9, 1], [13, 0.8], [17, 0.42]];
+/* Circle radius vs zoom: small dots when wide, GROWING toward the real site
+ * footprint as you zoom in (the fill fades to a ring so roads show through). */
+const R_STOPS: [number, number][] = [[5, 0.55], [8, 0.95], [11, 1.7], [14, 2.9], [17, 4]];
 function radiusExpr(prop: string, mult = 1): any {
   const out: any[] = ["interpolate", ["linear"], ["zoom"]];
   for (const [z, f] of R_STOPS) out.push(z, ["*", ["get", prop], f * mult]);
@@ -252,7 +252,7 @@ export class GridMap {
       paint: {
         "circle-radius": radiusExpr("glowR"),
         "circle-color": ["get", "color"],
-        "circle-opacity": ["get", "glowOp"],
+        "circle-opacity": ["*", ["get", "glowOp"], ["interpolate", ["linear"], ["zoom"], 10, 1, 14, 0.22]],
         "circle-blur": 1.0,
       } });
 
@@ -262,9 +262,10 @@ export class GridMap {
       paint: {
         "circle-radius": radiusExpr("r"),
         "circle-color": ["get", "color"],
-        "circle-opacity": ["*", 0.55, ["get", "coreOp"]],
+        // fill fades as you zoom in so the node becomes a ring and roads show through
+        "circle-opacity": ["*", ["get", "coreOp"], ["interpolate", ["linear"], ["zoom"], 10, 0.55, 13.5, 0.1]],
         "circle-stroke-color": ["get", "color"],
-        "circle-stroke-width": 1.4,
+        "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 10, 1.4, 14, 2.2],
         "circle-stroke-opacity": ["get", "coreOp"],
       } });
 
@@ -388,7 +389,8 @@ export class GridMap {
         try {
           this.map.setPaintProperty("dc-glow", "circle-radius", radiusExpr("glowR", pulse));
           this.map.setPaintProperty("dc-glow", "circle-opacity",
-            ["*", ["get", "glowOp"], 0.75 + 0.25 * Math.sin(el * 2.1 + 1)] as any);
+            ["*", ["get", "glowOp"], ["interpolate", ["linear"], ["zoom"], 10, 1, 14, 0.22],
+              0.75 + 0.25 * Math.sin(el * 2.1 + 1)] as any);
           const off = Math.round(((el * 1.6) % 7) * 2) / 2;
           if (off !== this.lastDash) {
             this.lastDash = off;
