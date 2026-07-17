@@ -2,7 +2,8 @@ import maplibregl, { Map as MLMap, LngLatBoundsLike } from "maplibre-gl";
 import type { AppData, Facility } from "./data";
 import { computeState, sevColor, fuelColor, utilColor, clamp } from "./util";
 
-const INDIANA_BOUNDS: LngLatBoundsLike = [[-88.6, 37.6], [-84.5, 41.95]];
+// snug to the state so the whole outline fills the frame
+const INDIANA_BOUNDS: LngLatBoundsLike = [[-88.12, 37.74], [-84.74, 41.79]];
 const INDIANA_CENTER: [number, number] = [-86.3, 39.9];
 
 export interface MapHandlers {
@@ -210,24 +211,36 @@ export class GridMap {
     this.ready = true;
     this.readyCbs.splice(0).forEach((cb) => cb());
     this.startLoop();
-    const z = this.homeZoom();
+    const cam = this.homeCamera();
     if (!this.reduceMotion) {
-      setTimeout(() => m.flyTo({ center: INDIANA_CENTER, zoom: z, pitch: 0, bearing: 0, duration: 2600, essential: true }), 120);
+      setTimeout(() => m.flyTo({ ...cam, pitch: 0, bearing: 0, duration: 2600, essential: true }), 120);
     } else {
-      m.jumpTo({ center: INDIANA_CENTER, zoom: z });
+      m.jumpTo(cam as any);
     }
   }
 
-  /** Keep Indiana in the clear zone between the console and the rail. */
-  private applyPadding() {
-    const wide = window.innerWidth > 820;
-    this.map.setPadding(
-      wide
-        ? { left: 388, right: 226, top: 58, bottom: 132 }
-        : { left: 8, right: 8, top: 58, bottom: window.innerHeight * 0.42 }
-    );
+  /** Padding that keeps the fit clear of whichever panels are open. */
+  private pad() {
+    if (window.innerWidth <= 820)
+      return { top: 56, bottom: Math.round(window.innerHeight * 0.4), left: 10, right: 10 };
+    const cOpen = !document.getElementById("console")?.classList.contains("collapsed");
+    const rOpen = !document.getElementById("rail")?.classList.contains("collapsed");
+    return { top: 66, bottom: 130, left: cOpen ? 366 : 28, right: rOpen ? 214 : 28 };
   }
-  private homeZoom() { return window.innerWidth > 820 ? 6.25 : 6.15; }
+
+  applyPadding() { this.map.setPadding(this.pad()); }
+
+  /** Camera that fits the whole state into the current clear zone. */
+  private homeCamera(): { center: [number, number]; zoom: number } {
+    const cam = this.map.cameraForBounds(INDIANA_BOUNDS, { padding: this.pad(), maxZoom: 7.6 });
+    return (cam as any) ?? { center: INDIANA_CENTER, zoom: 6 };
+  }
+
+  /** Re-fit the state after a panel is collapsed/expanded. */
+  reframe() {
+    this.applyPadding();
+    this.map.flyTo({ ...this.homeCamera(), duration: 620, essential: true });
+  }
 
   private wireEvents() {
     const m = this.map;
@@ -404,7 +417,7 @@ export class GridMap {
   }
 
   resetView() {
-    this.map.flyTo({ center: INDIANA_CENTER, zoom: this.homeZoom(), pitch: 0, bearing: 0, duration: 1400, essential: true });
+    this.map.flyTo({ ...this.homeCamera(), pitch: 0, bearing: 0, duration: 1400, essential: true });
   }
 
   fitIndiana() { this.map.fitBounds(INDIANA_BOUNDS, { padding: 60, duration: 1200 }); }

@@ -85,9 +85,9 @@
 
   /* layout */
   --topbar-h: 54px;
-  --console-w: 372px;
-  --timeline-h: 118px;
-  --rail-w: 214px;
+  --console-w: 346px;
+  --timeline-h: 112px;
+  --rail-w: 238px;
 
   color-scheme: dark;
 }
