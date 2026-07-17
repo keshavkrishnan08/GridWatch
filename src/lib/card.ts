@@ -51,6 +51,19 @@ export class Card {
     const impactBlock = (impactRows || jobsCompare)
       ? `<div class="card-impact"><span class="eyebrow">Local impact</span>${impactRows}${jobsCompare}</div>` : "";
 
+    const prospective = ["proposed", "approved", "rumored"].includes(f.status);
+    const involveBlock = f.status === "withdrawn"
+      ? `<div class="card-action">
+          <span class="eyebrow">Withdrawn after public opposition</span>
+          <a class="act-link" href="https://www.citact.org/ai-data-centers" target="_blank" rel="noopener">◈ How residents pushed back — Citizens Action Coalition</a>
+        </div>`
+      : `<div class="card-action">
+          <span class="eyebrow">Get involved${prospective ? " · this one is still in play" : ""}</span>
+          <a class="act-link hot" href="https://www.citact.org/cac-email-sign-up" target="_blank" rel="noopener">◈ Citizens Action Coalition — join &amp; get alerts</a>
+          <a class="act-link" href="https://www.in.gov/oucc/2504.htm" target="_blank" rel="noopener">✎ File a public comment on ${f.iurc_docket ? "Cause " + esc(f.iurc_docket) : "this case"} (OUCC)</a>
+          <a class="act-link" href="https://www.in.gov/iurc/" target="_blank" rel="noopener">◱ Find ${esc(f.county)} County's plan-commission meeting</a>
+        </div>`;
+
     this.root.className = "";
     this.root.style.setProperty("--sev", col);
     this.root.innerHTML = `
@@ -86,6 +99,8 @@ export class Card {
               f.mw_estimated ? "Capacity is estimated from public reporting, not a filed figure." : "",
             ].filter(Boolean).join(" ")}</div>`
           : ""}
+
+        ${involveBlock}
 
         <div class="card-sources">
           <span class="eyebrow">Sources · every figure is traceable</span>
