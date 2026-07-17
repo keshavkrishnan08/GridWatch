@@ -1,5 +1,6 @@
 import type { AppData, UtilityModel } from "./data";
-import { fmtUSD, fmtInt, esc, safeUrl } from "./format";
+import { fmtUSD, fmtInt, fmtMW, esc, safeUrl } from "./format";
+import { fuelColor, FUEL_LABEL, JOBS_PER_MW_DC, JOBS_PER_MW_OTHER } from "./util";
 
 const root = () => document.getElementById("modal-root")!;
 const BG_SELECTORS = ["#topbar", "#controls", "#timeline", "#card", "#map"];
@@ -155,6 +156,46 @@ export function openAction(data: AppData) {
         <div class="act-detail">${esc(d.ratepayer_note)}</div>
       </div>`).join("")}
     <div class="mini-note" style="margin-top:6px;text-align:center">Search any Cause number at <a href="${safeUrl(data.dockets.portal)}" target="_blank" rel="noopener">iurc.portal.in.gov</a></div>
+  `);
+}
+
+/* ---------------- Indiana at a glance ---------------- */
+export function openStats(data: AppData) {
+  const m = data.meta;
+  const mix = m.generation_mix.filter((g) => g.pct >= 0.3);
+  const total = m.load_mw.active_total;
+  const dcJobs = Math.round(total * JOBS_PER_MW_DC);
+  const otherJobs = Math.round(total * JOBS_PER_MW_OTHER);
+  const restricted = data.restrictions.counties.length;
+  openModal("Indiana at a Glance", `
+    <div class="stats-hero">
+      <div class="sh-cell"><div class="sh-num phos">${fmtMW(total)}<small>MW</small></div><div class="sh-lab">Active data-center load</div></div>
+      <div class="sh-cell"><div class="sh-num" style="color:var(--load-high)">${m.load_mw.pct_of_state_peak}<small>%</small></div><div class="sh-lab">of state peak demand</div></div>
+    </div>
+    <div class="stats-grid">
+      <div class="sg"><span class="sg-v" style="color:var(--phosphor-bright)">${fmtMW(m.load_mw.committed)}</span><span class="sg-k">MW online / building</span></div>
+      <div class="sg"><span class="sg-v" style="color:var(--load-med)">${fmtMW(m.load_mw.proposed)}</span><span class="sg-k">MW proposed</span></div>
+      <div class="sg"><span class="sg-v" style="color:var(--load-mega)">${m.mega_facilities.length}</span><span class="sg-k">hyperscale sites (&gt;500MW)</span></div>
+      <div class="sg"><span class="sg-v">${m.counts.facilities_tracked_statewide}</span><span class="sg-k">projects tracked</span></div>
+      <div class="sg"><span class="sg-v" style="color:var(--load-high)">${restricted}</span><span class="sg-k">counties restricting</span></div>
+      <div class="sg"><span class="sg-v">${fmtMW(m.load_mw.withdrawn_avoided)}</span><span class="sg-k">MW withdrawn</span></div>
+    </div>
+
+    <div class="prose"><h3>Existing generation mix — ${fmtInt(m.total_generation_mw)} MW</h3></div>
+    <div class="genmix">${mix.map((g) => `<span style="width:${g.pct}%;background:${fuelColor(g.fuel)}" title="${FUEL_LABEL[g.fuel]} ${g.pct}%"></span>`).join("")}</div>
+    <div class="genmix-legend">${mix.slice(0, 6).map((g) => `<span class="gl-item"><span class="gl-swatch" style="background:${fuelColor(g.fuel)}"></span>${FUEL_LABEL[g.fuel]} ${g.pct}%</span>`).join("")}</div>
+
+    <div class="prose">
+      <h3>Jobs</h3>
+      <p>At the data-center average of <strong>~0.26 jobs/MW</strong>, ${fmtMW(total)} MW supports roughly <strong>${fmtInt(dcJobs)} permanent jobs</strong>. The same load in typical Indiana industry (~41 jobs/MW) would support about <strong>${fmtInt(otherJobs)}</strong> — a ${Math.round(otherJobs / Math.max(1, dcJobs))}× difference.</p>
+      <h3>Scale comparisons</h3>
+      <ul>
+        <li>A single large AI data center uses about as much energy as <strong>730,000 Hoosier households</strong>.</li>
+        <li>Amazon's New Carlisle campus alone could draw as much power as <strong>half of Indiana's 2.8 million households</strong>.</li>
+        <li>The grid is <strong>${mix[0]?.pct}% ${mix[0]?.fuel}</strong> today; I&amp;M and NIPSCO plan <strong>5.6 GW of new gas by 2030</strong> to serve the load.</li>
+      </ul>
+      <p style="color:var(--text-dim);font-size:11px;font-family:var(--mono)">DATA UPDATED ${esc(m.last_updated)} · Σ OF ${m.counts.facilities_curated} CURATED FACILITIES · SOURCES IN EACH CARD &amp; ABOUT</p>
+    </div>
   `);
 }
 

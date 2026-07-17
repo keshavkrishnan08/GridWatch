@@ -274,6 +274,12 @@ a:hover { text-decoration: underline; }
 .card-row .rk { color: var(--text-dim); font-family: var(--mono); font-size: 10px; letter-spacing: 0.05em; }
 .card-row .rv { color: var(--text-hi); text-align: right; }
 .card-notes { font-size: 12px; color: var(--text-mid); line-height: 1.55; margin: 12px 0; padding: 10px 11px; background: rgba(88,166,255,0.05); border-left: 2px solid var(--transmission); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+.card-impact { margin-top: 12px; padding: 9px 11px 10px; background: rgba(227,167,43,0.06); border-left: 2px solid var(--load-med); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+.card-impact > .eyebrow { display: block; margin-bottom: 5px; }
+.card-impact .card-row { border-bottom: 1px dashed rgba(255,255,255,0.05); }
+.card-impact .card-row:last-of-type { border-bottom: 0; }
+.card-impact .mini-note { color: var(--text-mid); }
+.card-impact b { color: var(--text-hi); }
 .redaction-chip { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 9px; color: var(--warning); background: var(--warning-glow); padding: 2px 7px; border-radius: 12px; letter-spacing: 0.06em; }
 .card-sources { margin-top: 12px; }
 .card-sources .eyebrow { margin-bottom: 7px; display: block; }
@@ -354,6 +360,18 @@ a:hover { text-decoration: underline; }
 .bc-line .bl-k { color: var(--text-mid); }
 .bc-line .bl-v { font-family: var(--mono); color: var(--text-hi); }
 .bc-disclaim { margin-top: 14px; font-size: 10.5px; color: var(--text-dim); line-height: 1.55; padding: 10px; background: var(--warning-glow); border-radius: var(--r-sm); border-left: 2px solid var(--warning); }
+
+/* indiana at a glance */
+.stats-hero { display: flex; gap: 1px; background: var(--panel-line); border: var(--hair); border-radius: var(--r-md); overflow: hidden; margin-bottom: 10px; }
+.stats-hero .sh-cell { flex: 1; background: var(--panel-solid); padding: 14px 16px; }
+.sh-num { font-family: var(--mono); font-size: 34px; font-weight: 650; letter-spacing: -0.02em; line-height: 1; color: var(--text-hi); font-variant-numeric: tabular-nums; }
+.sh-num small { font-size: 14px; color: var(--text-mid); margin-left: 3px; }
+.sh-num.phos { color: var(--phosphor-bright); text-shadow: 0 0 16px var(--phosphor-glow); }
+.sh-lab { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; color: var(--text-dim); text-transform: uppercase; margin-top: 7px; }
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--panel-line); border: var(--hair); border-radius: var(--r-sm); overflow: hidden; margin-bottom: 4px; }
+.stats-grid .sg { background: var(--panel-solid); padding: 10px 11px; display: flex; flex-direction: column; gap: 3px; }
+.sg-v { font-family: var(--mono); font-size: 18px; font-weight: 650; color: var(--text-hi); font-variant-numeric: tabular-nums; }
+.sg-k { font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.04em; color: var(--text-dim); text-transform: uppercase; }
 
 /* action layer list */
 .act-item { padding: 13px 14px; border: var(--hair); border-radius: var(--r-md); margin-bottom: 10px; transition: all var(--t-fast); background: var(--void-2); }

@@ -2,7 +2,7 @@ import maplibregl, { Map as MLMap, LngLatBoundsLike } from "maplibre-gl";
 import type { AppData, Facility } from "./data";
 import {
   computeState, sevColor, fuelColor, utilColor, clamp,
-  matchFacility, ALL_FILTERS, type Filters,
+  matchFacility, countyAt, ALL_FILTERS, type Filters,
 } from "./util";
 
 // snug to the state so the whole outline fills the frame
@@ -44,6 +44,7 @@ function zoomFactor(z: number): number {
 export interface MapHandlers {
   onSelect: (id: string | null) => void;
   onHover: (f: Facility | null, pt: { x: number; y: number } | null) => void;
+  onCounty: (county: string | null, lngLat: [number, number]) => void;
 }
 
 /** Enrich the facilities into a render-ready FeatureCollection for a year + filters. */
@@ -267,7 +268,7 @@ export class GridMap {
       paint: {
         "circle-radius": radiusExpr("glowR"),
         "circle-color": ["get", "color"],
-        "circle-opacity": ["*", ["get", "glowOp"], ["interpolate", ["linear"], ["zoom"], 10, 1, 14, 0.22]],
+        "circle-opacity": ["interpolate", ["linear"], ["zoom"], 10, ["get", "glowOp"], 14, ["*", ["get", "glowOp"], 0.22]],
         "circle-blur": 1.0,
       } });
 
@@ -278,7 +279,7 @@ export class GridMap {
         "circle-radius": radiusExpr("r"),
         "circle-color": ["get", "color"],
         // fill fades as you zoom in so the node becomes a ring and roads show through
-        "circle-opacity": ["*", ["get", "coreOp"], ["interpolate", ["linear"], ["zoom"], 10, 0.55, 13.5, 0.1]],
+        "circle-opacity": ["interpolate", ["linear"], ["zoom"], 10, ["*", ["get", "coreOp"], 0.55], 13.5, ["*", ["get", "coreOp"], 0.1]],
         "circle-stroke-color": ["get", "color"],
         "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 10, 1.4, 14, 2.2],
         "circle-stroke-opacity": ["get", "coreOp"],
@@ -302,11 +303,15 @@ export class GridMap {
     this.ready = true;
     this.readyCbs.splice(0).forEach((cb) => cb());
     this.startLoop();
-    const cam = this.homeCamera();
-    if (!this.reduceMotion) {
-      setTimeout(() => m.flyTo({ ...cam, pitch: 0, bearing: 0, duration: 2400, essential: true }), 180);
-    } else {
-      m.jumpTo({ ...cam, pitch: 0, bearing: 0 } as any);
+    // a shared ?f/?c link already flew to its target in the whenReady callbacks
+    // above — don't fight it with the intro camera.
+    if (!/[?&][fc]=/.test(location.search)) {
+      const cam = this.homeCamera();
+      if (!this.reduceMotion) {
+        setTimeout(() => m.flyTo({ ...cam, pitch: 0, bearing: 0, duration: 2400, essential: true }), 180);
+      } else {
+        m.jumpTo({ ...cam, pitch: 0, bearing: 0 } as any);
+      }
     }
   }
 
@@ -369,7 +374,8 @@ export class GridMap {
     }
     m.on("click", (e) => {
       const hits = m.queryRenderedFeatures(e.point, { layers: ["dc-core", "dc-ghost"] });
-      if (!hits.length) this.handlers.onSelect(null);
+      if (hits.length) return; // facility click handlers fire instead
+      this.handlers.onCounty(countyAt([e.lngLat.lng, e.lngLat.lat], this.data.counties), [e.lngLat.lng, e.lngLat.lat]);
     });
   }
 
@@ -403,9 +409,9 @@ export class GridMap {
         const pulse = 1 + 0.16 * Math.sin(el * 2.1);
         try {
           this.map.setPaintProperty("dc-glow", "circle-radius", radiusExpr("glowR", pulse));
+          const pf = 0.75 + 0.25 * Math.sin(el * 2.1 + 1);
           this.map.setPaintProperty("dc-glow", "circle-opacity",
-            ["*", ["get", "glowOp"], ["interpolate", ["linear"], ["zoom"], 10, 1, 14, 0.22],
-              0.75 + 0.25 * Math.sin(el * 2.1 + 1)] as any);
+            ["interpolate", ["linear"], ["zoom"], 10, ["*", ["get", "glowOp"], pf], 14, ["*", ["get", "glowOp"], 0.22 * pf]] as any);
           const off = Math.round(((el * 1.6) % 7) * 2) / 2;
           if (off !== this.lastDash) {
             this.lastDash = off;

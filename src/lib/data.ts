@@ -18,6 +18,11 @@ export interface Facility {
   investment_usd: number | null;
   water_mgd: number | null;
   water_status: "known" | "redacted" | "unknown";
+  water_source?: string | null;
+  jobs?: number | null;
+  diesel_generators?: number | null;
+  diesel_gallons_m?: number | null;
+  wetland_acres?: number | null;
   utility: string | null;
   iurc_docket: string | null;
   docket_url: string | null;
