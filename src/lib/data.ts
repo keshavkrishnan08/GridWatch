@@ -97,6 +97,9 @@ export interface Docket {
 }
 export interface DocketFile { portal: string; note: string; dockets: Docket[]; }
 
+export interface CountyRestriction { name: string; type: "ban" | "moratorium"; detail: string; }
+export interface RestrictionFile { note: string; sources: Source[]; counties: CountyRestriction[]; }
+
 export type FC = GeoJSON.FeatureCollection;
 
 export interface AppData {
@@ -106,6 +109,7 @@ export interface AppData {
   bill: BillFile;
   action: ActionFile;
   dockets: DocketFile;
+  restrictions: RestrictionFile;
   counties: FC;
   indiana: FC;
   powerPlants: FC;
@@ -129,7 +133,7 @@ async function getFC(path: string): Promise<FC> {
 
 export async function loadAll(): Promise<AppData> {
   const [
-    facilities, meta, timeline, bill, action, dockets,
+    facilities, meta, timeline, bill, action, dockets, restrictions,
     counties, indiana, powerPlants, transmission, territories, substations,
   ] = await Promise.all([
     get<FacilitiesFile>("facilities.json"),
@@ -138,6 +142,7 @@ export async function loadAll(): Promise<AppData> {
     get<BillFile>("bill_impact_models.json"),
     get<ActionFile>("action_items.json"),
     get<DocketFile>("dockets.json"),
+    get<RestrictionFile>("county_restrictions.json"),
     getFC("counties.geojson"),
     getFC("indiana.geojson"),
     getFC("power_plants.geojson"),
@@ -145,5 +150,5 @@ export async function loadAll(): Promise<AppData> {
     getFC("utility_territories.geojson"),
     getFC("substations.geojson"),
   ]);
-  return { facilities, meta, timeline, bill, action, dockets, counties, indiana, powerPlants, transmission, territories, substations };
+  return { facilities, meta, timeline, bill, action, dockets, restrictions, counties, indiana, powerPlants, transmission, territories, substations };
 }

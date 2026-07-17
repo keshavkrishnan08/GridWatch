@@ -449,8 +449,10 @@ a:hover { text-decoration: underline; }
 .ctrl-select { width: 100%; background: var(--void-2); border: var(--hair-2); color: var(--text-hi); font-family: var(--mono); font-size: 11.5px; padding: 8px 10px; border-radius: var(--r-sm); outline: none; cursor: pointer; }
 .ctrl-select:focus { border-color: var(--phosphor); }
 
-.ctrl-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 11px; border-top: 1px solid var(--panel-line); }
-.lay-row { display: flex; gap: 5px; }
+.ctrl-foot { display: flex; flex-direction: column; gap: 7px; padding-top: 11px; border-top: 1px solid var(--panel-line); }
+.lay-row { display: flex; gap: 5px; flex-wrap: wrap; }
+.lay-legend { display: flex; gap: 12px; font-family: var(--mono); font-size: 9px; color: var(--text-mid); }
+.lay-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; vertical-align: middle; }
 .lay { font-family: var(--mono); font-size: 9.5px; color: var(--text-dim); padding: 4px 8px; border: var(--hair); border-radius: 14px; background: transparent; transition: all var(--t-fast); }
 .lay:hover { color: var(--text-hi); }
 .lay.on { color: var(--transmission); border-color: rgba(88,166,255,0.4); background: rgba(88,166,255,0.08); }

@@ -7,6 +7,7 @@ const STATUS_CHIPS = [
   { k: "proposed", label: "Proposed" },
   { k: "approved", label: "Approved" },
   { k: "built", label: "Built" },
+  { k: "rumored", label: "Rumored" },
   { k: "withdrawn", label: "Withdrawn" },
 ];
 const SIZE_CHIPS: { k: Sev; label: string }[] = [
@@ -76,6 +77,12 @@ export class Controls {
           <button class="lay on" data-layer="transmission">grid</button>
           <button class="lay" data-layer="plants">plants</button>
           <button class="lay" data-layer="territories">utilities</button>
+          <button class="lay" data-layer="restrictions" title="County data-center bans &amp; moratoriums">bans</button>
+        </div>
+        <div class="lay-legend" id="lay-legend" hidden>
+          <span><i style="background:#F85149"></i> ban</span>
+          <span><i style="background:#E3A72B"></i> moratorium</span>
+          <span style="color:var(--text-faint)">partial · sourced</span>
         </div>
       </div>`;
 
@@ -89,6 +96,10 @@ export class Controls {
       b.addEventListener("click", () => {
         const on = b.classList.toggle("on");
         this.map.setLayerVisible(b.dataset.layer!, on);
+        if (b.dataset.layer === "restrictions") {
+          const lg = this.root.querySelector<HTMLElement>("#lay-legend");
+          if (lg) lg.hidden = !on;
+        }
       }));
     this.wireSearch();
     this.apply();
@@ -128,8 +139,8 @@ export class Controls {
     const t = this.map.shownTotals();
     const c = this.root.querySelector<HTMLElement>("#ctrl-count");
     const m = this.root.querySelector<HTMLElement>("#ctrl-mw");
-    if (c) c.textContent = fmtInt(t.nodes);
-    if (m) m.textContent = fmtMW(t.total);
+    if (c) c.textContent = fmtInt(t.count);
+    if (m) m.textContent = fmtMW(t.mw);
   }
 
   private wireSearch() {
