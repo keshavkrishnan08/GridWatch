@@ -15,8 +15,8 @@ GridWatch answers exactly that.
 ## What it does
 
 - **Maps the whole fleet.** Every data center renders as a glowing node sized by megawatts and colored by load severity — green under 50 MW up to magenta for the hyperscalers that are off the scale Indiana's grid was built for. Existing power plants, ≥138 kV transmission lines, and utility service territories layer underneath.
-- **Scrubs through time.** A 2020 → 2035 timeline animates the build-out. Drag it and watch the grid fill: nodes appear when they were proposed, load shifts from "pipeline" to "online," and the statewide counters climb in real time.
-- **Locates you.** Type your county. The map flies there and tells you which utility serves you (resolved by point-in-polygon against real service territories), which data centers sit within 25 miles, their combined load, and a projected bill impact.
+- **Filters to what matters.** Filter the map live by status (proposed, approved, built, withdrawn), by size tier (small up to off-the-scale hyperscale), and by serving utility. The count updates as you go. Search any county or facility to fly straight to it.
+- **Scrubs through time.** A 2020 → 2035 timeline animates the build-out. Drag it and watch the grid fill as nodes appear and grow toward their projected energization.
 - **Shows the receipts.** Click any node for a full dossier: capacity, water use, acreage, investment, developer, serving utility, IURC cause number, and **every figure linked to its public source**. When a developer redacts a number, the card flags it `◈ DEVELOPER-REDACTED` instead of guessing.
 - **Projects your bill.** A transparent calculator combines each utility's IURC-approved rate change with an illustrative split of filed data-center infrastructure costs. Clearly labeled as a projection, with the math shown.
 - **Points to the process.** A nonpartisan action layer lists how to file an IURC comment, the active dockets, and where the public hearings are. It shows the process, not a position.
