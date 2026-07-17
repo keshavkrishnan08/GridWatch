@@ -310,6 +310,8 @@ a:hover { text-decoration: underline; }
 .card-row { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 1px dashed var(--panel-line); font-size: 12px; }
 .card-row .rk { color: var(--text-dim); font-family: var(--mono); font-size: 10px; letter-spacing: 0.05em; }
 .card-row .rv { color: var(--text-hi); text-align: right; }
+.card-chatter { font-family: var(--mono); font-size: 10px; line-height: 1.5; letter-spacing: 0.02em; color: var(--load-med); margin: 0 0 13px; padding: 8px 10px; background: rgba(227,167,43,0.07); border: 1px dashed rgba(227,167,43,0.5); border-radius: var(--r-sm); }
+.card-chatter b { color: var(--text-hi); }
 .card-notes { font-size: 12px; color: var(--text-mid); line-height: 1.55; margin: 12px 0; padding: 10px 11px; background: rgba(88,166,255,0.05); border-left: 2px solid var(--transmission); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
 .card-impact { margin-top: 12px; padding: 9px 11px 10px; background: rgba(227,167,43,0.06); border-left: 2px solid var(--load-med); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
 .card-impact > .eyebrow { display: block; margin-bottom: 5px; }
@@ -538,8 +540,70 @@ a:hover { text-decoration: underline; }
 .tl-year-big { text-align: right; }
 .tl-year-big .val { font-family: var(--mono); font-size: 25px; font-weight: 650; color: var(--text-hi); letter-spacing: -0.01em; }
 
+/* ---------- newsletter "broadcast" popup ---------- */
+#newsletter {
+  position: absolute; top: calc(var(--topbar-h) + 14px); left: 50%;
+  z-index: 30; transform: translate(-50%, -14px); opacity: 0;
+  pointer-events: none; transition: transform var(--t-med) var(--ease-out), opacity var(--t-med) var(--ease-out);
+}
+#newsletter.on { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
+#newsletter[hidden] { display: none; }
+.nl-pop {
+  position: relative; width: 392px; max-width: calc(100vw - 24px);
+  padding: 16px 18px 15px; border-radius: var(--r-lg);
+  background: var(--panel-solid); border: var(--hair-2);
+  box-shadow: var(--shadow-card), 0 0 26px -8px var(--phosphor-glow);
+}
+.nl-pop::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 2px; border-radius: var(--r-lg) var(--r-lg) 0 0;
+  background: linear-gradient(90deg, transparent, var(--phosphor), transparent); opacity: 0.8;
+}
+.nl-close {
+  position: absolute; top: 9px; right: 10px; width: 22px; height: 22px;
+  background: none; border: none; color: var(--text-dim); font-size: 13px;
+  cursor: pointer; border-radius: var(--r-sm); transition: color var(--t-fast) var(--ease);
+}
+.nl-close:hover { color: var(--phosphor-bright); }
+.nl-eyebrow { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.22em; color: var(--phosphor); text-shadow: 0 0 10px var(--phosphor-glow); }
+.nl-head { margin-top: 7px; font-size: 16px; font-weight: 650; line-height: 1.24; color: var(--text-hi); letter-spacing: -0.01em; }
+.nl-sub { margin-top: 6px; font-size: 12px; line-height: 1.45; color: var(--text-mid); }
+
+/* shared signup form (popup + Take Action embed) */
+.nl-form { margin-top: 12px; }
+.nl-input-row { display: flex; gap: 6px; }
+.nl-email {
+  flex: 1; min-width: 0; background: var(--void-2); border: var(--hair-2);
+  border-radius: var(--r-sm); color: var(--text-hi); font-family: var(--mono);
+  font-size: 12px; padding: 9px 11px; transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+}
+.nl-email::placeholder { color: var(--text-faint); }
+.nl-email:focus { outline: none; border-color: var(--phosphor); box-shadow: 0 0 0 3px rgba(63,185,80,0.12); }
+.nl-submit {
+  flex: none; padding: 0 14px; border-radius: var(--r-sm); cursor: pointer;
+  background: rgba(63,185,80,0.12); border: 1px solid var(--phosphor-dim);
+  color: var(--phosphor-bright); font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.12em; font-weight: 600; transition: all var(--t-fast) var(--ease);
+}
+.nl-submit:hover { background: rgba(63,185,80,0.22); box-shadow: 0 0 16px -3px var(--phosphor-glow); }
+.nl-form.done .nl-input-row { display: none; }
+.nl-msg { font-size: 11px; line-height: 1.4; margin-top: 8px; min-height: 0; color: var(--text-mid); }
+.nl-msg:empty { display: none; }
+.nl-msg.err { color: var(--warning); }
+.nl-msg.ok { color: var(--text-mid); }
+.nl-ok { color: var(--phosphor-bright); font-weight: 600; text-shadow: 0 0 10px var(--phosphor-glow); }
+.nl-fine { margin-top: 8px; font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.04em; line-height: 1.5; color: var(--text-faint); }
+.nl-form.done .nl-fine { display: none; }
+
+/* Take Action embed variant */
+.nl-embed {
+  margin-bottom: 16px; padding: 13px 14px; border-radius: var(--r-md);
+  background: rgba(63,185,80,0.05); border: 1px solid var(--phosphor-dim);
+}
+.nl-embed-head { margin-top: 5px; font-size: 13px; font-weight: 600; color: var(--text-hi); }
+
 /* ---------- responsive ---------- */
 @media (max-width: 820px) {
+  #newsletter { top: auto; bottom: calc(var(--timeline-h) + 10px); }
   #controls { left: 8px; right: 8px; width: auto; max-height: 52%; }
   #card { left: 8px; right: 8px; width: auto; bottom: calc(var(--timeline-h) + 8px); }
   .brand-title { font-size: 13px; white-space: nowrap; }

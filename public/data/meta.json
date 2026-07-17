@@ -1,17 +1,17 @@
 {
-  "last_updated": "2026-07-16",
+  "last_updated": "2026-07-17",
   "state_peak_mw": 35000,
   "counts": {
-    "facilities_curated": 44,
-    "facilities_tracked_statewide": 46,
+    "facilities_curated": 47,
+    "facilities_tracked_statewide": 50,
     "by_status": {
       "construction": 6,
       "approved": 2,
-      "proposed": 22,
-      "withdrawn": 10,
-      "rumored": 4
+      "proposed": 18,
+      "withdrawn": 13,
+      "rumored": 8
     },
-    "counties_with_projects": 21,
+    "counties_with_projects": 20,
     "power_plants": 205,
     "transmission_lines": 1237,
     "utility_territories": 114,
@@ -36,11 +36,6 @@
       "county": "Boone"
     },
     {
-      "name": "Takanock Goshen Data Center",
-      "mw": 1500,
-      "county": "Elkhart"
-    },
-    {
       "name": "Google Monrovia Data Center",
       "mw": 1200,
       "county": "Morgan"
@@ -56,11 +51,6 @@
       "county": "St. Joseph"
     },
     {
-      "name": "Prologis Shelbyville Campus",
-      "mw": 900,
-      "county": "Shelby"
-    },
-    {
       "name": "Unnamed Data Center (Gibson/Posey)",
       "mw": 600,
       "county": "Gibson"
@@ -69,11 +59,6 @@
       "name": "Microsoft La Porte Campus",
       "mw": 538,
       "county": "LaPorte"
-    },
-    {
-      "name": "Sentinel Hebron Data Center",
-      "mw": 504,
-      "county": "Porter"
     }
   ],
   "generation_mix": [
