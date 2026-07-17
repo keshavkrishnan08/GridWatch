@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "last_updated": "2026-07-16",
-  "coverage_note": "The AI Law Tracker inventory lists ~46 Indiana data-center projects across active, proposed, rumored, and withdrawn stages; other trackers (e.g., Cleanview) count 90+ planned facilities totaling ~14 GW. This file curates those with locatable sites and at least one verifiable attribute, and is refreshed as high-profile proposals land. Flagship figures are cross-checked against IURC filings, utility filings, and news reporting cited per record.",
+  "last_updated": "2026-07-17",
+  "coverage_note": "The AI Law Tracker inventory lists ~46 Indiana data-center projects; other trackers (e.g., Cleanview) count 90+ planned facilities totaling ~14 GW. This file curates those with locatable sites and at least one verifiable attribute, including RUMORED/CHATTER proposals that are reported but unconfirmed (no named operator, or rejected at local rezoning) — each flagged with its stage in the notes. Flagship figures are cross-checked against IURC filings, utility filings, and news reporting cited per record.",
   "primary_sources": [
     { "label": "AI Law Tracker — Indiana Data Center Map", "url": "https://ailawtracker.org/data-centers" },
     { "label": "Citizens Action Coalition — AI Data Centers", "url": "https://www.citact.org/ai-data-centers" },
@@ -122,22 +122,26 @@
     },
     {
       "id": "takanock-goshen",
-      "name": "Takanock Goshen Data Center",
-      "developer": "Takanock",
+      "name": "Takanock Goshen (stealth campus)",
+      "developer": "Takanock, LLC",
       "city": "Goshen",
       "county": "Elkhart",
       "lat": 41.5820, "lng": -85.8344, "geo_precision": "city",
-      "status": "proposed",
-      "mw_phase1": null, "mw_full": 1500, "mw_estimated": false,
+      "status": "rumored",
+      "mw_phase1": null, "mw_full": 1500, "mw_estimated": true,
       "acres": null, "investment_usd": null,
       "water_mgd": null, "water_status": "unknown",
       "utility": null,
       "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
-      "announced_year": 2025, "online_year": 2029,
+      "announced_year": 2025, "online_year": null,
       "tax_note": null,
-      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
-      "notes": "1,500 MW proposed campus.",
-      "last_verified": "2026-07-16"
+      "sources": [
+        { "label": "Cleanview — Takanock Goshen Data Center", "url": "https://cleanview.co/data-centers/indiana/1992/takanock-goshen-data-center" },
+        { "label": "Baxtel — Takanock: Goshen, IN", "url": "https://baxtel.com/data-center/takanock-goshen-in" },
+        { "label": "IURC — Takanock Intervenor's Exhibit 1 (Cause 46183)", "url": "https://iurc.portal.in.gov/" }
+      ],
+      "notes": "Stealth developer Takanock is entitling a large Elkhart County site to sell shovel-ready to an unnamed operator; it intervened in IURC Cause 46183 (Apr 2025). The ~1,500 MW figure is from industry trackers, not a filing, and no hyperscale tenant is public.",
+      "last_verified": "2026-07-17"
     },
     {
       "id": "unnamed-gibson-posey",
@@ -182,22 +186,26 @@
     },
     {
       "id": "sentinel-hebron",
-      "name": "Sentinel Hebron Data Center",
+      "name": "Sentinel Hebron (undisclosed operator)",
       "developer": "Sentinel Data Centers",
       "city": "Hebron",
       "county": "Porter",
       "lat": 41.3230, "lng": -87.2000, "geo_precision": "city",
-      "status": "proposed",
-      "mw_phase1": null, "mw_full": 504, "mw_estimated": false,
+      "status": "rumored",
+      "mw_phase1": null, "mw_full": 504, "mw_estimated": true,
       "acres": 164, "investment_usd": null,
       "water_mgd": null, "water_status": "unknown",
       "utility": "NIPSCO",
       "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
-      "announced_year": 2025, "online_year": 2028,
+      "announced_year": 2025, "online_year": null,
       "tax_note": null,
-      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
-      "notes": "504 MW on 164 acres, NIPSCO territory.",
-      "last_verified": "2026-07-16"
+      "sources": [
+        { "label": "NWI Times — Developer proposes Porter County data center", "url": "https://www.nwitimes.com/news/local/article_8e927e35-00f0-4325-99fb-baafdf8c15e7.html" },
+        { "label": "Indiana Economic Digest — Porter County proposal meets pushback", "url": "https://indianaeconomicdigest.net/Content/Default/Also-In-The-News/Article/Latest-Porter-County-data-center-proposal-meets-more-public-pushback/-3/5307/118720" },
+        { "label": "DCD — Four-building campus explored in NW Indiana", "url": "https://www.datacenterdynamics.com/en/news/developer-explores-option-to-build-four-building-data-center-campus-in-northwest-indiana/" }
+      ],
+      "notes": "A ~164-acre, roughly 504 MW campus proposed near Hebron and served by NIPSCO has drawn repeated pushback at Porter County meetings. Attributed to Sentinel in local reporting, but no operator or end user is confirmed and the MW figure comes from grid-interconnection trackers rather than a formal filing.",
+      "last_verified": "2026-07-17"
     },
     {
       "id": "unnamed-new-haven",
@@ -399,22 +407,26 @@
     },
     {
       "id": "surge-knightstown",
-      "name": "Surge Development Data Center",
-      "developer": "Surge Development",
+      "name": "Surge Development (Knightstown)",
+      "developer": "Surge Development LLC",
       "city": "Knightstown",
       "county": "Henry",
       "lat": 39.7950, "lng": -85.5270, "geo_precision": "city",
-      "status": "proposed",
+      "status": "rumored",
       "mw_phase1": null, "mw_full": null, "mw_estimated": false,
       "acres": 585, "investment_usd": null,
       "water_mgd": null, "water_status": "unknown",
       "utility": "Hoosier Energy / South Central REMC",
       "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
-      "announced_year": 2026, "online_year": 2029,
+      "announced_year": 2025, "online_year": null,
       "tax_note": null,
-      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
-      "notes": "585-acre proposal, east-central Indiana.",
-      "last_verified": "2026-07-16"
+      "sources": [
+        { "label": "WFYI — Henry County approves rezoning that could bring data center", "url": "https://www.wfyi.org/news/articles/henry-county-planning-commission-approves-rezoning-that-could-bring-new-data-center" },
+        { "label": "Indiana Public Radio — Henry County data center approved at final vote", "url": "https://indianapublicradio.org/news/2026/01/henry-county-data-center-approved-at-last-commissioners-vote/" },
+        { "label": "Brookville American — Developer discusses Knightstown proposal", "url": "https://www.brookvilleindiana.com/story/2026/03/11/news/developer-discusses-knightstown-data-center-proposal-after-henry-county-approval/1263.html" }
+      ],
+      "notes": "Surge Development's 500+ acre site near SR-109/I-70 cleared its final Henry County commissioners vote (Jan 2026), but the developer says no operator or user is selected and a full development plan is still pending. No MW or investment has been reported.",
+      "last_verified": "2026-07-17"
     },
     {
       "id": "karis-merrillville",
@@ -700,14 +712,14 @@
       "notes": "343-acre proposal — withdrawn.", "last_verified": "2026-07-16"
     },
     {
-      "id": "prologis-shelbyville", "name": "Prologis Shelbyville Campus", "developer": "Prologis",
+      "id": "prologis-shelbyville", "name": "Prologis Shelbyville (denied)", "developer": "Prologis",
       "city": "Shelbyville", "county": "Shelby", "lat": 39.5220, "lng": -85.7770, "geo_precision": "city",
-      "status": "proposed", "mw_phase1": null, "mw_full": 900, "mw_estimated": false,
-      "acres": null, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "status": "withdrawn", "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": 429, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
       "utility": "Duke Energy Indiana", "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
-      "announced_year": 2026, "online_year": 2028, "tax_note": null,
-      "sources": [ { "label": "Cleanview — Indiana data centers", "url": "https://cleanview.co/data-centers/indiana" } ],
-      "notes": "900 MW proposed SE of Indianapolis; among the larger recent proposals.", "last_verified": "2026-07-17"
+      "announced_year": 2025, "online_year": null, "tax_note": null,
+      "sources": [ { "label": "WTHR — Shelbyville plan commission says no to 429-acre project", "url": "https://www.wthr.com/article/news/local/shelbyville-plan-commission-says-no-429-acre-data-center-project-local-news-construction/531-17a451a1-64e7-4023-b5bf-fdeee3f26f4f" } ],
+      "notes": "Prologis sought to annex and rezone 429 acres east of I-74/SR-44 near Shelbyville for industrial use; the Shelbyville Plan Commission voted no on Jan. 7, 2026. No operator, MW, or investment was ever disclosed.", "last_verified": "2026-07-17"
     },
     {
       "id": "powerhouse-hobart", "name": "PowerHouse Hobart Data Center", "developer": "PowerHouse Data Centers",
@@ -718,6 +730,75 @@
       "announced_year": 2026, "online_year": 2027, "tax_note": null,
       "sources": [ { "label": "Cleanview — Indiana data centers", "url": "https://cleanview.co/data-centers/indiana" } ],
       "notes": "450 MW proposed in NW Indiana (NIPSCO territory).", "last_verified": "2026-07-17"
+    },
+    {
+      "id": "sentinel-lowell",
+      "name": "Project Shirley (Sentinel · Lowell)",
+      "developer": "Sentinel Data Centers",
+      "city": "Lowell",
+      "county": "Lake",
+      "lat": 41.3000, "lng": -87.3600, "geo_precision": "city",
+      "status": "rumored",
+      "mw_phase1": null, "mw_full": 500, "mw_estimated": true,
+      "acres": 160, "investment_usd": 5000000000,
+      "water_mgd": null, "water_status": "unknown",
+      "utility": "NIPSCO",
+      "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2025, "online_year": null,
+      "tax_note": null,
+      "sources": [
+        { "label": "NWI Times — Rezoning approved for rural Lake County data center", "url": "https://nwitimes.com/news/local/lake/article_bda889b5-f6ef-4e83-9ae4-5000ec293f09.html" },
+        { "label": "ABC7 Chicago — Lowell town hall on $5B Sentinel data center", "url": "https://abc7chicago.com/post/lowell-indiana-hold-town-hall-proposed-5b-data-center-sentinel-centers/18897342/" },
+        { "label": "Latitude Media — Anatomy of Indiana data center opposition", "url": "https://www.latitudemedia.com/news/in-indiana-an-anatomy-of-data-center-opposition/" }
+      ],
+      "notes": "Sentinel's ~160-acre 'Project Shirley' won a 6-0 Lake County rezoning (Jun 2026) after a Lowell town hall, but no anchor tenant is named. Reported at ~500 MW / $5B and merchant-built on spec, so the end user stays unconfirmed.",
+      "last_verified": "2026-07-17"
+    },
+    {
+      "id": "newcarlisle-ne",
+      "name": "New Carlisle NE campus (denied)",
+      "developer": "Undisclosed",
+      "city": "New Carlisle",
+      "county": "St. Joseph",
+      "lat": 41.7200, "lng": -86.4800, "geo_precision": "city",
+      "status": "withdrawn",
+      "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": 1057, "investment_usd": 13000000000,
+      "water_mgd": null, "water_status": "unknown",
+      "utility": "Indiana Michigan Power (I&M)",
+      "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2026, "online_year": null,
+      "tax_note": null,
+      "sources": [
+        { "label": "WSBT — County Council denies rezoning, 7-2", "url": "https://wsbt.com/news/local/st-joseph-county-council-denies-rezoning-of-land-for-data-center-votes-7-2-marathon-meeting-hours-long-public-opinion-13-billion-dollar-project-amazon-new-carlisle-approval-process-plan-commission-st-joseph-county-indiana" },
+        { "label": "DCD — Potential data center NE of New Carlisle", "url": "https://www.datacenterdynamics.com/en/news/potential-data-center-to-be-built-northeast-of-new-carlisle-indiana/" },
+        { "label": "Indiana Economic Digest — $12B New Carlisle proposal", "url": "https://indianaeconomicdigest.net/MobileContent/Default/All-The-News-Digest/Article/-12-billion-data-center-proposed-in-New-Carlisle-in-St-Joseph-County/-3/5310/119966" }
+      ],
+      "notes": "A petition to rezone ~1,057 acres northeast of New Carlisle for an undisclosed operator (reported ~$12-13B, NY 'Broad St.' address, landowners under confidentiality) was denied 7-2 by the St. Joseph County Council in spring 2026 after a marathon hearing.",
+      "last_verified": "2026-07-17"
+    },
+    {
+      "id": "logix-clinton",
+      "name": "Logix Realty / Clinton County (denied)",
+      "developer": "Logix Realty, LLC",
+      "city": "Frankfort",
+      "county": "Clinton",
+      "lat": 40.3100, "lng": -86.5200, "geo_precision": "city",
+      "status": "withdrawn",
+      "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": 715, "investment_usd": 10000000000,
+      "water_mgd": null, "water_status": "unknown",
+      "utility": "Duke Energy Indiana",
+      "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2025, "online_year": null,
+      "tax_note": null,
+      "sources": [
+        { "label": "DCD — Logix Realty denied over concerns and 'red flags'", "url": "https://www.datacenterdynamics.com/en/news/logix-realty-indiana-development-denied-due-to-community-concerns-and-developer-red-flags/" },
+        { "label": "WTHR — Clinton County commissioners reject data center", "url": "https://www.wthr.com/article/news/local/clinton-county-commissioners-reject-data-center-project-over-growing-concerns-rezoning-plan-proposal/531-30cc9c05-69e5-4fb6-b510-78929ce6751b" },
+        { "label": "Clinton County Today — APC rezoning hearing set", "url": "https://www.clintoncountytoday.com/county-apc-rezoning-hearing-for-proposed-data-center-set/" }
+      ],
+      "notes": "Logix Realty's bid to rezone ~715 acres near Frankfort — end user rumored only as 'DataOne,' >$10B a proponent projection — was denied 3-0 by Clinton County Commissioners amid reported developer 'red flags.' It can't be refiled on the same land for 12 months.",
+      "last_verified": "2026-07-17"
     }
   ]
 }

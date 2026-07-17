@@ -1,6 +1,7 @@
 import type { AppData, UtilityModel } from "./data";
 import { fmtUSD, fmtInt, fmtMW, esc, safeUrl } from "./format";
 import { fuelColor, FUEL_LABEL, JOBS_PER_MW_DC, JOBS_PER_MW_OTHER } from "./util";
+import { newsletterFormHTML, wireNewsletterForm } from "./newsletter";
 
 const root = () => document.getElementById("modal-root")!;
 const BG_SELECTORS = ["#topbar", "#controls", "#timeline", "#card", "#map"];
@@ -131,6 +132,11 @@ export function openAction(data: AppData) {
   const dockets = data.dockets.dockets;
   const typeClass = (t: string) => (/^[a-z]+$/.test(t) ? t : "howto");
   openModal("Take Action · Public Process", `
+    <div class="nl-embed">
+      <div class="nl-eyebrow">◈ GRIDWATCH SIGNAL</div>
+      <div class="nl-embed-head">Get a brief when Indiana's grid numbers move</div>
+      ${newsletterFormHTML(false)}
+    </div>
     <div class="prose" style="margin-bottom:16px">${esc(data.action.intro)}</div>
     ${items.map((it) => `
       <div class="act-item">
@@ -156,7 +162,7 @@ export function openAction(data: AppData) {
         <div class="act-detail">${esc(d.ratepayer_note)}</div>
       </div>`).join("")}
     <div class="mini-note" style="margin-top:6px;text-align:center">Search any Cause number at <a href="${safeUrl(data.dockets.portal)}" target="_blank" rel="noopener">iurc.portal.in.gov</a></div>
-  `);
+  `, (el) => wireNewsletterForm(el));
 }
 
 /* ---------------- Indiana at a glance ---------------- */

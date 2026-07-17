@@ -51,6 +51,10 @@ export class Card {
     const impactBlock = (impactRows || jobsCompare)
       ? `<div class="card-impact"><span class="eyebrow">Local impact</span>${impactRows}${jobsCompare}</div>` : "";
 
+    const chatterBlock = f.status === "rumored"
+      ? `<div class="card-chatter">◌ CHATTER — reported but <b>unconfirmed</b>. No filing or named operator yet; any figures come from reporting or grid trackers, not filed records.</div>`
+      : "";
+
     const prospective = ["proposed", "approved", "rumored"].includes(f.status);
     const involveBlock = f.status === "withdrawn"
       ? `<div class="card-action">
@@ -75,6 +79,7 @@ export class Card {
         <div class="card-loc">${esc(f.city)}, ${esc(f.county)} County · ${fmtCoord(f.lat, f.lng)} <span style="color:var(--text-faint)">(${geoNote})</span></div>
       </div>
       <div class="card-body">
+        ${chatterBlock}
         <div class="stat-grid">
           <div class="stat"><div class="k">Power Draw</div>${mwCell}</div>
           <div class="stat"><div class="k">Water Use</div>${waterCell}</div>
