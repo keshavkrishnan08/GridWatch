@@ -8,6 +8,7 @@ import { Controls } from "./lib/controls";
 import { Timeline } from "./lib/timeline";
 import { Card } from "./lib/card";
 import { Reticle } from "./lib/reticle";
+import { Newsletter } from "./lib/newsletter";
 import { openBillCalc, openAction, openAbout, openStats, closeModal } from "./lib/modals";
 import { servingUtility, UTIL_DISPLAY } from "./lib/util";
 import { fmtMW, esc } from "./lib/format";
@@ -49,7 +50,7 @@ async function boot() {
     clearInterval(tick);
     bar.style.width = "100%";
     $("intro").classList.add("done");
-    setTimeout(() => { $("intro").style.display = "none"; app.maybeHint(); }, 720);
+    setTimeout(() => { $("intro").style.display = "none"; app.maybeHint(); app.newsletter.maybeShow(); }, 720);
   };
   $("intro-skip").addEventListener("click", finishIntro, { once: true });
   setTimeout(finishIntro, reduce ? 200 : 1700);
@@ -62,6 +63,7 @@ class App {
   timeline!: Timeline;
   card!: Card;
   reticle!: Reticle;
+  newsletter!: Newsletter;
   selectedId: string | null = null;
 
   constructor(data: AppData) { this.data = data; }
@@ -70,6 +72,7 @@ class App {
     const d = this.data;
     this.card = new Card($("card"), () => this.select(null));
     this.reticle = new Reticle($("reticle"), $("telemetry"));
+    this.newsletter = new Newsletter($("newsletter"));
 
     this.map = new GridMap("map", d, {
       onSelect: (id) => this.select(id),
