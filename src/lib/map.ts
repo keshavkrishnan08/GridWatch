@@ -13,12 +13,12 @@ const UPCOMING = new Set(["proposed", "approved", "rumored"]); // get dashed "ta
 /** Base pixel radius of a facility node, by megawatts. Kept small so nodes
  *  don't swamp the state. */
 function nodeRadius(mw: number): number {
-  return clamp(3 + Math.sqrt(mw) * 0.55, 4, 16);
+  return clamp(4 + Math.sqrt(mw) * 0.55, 7, 17);
 }
 
 /* Circle radius vs zoom: small dots when wide, GROWING toward the real site
  * footprint as you zoom in (the fill fades to a ring so roads show through). */
-const R_STOPS: [number, number][] = [[5, 0.55], [8, 0.95], [11, 1.7], [14, 2.9], [17, 4]];
+const R_STOPS: [number, number][] = [[5, 0.62], [8, 1], [11, 1.7], [14, 2.9], [17, 4]];
 function radiusExpr(prop: string, mult = 1): any {
   const out: any[] = ["interpolate", ["linear"], ["zoom"]];
   for (const [z, f] of R_STOPS) out.push(z, ["*", ["get", prop], f * mult]);
@@ -54,8 +54,9 @@ function buildFacFC(facilities: Facility[], year: number, filters: Filters): Geo
     const ghost = f.status === "withdrawn";
     const match = s.visible && matchFacility(f, filters);
     const r = nodeRadius(mw);
-    const coreOp = !match || ghost ? 0 : s.online ? 0.95 : 0.5 + 0.4 * s.ramp;
-    const glowOp = !match || ghost ? 0 : 0.12 + 0.34 * s.ramp;
+    // clearly visible whether built or not; brighter once online
+    const coreOp = !match || ghost ? 0 : s.online ? 0.95 : 0.72;
+    const glowOp = !match || ghost ? 0 : s.online ? 0.42 : 0.26;
     const ghostOp = match && ghost ? 0.5 : 0;
     return {
       type: "Feature" as const,
@@ -300,7 +301,7 @@ export class GridMap {
     if (window.innerWidth <= 820)
       return { top: Math.round(window.innerHeight * 0.3), bottom: 70, left: 10, right: 10 };
     const open = !document.getElementById("controls")?.classList.contains("collapsed");
-    return { top: 58, bottom: 94, left: open ? 304 : 16, right: 16 };
+    return { top: 56, bottom: 86, left: open ? 300 : 14, right: 14 };
   }
 
   applyPadding() { this.map.setPadding(this.pad()); }
@@ -316,7 +317,7 @@ export class GridMap {
     try {
       const cam: any = this.map.cameraForBounds(INDIANA_BOUNDS, { padding: this.pad(), maxZoom: 9 });
       if (cam && typeof cam.zoom === "number" && cam.zoom >= 5.5) {
-        zoom = Math.min(9, cam.zoom + 0.28);
+        zoom = Math.min(9, cam.zoom + 0.42);
       }
     } catch { /* keep fallback zoom */ }
     return { center, zoom };
