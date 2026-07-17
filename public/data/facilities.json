@@ -543,6 +543,156 @@
       "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
       "notes": "Two-parcel QTS proposal — withdrawn.",
       "last_verified": "2026-07-16"
+    },
+    {
+      "id": "wylie-hobart", "name": "Wylie Capital Data Center (Hobart)", "developer": "Wylie Capital",
+      "city": "Hobart", "county": "Lake", "lat": 41.5100, "lng": -87.2800, "geo_precision": "city",
+      "status": "proposed", "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": 400, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": "NIPSCO", "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2026, "online_year": 2029, "tax_note": null,
+      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
+      "notes": "400-acre proposal, NW Indiana.", "last_verified": "2026-07-16"
+    },
+    {
+      "id": "province-merrillville", "name": "Province Group Data Center", "developer": "Province Group",
+      "city": "Merrillville", "county": "Lake", "lat": 41.4700, "lng": -87.3500, "geo_precision": "city",
+      "status": "proposed", "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": null, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": "NIPSCO", "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2026, "online_year": 2029, "tax_note": null,
+      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
+      "notes": "Proposed in NW Indiana.", "last_verified": "2026-07-16"
+    },
+    {
+      "id": "kingsbury-unnamed", "name": "Unnamed Data Center (Kingsbury)", "developer": "Undisclosed",
+      "city": "Kingsbury", "county": "LaPorte", "lat": 41.5280, "lng": -86.6930, "geo_precision": "city",
+      "status": "proposed", "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": null, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": "NIPSCO", "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2026, "online_year": 2029, "tax_note": null,
+      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
+      "notes": "Proposed in NIPSCO territory.", "last_verified": "2026-07-16"
+    },
+    {
+      "id": "new-carlisle-unnamed", "name": "Unnamed Data Center (New Carlisle)", "developer": "Undisclosed",
+      "city": "New Carlisle", "county": "St. Joseph", "lat": 41.6800, "lng": -86.5300, "geo_precision": "site",
+      "status": "proposed", "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": 1057, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": "Indiana Michigan Power (I&M)", "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2026, "online_year": 2029, "tax_note": null,
+      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
+      "notes": "1,057-acre proposal near the AWS campus.", "last_verified": "2026-07-16"
+    },
+    {
+      "id": "dale-unnamed", "name": "Unnamed Data Center (Dale)", "developer": "Undisclosed",
+      "city": "Dale", "county": "Dubois", "lat": 38.1690, "lng": -86.9890, "geo_precision": "city",
+      "status": "proposed", "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": null, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": "Southern Indiana REMC / Duke", "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2026, "online_year": 2029, "tax_note": null,
+      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
+      "notes": "Proposed in SW Indiana.", "last_verified": "2026-07-16"
+    },
+    {
+      "id": "wolcott-unnamed", "name": "Unnamed Data Center (Wolcott)", "developer": "Undisclosed",
+      "city": "Wolcott", "county": "White", "lat": 40.7570, "lng": -87.0430, "geo_precision": "city",
+      "status": "proposed", "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": null, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": "NIPSCO", "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2026, "online_year": 2029, "tax_note": null,
+      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
+      "notes": "Proposed in NW Indiana.", "last_verified": "2026-07-16"
+    },
+    {
+      "id": "mccordsville-rumored", "name": "Rumored Data Center (McCordsville)", "developer": "Undisclosed",
+      "city": "McCordsville", "county": "Hamilton", "lat": 39.9020, "lng": -85.9280, "geo_precision": "city",
+      "status": "rumored", "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": null, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": "Duke Energy Indiana", "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2026, "online_year": null, "tax_note": null,
+      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
+      "notes": "Rumored, Indianapolis suburbs.", "last_verified": "2026-07-16"
+    },
+    {
+      "id": "wheatfield-rumored", "name": "Rumored Data Center (Wheatfield)", "developer": "Undisclosed",
+      "city": "Wheatfield", "county": "Jasper", "lat": 41.1900, "lng": -87.0530, "geo_precision": "city",
+      "status": "rumored", "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": null, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": "NIPSCO", "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2026, "online_year": null, "tax_note": null,
+      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
+      "notes": "Rumored, NW Indiana.", "last_verified": "2026-07-16"
+    },
+    {
+      "id": "gary-rumored", "name": "Rumored Data Center (Gary)", "developer": "Undisclosed",
+      "city": "Gary", "county": "Lake", "lat": 41.5930, "lng": -87.3460, "geo_precision": "city",
+      "status": "rumored", "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": null, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": "NIPSCO", "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2026, "online_year": null, "tax_note": null,
+      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
+      "notes": "Rumored, NW Indiana.", "last_verified": "2026-07-16"
+    },
+    {
+      "id": "abei-knox", "name": "Abei Energy Data Center", "developer": "Abei Energy",
+      "city": "Knox", "county": "Starke", "lat": 41.2960, "lng": -86.6270, "geo_precision": "city",
+      "status": "rumored", "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": null, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": null, "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2026, "online_year": null, "tax_note": null,
+      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
+      "notes": "Rumored; Starke County enacted a data-center moratorium.", "last_verified": "2026-07-16"
+    },
+    {
+      "id": "province-bristol-withdrawn", "name": "Province Group Bristol (Withdrawn)", "developer": "Province Group",
+      "city": "Bristol", "county": "Elkhart", "lat": 41.7190, "lng": -85.8170, "geo_precision": "city",
+      "status": "withdrawn", "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": 247, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": null, "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2024, "online_year": null, "tax_note": null,
+      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
+      "notes": "247-acre proposal — withdrawn.", "last_verified": "2026-07-16"
+    },
+    {
+      "id": "surge-greenfield-withdrawn", "name": "Surge Greenfield MegaSite (Withdrawn)", "developer": "Surge Development",
+      "city": "Greenfield", "county": "Hancock", "lat": 39.7860, "lng": -85.7690, "geo_precision": "city",
+      "status": "withdrawn", "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": 775, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": null, "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2024, "online_year": null, "tax_note": null,
+      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
+      "notes": "775-acre megasite — withdrawn.", "last_verified": "2026-07-16"
+    },
+    {
+      "id": "provident-burns-harbor-withdrawn", "name": "Provident Realty Burns Harbor (Withdrawn)", "developer": "Provident Realty",
+      "city": "Burns Harbor", "county": "Porter", "lat": 41.6320, "lng": -87.1280, "geo_precision": "city",
+      "status": "withdrawn", "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": 102, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": "NIPSCO", "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2024, "online_year": null, "tax_note": null,
+      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
+      "notes": "102-acre proposal — withdrawn.", "last_verified": "2026-07-16"
+    },
+    {
+      "id": "agincourt-valparaiso-withdrawn", "name": "Agincourt Valparaiso (Withdrawn)", "developer": "Agincourt Investments",
+      "city": "Valparaiso", "county": "Porter", "lat": 41.4730, "lng": -87.0610, "geo_precision": "city",
+      "status": "withdrawn", "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": 249, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": "NIPSCO", "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2024, "online_year": null, "tax_note": null,
+      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
+      "notes": "249-acre proposal — withdrawn.", "last_verified": "2026-07-16"
+    },
+    {
+      "id": "digital-resources-ellettsville-withdrawn", "name": "Digital Resources Ellettsville (Withdrawn)", "developer": "Digital Resources Acquisitions",
+      "city": "Ellettsville", "county": "Monroe", "lat": 39.2340, "lng": -86.6250, "geo_precision": "city",
+      "status": "withdrawn", "mw_phase1": null, "mw_full": null, "mw_estimated": false,
+      "acres": 343, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": "Duke Energy Indiana", "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2024, "online_year": null, "tax_note": null,
+      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
+      "notes": "343-acre proposal — withdrawn.", "last_verified": "2026-07-16"
     }
   ]
 }

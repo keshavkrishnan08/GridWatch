@@ -16,6 +16,31 @@ function nodeRadius(mw: number): number {
   return clamp(3 + Math.sqrt(mw) * 0.55, 4, 16);
 }
 
+/* Circle radius vs zoom: roughly constant, then SHRINKS as you zoom in so the
+ * node marks the precise center and reveals the roads/town beneath it. */
+const R_STOPS: [number, number][] = [[5, 0.7], [9, 1], [13, 0.8], [17, 0.42]];
+function radiusExpr(prop: string, mult = 1): any {
+  const out: any[] = ["interpolate", ["linear"], ["zoom"]];
+  for (const [z, f] of R_STOPS) out.push(z, ["*", ["get", prop], f * mult]);
+  return out;
+}
+function radiusExprOffset(prop: string, add: number): any {
+  const out: any[] = ["interpolate", ["linear"], ["zoom"]];
+  for (const [z, f] of R_STOPS) out.push(z, ["+", ["*", ["get", prop], f], add]);
+  return out;
+}
+function zoomFactor(z: number): number {
+  const s = R_STOPS;
+  if (z <= s[0][0]) return s[0][1];
+  for (let i = 1; i < s.length; i++) {
+    if (z <= s[i][0]) {
+      const [z0, f0] = s[i - 1], [z1, f1] = s[i];
+      return f0 + ((z - z0) / (z1 - z0)) * (f1 - f0);
+    }
+  }
+  return s[s.length - 1][1];
+}
+
 export interface MapHandlers {
   onSelect: (id: string | null) => void;
   onHover: (f: Facility | null, pt: { x: number; y: number } | null) => void;
@@ -139,6 +164,23 @@ export class GridMap {
     } catch { /* layer names vary between styles */ }
     const firstLabel = (m.getStyle().layers || []).find((l) => l.type === "symbol")?.id;
 
+    /* ---- brighten every road (incl. local/service) as you zoom in ---- */
+    m.addLayer({
+      id: "roads-hi", type: "line", source: "carto", "source-layer": "transportation",
+      minzoom: 9,
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: {
+        "line-color": ["interpolate", ["linear"], ["zoom"], 9, "#2b3a49", 14, "#42586c", 17, "#5a7690"],
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 9, 0, 11.5, 0.45, 14, 0.85, 17, 0.95],
+        "line-width": ["interpolate", ["linear"], ["zoom"],
+          9, 0.3,
+          13, ["match", ["get", "class"], ["motorway", "trunk"], 1.6, "primary", 1.1,
+               ["secondary", "tertiary"], 0.7, 0.4],
+          17, ["match", ["get", "class"], ["motorway", "trunk"], 6, "primary", 4,
+               ["secondary", "tertiary"], 2.6, ["minor", "residential", "service", "track", "path"], 1.4, 1.2]],
+      },
+    }, firstLabel);
+
     /* ---- sources ---- */
     m.addSource("territories", {
       type: "geojson",
@@ -197,7 +239,7 @@ export class GridMap {
     m.addLayer({ id: "dc-ghost", type: "circle", source: "fac",
       filter: ["==", ["get", "ghost"], 1],
       paint: {
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, ["*", ["get", "r"], 0.7], 7, ["get", "r"], 11, ["*", ["get", "r"], 1.8]],
+        "circle-radius": radiusExpr("r"),
         "circle-color": "rgba(0,0,0,0)",
         "circle-stroke-color": ["get", "color"],
         "circle-stroke-width": 1.1,
@@ -208,7 +250,7 @@ export class GridMap {
     m.addLayer({ id: "dc-glow", type: "circle", source: "fac",
       filter: ["==", ["get", "ghost"], 0],
       paint: {
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, ["*", ["get", "glowR"], 0.7], 7, ["get", "glowR"], 11, ["*", ["get", "glowR"], 1.8]],
+        "circle-radius": radiusExpr("glowR"),
         "circle-color": ["get", "color"],
         "circle-opacity": ["get", "glowOp"],
         "circle-blur": 1.0,
@@ -218,7 +260,7 @@ export class GridMap {
     m.addLayer({ id: "dc-core", type: "circle", source: "fac",
       filter: ["==", ["get", "ghost"], 0],
       paint: {
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, ["*", ["get", "r"], 0.7], 7, ["get", "r"], 11, ["*", ["get", "r"], 1.8]],
+        "circle-radius": radiusExpr("r"),
         "circle-color": ["get", "color"],
         "circle-opacity": ["*", 0.55, ["get", "coreOp"]],
         "circle-stroke-color": ["get", "color"],
@@ -230,10 +272,7 @@ export class GridMap {
     m.addLayer({ id: "dc-selected", type: "circle", source: "fac",
       filter: ["==", ["get", "id"], "__none__"],
       paint: {
-        "circle-radius": ["interpolate", ["linear"], ["zoom"],
-          5, ["+", ["*", ["get", "r"], 0.7], 6],
-          7, ["+", ["get", "r"], 6],
-          11, ["+", ["*", ["get", "r"], 1.8], 6]],
+        "circle-radius": radiusExprOffset("r", 6),
         "circle-color": "rgba(0,0,0,0)",
         "circle-stroke-color": "#E6EDF3",
         "circle-stroke-width": 1.5,
@@ -347,12 +386,7 @@ export class GridMap {
         const el = (t - this.t0) / 1000;
         const pulse = 1 + 0.16 * Math.sin(el * 2.1);
         try {
-          this.map.setPaintProperty("dc-glow", "circle-radius", [
-            "interpolate", ["linear"], ["zoom"],
-            5, ["*", ["get", "glowR"], 0.7 * pulse],
-            7, ["*", ["get", "glowR"], pulse],
-            11, ["*", ["get", "glowR"], 1.8 * pulse],
-          ] as any);
+          this.map.setPaintProperty("dc-glow", "circle-radius", radiusExpr("glowR", pulse));
           this.map.setPaintProperty("dc-glow", "circle-opacity",
             ["*", ["get", "glowOp"], 0.75 + 0.25 * Math.sin(el * 2.1 + 1)] as any);
           const off = Math.round(((el * 1.6) % 7) * 2) / 2;
@@ -397,7 +431,7 @@ export class GridMap {
         this.labelHost.appendChild(el);
       }
       const p = m.project([f.lng, f.lat]);
-      const r = nodeRadius(f.mw_full ?? 0) * (z >= 7 ? (z >= 11 ? 1.8 : 1) : 0.7);
+      const r = nodeRadius(f.mw_full ?? 0) * zoomFactor(z);
       el.style.left = `${p.x}px`;
       el.style.top = `${p.y - r - 11}px`;
       el.style.opacity = f.id === this.selectedId ? "1" : z < 6 ? "0" : "0.82";
@@ -423,7 +457,7 @@ export class GridMap {
         this.labelHost.appendChild(el);
       }
       const p = m.project([f.lng, f.lat]);
-      const rNode = nodeRadius(mw) * (z >= 7 ? (z >= 11 ? 1.8 : 1) : 0.7);
+      const rNode = nodeRadius(mw) * zoomFactor(z);
       const d = Math.max(20, rNode * 2.8 + 7);
       el.style.left = `${p.x}px`;
       el.style.top = `${p.y}px`;
@@ -490,7 +524,7 @@ export class GridMap {
     if (id && fly) {
       const f = this.facById(id);
       // fly in to reveal local roads around the site (flat, top-down)
-      if (f) this.map.flyTo({ center: [f.lng, f.lat], zoom: 12.5, pitch: 0, bearing: 0, duration: 1600, essential: true });
+      if (f) this.map.flyTo({ center: [f.lng, f.lat], zoom: 13.6, pitch: 0, bearing: 0, duration: 1700, essential: true });
     }
   }
 
