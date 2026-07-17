@@ -194,6 +194,51 @@ def build_counties():
                   {"source": "US Census cartographic boundaries (plotly mirror)"})
 
 
+def build_state():
+    """Dissolve the county polygons into one accurate Indiana outline.
+    Used by the app to mask everything outside the state (spotlight effect)."""
+    log("STATE OUTLINE <- dissolve counties (shapely)")
+    try:
+        from shapely.geometry import shape, mapping
+        from shapely.ops import unary_union
+    except ImportError:
+        log("shapely not available; skipping indiana.geojson")
+        return
+    try:
+        with open(os.path.join(OUT, "counties.geojson")) as f:
+            counties = json.load(f)
+    except Exception as e:  # noqa: BLE001
+        log(f"counties.geojson missing ({e}); run build_counties first")
+        return
+    geoms = [shape(ft["geometry"]) for ft in counties["features"] if ft.get("geometry")]
+    if not geoms:
+        log("no county geometries")
+        return
+    diss = unary_union(geoms).buffer(0).simplify(0.004, preserve_topology=True)
+    gj = mapping(diss)
+
+    def rnd(o):
+        if isinstance(o, float):
+            return round(o, 4)
+        if isinstance(o, (list, tuple)):
+            return [rnd(x) for x in o]
+        return o
+
+    geom = {"type": gj["type"], "coordinates": rnd(gj["coordinates"])}
+    fc = {"type": "FeatureCollection",
+          "features": [{"type": "Feature", "properties": {"name": "Indiana"}, "geometry": geom}]}
+    path = os.path.join(OUT, "indiana.geojson")
+    with open(path, "w") as f:
+        json.dump(fc, f, separators=(",", ":"))
+
+    def npts(c):
+        if c and isinstance(c[0], (int, float)):
+            return 1
+        return sum(npts(x) for x in c) if isinstance(c, list) else 0
+    log(f"wrote indiana.geojson: {geom['type']}, {npts(geom['coordinates'])} pts, "
+        f"{os.path.getsize(path)/1024:.0f} KB")
+
+
 FUEL_MAP = {
     "Coal": "coal", "Gas": "gas", "Oil": "oil", "Petcoke": "oil",
     "Nuclear": "nuclear", "Solar": "solar", "Wind": "wind",
@@ -321,7 +366,7 @@ def main():
     print("=" * 60)
     print("GridWatch Indiana - geographic data pipeline")
     print("=" * 60)
-    steps = [build_counties, build_power_plants, build_territories,
+    steps = [build_counties, build_state, build_power_plants, build_territories,
              build_transmission, build_substations]
     for fn in steps:
         try:

@@ -46,6 +46,19 @@ function enrich(fc: GeoJSON.FeatureCollection, fn: (p: any) => void): GeoJSON.Fe
   return fc;
 }
 
+/** A world polygon with Indiana punched out — masks everything beyond the
+ *  state so roads/buildings/labels never leave the border (spotlight effect). */
+function buildMask(indiana: GeoJSON.FeatureCollection): GeoJSON.Feature {
+  const world = [[-180, -85], [180, -85], [180, 85], [-180, 85], [-180, -85]];
+  const holes: number[][][] = [];
+  for (const f of indiana.features) {
+    const g: any = f.geometry;
+    if (g?.type === "Polygon") holes.push(g.coordinates[0]);
+    else if (g?.type === "MultiPolygon") g.coordinates.forEach((poly: number[][][]) => holes.push(poly[0]));
+  }
+  return { type: "Feature", properties: {}, geometry: { type: "Polygon", coordinates: [world, ...holes] } };
+}
+
 export class GridMap {
   map: MLMap;
   private data: AppData;
@@ -147,6 +160,8 @@ export class GridMap {
       }),
     });
     m.addSource("fac", { type: "geojson", data: buildFacFC(this.data.facilities.facilities, this.year, this.filters) });
+    m.addSource("state", { type: "geojson", data: this.data.indiana });
+    m.addSource("mask", { type: "geojson", data: buildMask(this.data.indiana) });
 
     /* ---- utility territories (beneath labels) ---- */
     m.addLayer({ id: "terr-fill", type: "fill", source: "territories",
@@ -176,6 +191,14 @@ export class GridMap {
         "circle-color": ["get", "_c"], "circle-opacity": 0.6,
         "circle-stroke-color": ["get", "_c"], "circle-stroke-width": 0.8, "circle-stroke-opacity": 0.55,
       } }, firstLabel);
+
+    /* ---- spotlight: mask everything outside Indiana ---- */
+    m.addLayer({ id: "state-mask", type: "fill", source: "mask",
+      paint: { "fill-color": "#06090e", "fill-opacity": 0.975 } });
+    m.addLayer({ id: "state-glow", type: "line", source: "state",
+      paint: { "line-color": "#3FB950", "line-width": 7, "line-opacity": 0.16, "line-blur": 5 } });
+    m.addLayer({ id: "state-border", type: "line", source: "state",
+      paint: { "line-color": "#56E06A", "line-width": 1.4, "line-opacity": 0.85, "line-blur": 0.3 } });
 
     /* ---- data center ghosts (withdrawn) ---- */
     m.addLayer({ id: "dc-ghost", type: "circle", source: "fac",
