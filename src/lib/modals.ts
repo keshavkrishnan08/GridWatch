@@ -52,19 +52,16 @@ export function openModal(title: string, bodyHTML: string, onMount?: (el: HTMLEl
   (r.querySelector(".modal-close") as HTMLElement)?.focus();
 }
 
-/* ---------------- Bill impact calculator ---------------- */
+/* ---------------- Bill impact calculator ----------------
+   Headline = data-center-specific impact: filed infrastructure $ split across
+   customers and amortized. Fully data-driven — edit bill_impact_models.json and
+   every number here recomputes. */
 function project(u: UtilityModel, kwh: number, a: AppData["bill"]["assumptions"]) {
   const base = kwh * (u.avg_rate_cents_kwh / 100);
-  const addApproved = base * (u.approved_increase.pct / 100);
-  const totalShift = u.cost_shifts.reduce((s, c) => s + c.usd, 0);
-  const monthlyShift = totalShift / u.customers / (a.amortize_years * 12);
-  const mid = addApproved + monthlyShift;
+  const dcTotal = u.cost_shifts.reduce((s, c) => s + c.usd, 0);
+  const dcMonthly = dcTotal / u.customers / (a.amortize_years * 12);
   const band = a.uncertainty_band_pct / 100;
-  // The approved increase is firm; only widen around the mid, and never let the
-  // low fall below the already-approved component shown in the breakdown.
-  const low = Math.max(addApproved, mid * (1 - band));
-  const high = mid * (1 + band);
-  return { base, addApproved, monthlyShift, totalShift, low, high };
+  return { base, dcTotal, dcMonthly, low: dcMonthly * (1 - band), high: dcMonthly * (1 + band) };
 }
 
 export function openBillCalc(data: AppData, prefillId?: string) {
@@ -72,7 +69,7 @@ export function openBillCalc(data: AppData, prefillId?: string) {
   const a = data.bill.assumptions;
   const options = utils.map((u) => `<option value="${esc(u.id)}">${esc(u.display_name)}</option>`).join("");
 
-  openModal("Bill Impact Projection", `
+  openModal("Bill Impact · Data Centers", `
     <div class="bc-field">
       <label for="bc-util">Your electric utility</label>
       <select class="bc-select" id="bc-util">${options}</select>
@@ -96,18 +93,20 @@ export function openBillCalc(data: AppData, prefillId?: string) {
       const u = utils.find((x) => x.id === sel.value) ?? utils[0];
       const k = Math.max(100, Math.min(5000, +kwh.value || a.typical_household_kwh));
       const p = project(u, k, a);
-      const range = p.high - p.low < 0.5
-        ? `+$${p.low.toFixed(0)}`
-        : `+$${p.low.toFixed(0)}–$${p.high.toFixed(0)}`;
+      const headline = p.dcTotal > 0
+        ? `<div class="bc-headline">+$${p.low.toFixed(0)}–$${p.high.toFixed(0)}<small> / mo</small></div>
+           <div class="bc-sub">from data-center infrastructure filed to date · ≈ +$${(p.low * 12).toFixed(0)}–$${(p.high * 12).toFixed(0)} / yr, spread over ~${a.amortize_years} yrs</div>`
+        : `<div class="bc-headline" style="color:var(--text-mid);font-size:22px">No DC docket filed yet</div>
+           <div class="bc-sub">No single data-center infrastructure cost is broken out for this utility — but rates are climbing (see below).</div>`;
       el.querySelector("#bc-result")!.innerHTML = `
-        <div class="bc-headline">${range}<small> / mo</small></div>
-        <div class="bc-sub">projected added cost within ~${a.amortize_years} yrs · ≈ +$${(p.low * 12).toFixed(0)}–$${(p.high * 12).toFixed(0)} / yr</div>
+        ${headline}
         <div class="bc-break">
-          <div class="bc-line"><span class="bl-k">Est. current monthly bill</span><span class="bl-v">$${p.base.toFixed(0)}</span></div>
-          <div class="bc-line"><span class="bl-k">IURC-approved rate increase (${u.approved_increase.pct}%)</span><span class="bl-v">+$${p.addApproved.toFixed(2)}/mo</span></div>
-          <div class="bc-line"><span class="bl-k">Data-center infra share ${p.totalShift ? `(${fmtUSD(p.totalShift)} ÷ ${fmtInt(u.customers)} customers)` : "(none filed yet)"}</span><span class="bl-v">+$${p.monthlyShift.toFixed(2)}/mo</span></div>
+          <div class="bc-line"><span class="bl-k">Your current monthly bill (${fmtInt(k)} kWh)</span><span class="bl-v">$${p.base.toFixed(0)}</span></div>
+          <div class="bc-line"><span class="bl-k">Overall rate change, ${esc(u.recent_increase.period)}</span><span class="bl-v">+${u.recent_increase.pct}%</span></div>
+          <div class="bc-line"><span class="bl-k">Filed data-center infrastructure${p.dcTotal ? ` (${fmtUSD(p.dcTotal)} ÷ ${fmtInt(u.customers)} customers)` : ""}</span><span class="bl-v">${p.dcTotal ? "+$" + p.dcMonthly.toFixed(2) + "/mo" : "none filed"}</span></div>
         </div>
-        <div class="mini-note" style="margin-top:12px">${esc(u.notes)} <a href="${safeUrl(u.approved_increase.source.url)}" target="_blank" rel="noopener">Source ▸</a></div>`;
+        <div class="mini-note" style="margin-top:12px">${esc(u.notes)} <a href="${safeUrl(u.recent_increase.source.url)}" target="_blank" rel="noopener">Source ▸</a></div>
+        <div class="mini-note" style="margin-top:8px;font-size:9px;color:var(--text-faint)">${esc(data.bill.equation)}</div>`;
     };
     sel.addEventListener("change", compute);
     kwh.addEventListener("input", () => {
