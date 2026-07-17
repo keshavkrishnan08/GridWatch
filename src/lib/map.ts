@@ -2,7 +2,7 @@ import maplibregl, { Map as MLMap, LngLatBoundsLike } from "maplibre-gl";
 import type { AppData, Facility } from "./data";
 import {
   computeState, sevColor, fuelColor, utilColor, clamp,
-  matchFacility, totalsAt, ALL_FILTERS, type Filters, type LoadTotals,
+  matchFacility, ALL_FILTERS, type Filters,
 } from "./util";
 
 // snug to the state so the whole outline fills the frame
@@ -227,6 +227,20 @@ export class GridMap {
         "circle-color": ["get", "_c"], "circle-opacity": 0.6,
         "circle-stroke-color": ["get", "_c"], "circle-stroke-width": 0.8, "circle-stroke-opacity": 0.55,
       } }, firstLabel);
+
+    /* ---- county restriction overlay (bans / moratoriums) ---- */
+    const rBy = new Map(this.data.restrictions.counties.map((c) => [c.name.toLowerCase(), c.type]));
+    const rFeats = this.data.counties.features
+      .filter((f) => rBy.has((((f.properties as any)?.county) || "").toLowerCase()))
+      .map((f) => ({
+        type: "Feature" as const, geometry: f.geometry,
+        properties: { county: (f.properties as any).county, rtype: rBy.get(((f.properties as any).county).toLowerCase()) },
+      }));
+    m.addSource("restrictions", { type: "geojson", data: { type: "FeatureCollection", features: rFeats } as any });
+    m.addLayer({ id: "restrict-fill", type: "fill", source: "restrictions", layout: { visibility: "none" },
+      paint: { "fill-color": ["match", ["get", "rtype"], "ban", "#F85149", "#E3A72B"], "fill-opacity": 0.34 } }, firstLabel);
+    m.addLayer({ id: "restrict-line", type: "line", source: "restrictions", layout: { visibility: "none" },
+      paint: { "line-color": ["match", ["get", "rtype"], "ban", "#F85149", "#E3A72B"], "line-width": 1.6, "line-opacity": 0.9 } }, firstLabel);
 
     /* ---- spotlight: mask everything outside Indiana ---- */
     m.addLayer({ id: "state-mask", type: "fill", source: "mask",
@@ -502,9 +516,16 @@ export class GridMap {
     this.applyFac();
   }
 
-  /** Live totals for whatever is currently shown (year + filters). */
-  shownTotals(): LoadTotals {
-    return totalsAt(this.data.facilities.facilities, this.year, this.filters);
+  /** Count + planned MW of every facility currently on the map (incl. ghosts). */
+  shownTotals(): { count: number; mw: number } {
+    let count = 0, mw = 0;
+    for (const f of this.data.facilities.facilities) {
+      const s = computeState(f, this.year);
+      if (!s.visible || !matchFacility(f, this.filters)) continue;
+      count++;
+      mw += f.mw_full ?? f.mw_phase1 ?? 0;
+    }
+    return { count, mw };
   }
 
   setLayerVisible(key: string, on: boolean) {
@@ -512,6 +533,7 @@ export class GridMap {
     const vis = on ? "visible" : "none";
     const map: Record<string, string[]> = {
       territories: ["terr-fill", "terr-line"],
+      restrictions: ["restrict-fill", "restrict-line"],
       transmission: ["trans-base", "trans-flow"],
       plants: ["plants"],
       datacenters: ["dc-glow", "dc-core"],

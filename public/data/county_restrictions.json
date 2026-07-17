@@ -1,0 +1,18 @@
+{
+  "last_updated": "2026-07-17",
+  "note": "A partial, sourced snapshot of Indiana local data-center restrictions. Indiana University's Environmental Resilience Institute counts ~11 counties with ordinances and 17+ with temporary moratoriums as of mid-2026; the named jurisdictions below are those with confirmed public sources. Restriction status changes often — verify locally.",
+  "sources": [
+    { "label": "datacenterbans.com — Indiana", "url": "https://www.datacenterbans.com/state/indiana" },
+    { "label": "WFYI: nearly a third of Indiana counties restrict data centers", "url": "https://www.wfyi.org/statewide/2026-07-06/indiana-counties-data-center-moratoriums-bans-2026" }
+  ],
+  "counties": [
+    { "name": "Marshall", "type": "ban", "detail": "Enacted Indiana's first permanent county data-center ban (Apr 2026)." },
+    { "name": "Cass", "type": "ban", "detail": "Banned new data centers." },
+    { "name": "Fulton", "type": "moratorium", "detail": "1-year temporary moratorium." },
+    { "name": "Starke", "type": "moratorium", "detail": "12-month moratorium." },
+    { "name": "Dearborn", "type": "moratorium", "detail": "Up to 1-year moratorium." },
+    { "name": "White", "type": "moratorium", "detail": "Temporary moratorium." },
+    { "name": "Putnam", "type": "moratorium", "detail": "1-year moratorium." },
+    { "name": "Pulaski", "type": "moratorium", "detail": "12-month moratorium." }
+  ]
+}
