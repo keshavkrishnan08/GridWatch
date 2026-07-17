@@ -30,30 +30,23 @@
           <span class="brand-mark" aria-hidden="true"></span>
           <div class="brand-text">
             <span class="brand-title">GRIDWATCH<span class="brand-sub"> / INDIANA</span></span>
-            <span class="brand-tag">DATA CENTER &amp; GRID IMPACT ATLAS</span>
+            <span class="brand-tag">DATA CENTER ATLAS</span>
           </div>
         </div>
-        <div class="topbar-status" id="topbar-status">
-          <span class="pill live"><span class="dot"></span> LIVE DATASET</span>
-          <span class="pill" id="pill-updated">UPD ——</span>
-        </div>
         <div class="topbar-actions">
+          <button class="tb-btn" id="btn-bill" title="Projected bill impact">▤ BILL</button>
+          <button class="tb-btn" id="btn-action" title="Comment periods &amp; hearings">◈ ACT</button>
           <button class="tb-btn" id="btn-about" title="About &amp; methodology">ABOUT</button>
-          <button class="tb-btn" id="btn-share" title="Copy link">SHARE</button>
+          <button class="tb-btn icon" id="btn-share" title="Copy link">⧉</button>
         </div>
       </header>
 
-      <!-- LEFT COMMAND CONSOLE -->
-      <aside id="console" aria-label="Command console"></aside>
+      <!-- LEFT: filter panel (the crux) -->
+      <aside id="controls" class="panel bracket" aria-label="Map filters"></aside>
 
-      <!-- RIGHT: layers + legend -->
-      <aside id="rail" aria-label="Layers and legend"></aside>
-
-      <!-- panel collapse / reopen controls -->
-      <button id="console-collapse" class="edge-btn" aria-label="Collapse console" title="Collapse console">‹</button>
-      <button id="console-reopen" class="edge-btn reopen-left" aria-label="Open console" title="Open console" hidden>› CONSOLE</button>
-      <button id="rail-collapse" class="edge-btn" aria-label="Collapse layers" title="Collapse layers">›</button>
-      <button id="rail-reopen" class="edge-btn reopen-right" aria-label="Open layers" title="Open layers" hidden>LAYERS ‹</button>
+      <!-- collapse / reopen -->
+      <button id="controls-collapse" class="edge-btn" aria-label="Collapse filters" title="Collapse filters">‹</button>
+      <button id="controls-reopen" class="edge-btn reopen-left" aria-label="Open filters" title="Open filters" hidden>› FILTER</button>
 
       <!-- hover telemetry / reticle -->
       <div id="reticle" aria-hidden="true"></div>

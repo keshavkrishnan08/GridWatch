@@ -1,6 +1,9 @@
 import maplibregl, { Map as MLMap, LngLatBoundsLike } from "maplibre-gl";
 import type { AppData, Facility } from "./data";
-import { computeState, sevColor, fuelColor, utilColor, clamp } from "./util";
+import {
+  computeState, sevColor, fuelColor, utilColor, clamp,
+  matchFacility, totalsAt, ALL_FILTERS, type Filters, type LoadTotals,
+} from "./util";
 
 // snug to the state so the whole outline fills the frame
 const INDIANA_BOUNDS: LngLatBoundsLike = [[-88.12, 37.74], [-84.74, 41.79]];
@@ -11,23 +14,25 @@ export interface MapHandlers {
   onHover: (f: Facility | null, pt: { x: number; y: number } | null) => void;
 }
 
-/** Enrich the facilities into a render-ready FeatureCollection for a given year. */
-function buildFacFC(facilities: Facility[], year: number): GeoJSON.FeatureCollection {
+/** Enrich the facilities into a render-ready FeatureCollection for a year + filters. */
+function buildFacFC(facilities: Facility[], year: number, filters: Filters): GeoJSON.FeatureCollection {
   const features = facilities.map((f) => {
     const s = computeState(f, year);
     const mw = f.mw_full ?? f.mw_phase1 ?? 0;
-    const r = clamp(5 + Math.sqrt(mw) * 0.95, 6, 30);
     const ghost = f.status === "withdrawn";
-    const coreOp = !s.visible ? 0 : ghost ? 0 : s.online ? 0.95 : 0.5 + 0.4 * s.ramp;
-    const glowOp = !s.visible || ghost ? 0 : 0.12 + 0.34 * s.ramp;
+    const match = s.visible && matchFacility(f, filters);
+    const r = clamp(5 + Math.sqrt(mw) * 0.95, 6, 30);
+    const coreOp = !match || ghost ? 0 : s.online ? 0.95 : 0.5 + 0.4 * s.ramp;
+    const glowOp = !match || ghost ? 0 : 0.12 + 0.34 * s.ramp;
+    const ghostOp = match && ghost ? 0.5 : 0;
     return {
       type: "Feature" as const,
       geometry: { type: "Point" as const, coordinates: [f.lng, f.lat] },
       properties: {
         id: f.id, name: f.name, mw,
         color: mw > 0 ? sevColor(mw) : "#6B7684", // grey = capacity undisclosed
-        r, coreOp, glowOp, glowR: r * 2.3,
-        vis: s.visible ? 1 : 0, ghost: ghost ? 1 : 0,
+        r, coreOp, glowOp, ghostOp, glowR: r * 2.3,
+        vis: match ? 1 : 0, ghost: ghost ? 1 : 0,
         online: s.online ? 1 : 0, phase: s.phase,
       },
     };
@@ -58,6 +63,7 @@ export class GridMap {
   private hoveredId: string | null = null;
   private selectedId: string | null = null;
   private year: number;
+  private filters: Filters = ALL_FILTERS;
   private labelHost: HTMLDivElement;
   private reduceMotion: boolean;
 
@@ -123,7 +129,7 @@ export class GridMap {
         p._r = clamp(1.6 + Math.sqrt(p.capacity_mw || 1) * 0.28, 2, 9);
       }),
     });
-    m.addSource("fac", { type: "geojson", data: buildFacFC(this.data.facilities.facilities, this.year) });
+    m.addSource("fac", { type: "geojson", data: buildFacFC(this.data.facilities.facilities, this.year, this.filters) });
 
     /* ---- county landmass ---- */
     m.addLayer({ id: "county-fill", type: "fill", source: "counties",
@@ -142,13 +148,13 @@ export class GridMap {
       layout: { "line-cap": "round", "line-join": "round" },
       paint: {
         "line-color": "#58A6FF",
-        "line-opacity": ["interpolate", ["linear"], ["coalesce", ["get", "kv"], 138], 138, 0.12, 345, 0.28, 765, 0.5],
-        "line-width": ["interpolate", ["linear"], ["coalesce", ["get", "kv"], 138], 138, 0.4, 345, 1.1, 765, 2.2],
+        "line-opacity": ["interpolate", ["linear"], ["coalesce", ["get", "kv"], 138], 138, 0.06, 345, 0.15, 765, 0.3],
+        "line-width": ["interpolate", ["linear"], ["coalesce", ["get", "kv"], 138], 138, 0.4, 345, 1.0, 765, 2.0],
       } });
     m.addLayer({ id: "trans-flow", type: "line", source: "trans",
       filter: [">=", ["coalesce", ["get", "kv"], 0], 345],
       layout: { "line-cap": "round" },
-      paint: { "line-color": "#7CC0FF", "line-width": 1.3, "line-opacity": 0.55, "line-dasharray": [0, 4, 3] } });
+      paint: { "line-color": "#7CC0FF", "line-width": 1.2, "line-opacity": 0.32, "line-dasharray": [0, 4, 3] } });
 
     /* ---- power plants ---- */
     m.addLayer({ id: "plants", type: "circle", source: "plants",
@@ -166,7 +172,7 @@ export class GridMap {
         "circle-color": "rgba(0,0,0,0)",
         "circle-stroke-color": ["get", "color"],
         "circle-stroke-width": 1.1,
-        "circle-stroke-opacity": ["*", 0.42, ["get", "vis"]],
+        "circle-stroke-opacity": ["get", "ghostOp"],
       } });
 
     /* ---- data center glow (pulsing) ---- */
@@ -222,10 +228,9 @@ export class GridMap {
   /** Padding that keeps the fit clear of whichever panels are open. */
   private pad() {
     if (window.innerWidth <= 820)
-      return { top: 56, bottom: Math.round(window.innerHeight * 0.4), left: 10, right: 10 };
-    const cOpen = !document.getElementById("console")?.classList.contains("collapsed");
-    const rOpen = !document.getElementById("rail")?.classList.contains("collapsed");
-    return { top: 66, bottom: 130, left: cOpen ? 366 : 28, right: rOpen ? 214 : 28 };
+      return { top: Math.round(window.innerHeight * 0.34), bottom: 96, left: 12, right: 12 };
+    const open = !document.getElementById("controls")?.classList.contains("collapsed");
+    return { top: 66, bottom: 106, left: open ? 324 : 30, right: 30 };
   }
 
   applyPadding() { this.map.setPadding(this.pad()); }
@@ -333,7 +338,7 @@ export class GridMap {
       const mw = f.mw_full ?? 0;
       const s = computeState(f, this.year);
       if (f.id === this.selectedId || f.id === this.hoveredId) return true;
-      if (!s.visible || f.status === "withdrawn") return false;
+      if (!s.visible || f.status === "withdrawn" || !matchFacility(f, this.filters)) return false;
       return mw >= 500 && z >= 6.8; // ambient labels for hyperscalers once zoomed in a touch
     });
     const seen = new Set<string>();
@@ -370,17 +375,30 @@ export class GridMap {
    *  still update every frame elsewhere; the map ramp stays smooth without
    *  reparsing the whole GeoJSON source 60x/sec. A trailing apply guarantees
    *  the final scrub value always lands. */
+  private applyFac() {
+    if (!this.ready) return;
+    (this.map.getSource("fac") as maplibregl.GeoJSONSource)
+      .setData(buildFacFC(this.data.facilities.facilities, this.year, this.filters));
+  }
+
   setYear(year: number) {
     this.year = year;
     if (!this.ready) return;
-    const apply = () => {
-      this.applyAt = performance.now();
-      (this.map.getSource("fac") as maplibregl.GeoJSONSource)
-        .setData(buildFacFC(this.data.facilities.facilities, this.year));
-    };
+    const apply = () => { this.applyAt = performance.now(); this.applyFac(); };
     clearTimeout(this.applyTimer);
     if (performance.now() - this.applyAt > 45) apply();
     else this.applyTimer = window.setTimeout(apply, 46);
+  }
+
+  /** Apply interactive filters — the crux of the map. */
+  setFilters(filters: Filters) {
+    this.filters = filters;
+    this.applyFac();
+  }
+
+  /** Live totals for whatever is currently shown (year + filters). */
+  shownTotals(): LoadTotals {
+    return totalsAt(this.data.facilities.facilities, this.year, this.filters);
   }
 
   setLayerVisible(key: string, on: boolean) {

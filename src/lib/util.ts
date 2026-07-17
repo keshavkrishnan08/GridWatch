@@ -85,15 +85,27 @@ export function computeState(f: Facility, year: number): FacState {
 }
 
 export interface LoadTotals { online: number; pipeline: number; total: number; nodes: number; }
-export function totalsAt(facilities: Facility[], year: number): LoadTotals {
+export function totalsAt(facilities: Facility[], year: number, filters?: Filters): LoadTotals {
   let online = 0, pipeline = 0, nodes = 0;
   for (const f of facilities) {
     const s = computeState(f, year);
     if (!s.visible || f.status === "withdrawn") continue;
+    if (filters && !matchFacility(f, filters)) continue;
     nodes++;
     if (s.online) online += s.planned; else pipeline += s.planned;
   }
   return { online, pipeline, total: online + pipeline, nodes };
+}
+
+/* ---------- interactive filters (the crux) ---------- */
+export interface Filters { status: string[]; size: Sev[]; utility: UtilKey | "all"; }
+export const ALL_FILTERS: Filters = { status: [], size: [], utility: "all" };
+export function matchFacility(f: Facility, filters: Filters): boolean {
+  const mw = f.mw_full ?? f.mw_phase1 ?? 0;
+  const sOk = !filters.status.length || filters.status.includes(f.status);
+  const zOk = !filters.size.length || filters.size.includes(sevOf(mw));
+  const uOk = filters.utility === "all" || utilKey(f.utility) === filters.utility;
+  return sOk && zOk && uOk;
 }
 
 /* ---------- tiny reactive store ---------- */
