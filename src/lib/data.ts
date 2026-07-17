@@ -106,6 +106,7 @@ export interface AppData {
   action: ActionFile;
   dockets: DocketFile;
   counties: FC;
+  indiana: FC;
   powerPlants: FC;
   transmission: FC;
   territories: FC;
@@ -128,7 +129,7 @@ async function getFC(path: string): Promise<FC> {
 export async function loadAll(): Promise<AppData> {
   const [
     facilities, meta, timeline, bill, action, dockets,
-    counties, powerPlants, transmission, territories, substations,
+    counties, indiana, powerPlants, transmission, territories, substations,
   ] = await Promise.all([
     get<FacilitiesFile>("facilities.json"),
     get<Meta>("meta.json"),
@@ -137,10 +138,11 @@ export async function loadAll(): Promise<AppData> {
     get<ActionFile>("action_items.json"),
     get<DocketFile>("dockets.json"),
     getFC("counties.geojson"),
+    getFC("indiana.geojson"),
     getFC("power_plants.geojson"),
     getFC("transmission.geojson"),
     getFC("utility_territories.geojson"),
     getFC("substations.geojson"),
   ]);
-  return { facilities, meta, timeline, bill, action, dockets, counties, powerPlants, transmission, territories, substations };
+  return { facilities, meta, timeline, bill, action, dockets, counties, indiana, powerPlants, transmission, territories, substations };
 }
