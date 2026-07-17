@@ -104,6 +104,9 @@ export class GridMap {
       pitch: 0,
       bearing: 0,
       dragRotate: false,
+      pitchWithRotate: false,
+      touchPitch: false,
+      maxPitch: 0, // strictly 2D — never tilt
       attributionControl: false,
     });
     this.map.addControl(
@@ -114,7 +117,7 @@ export class GridMap {
       }),
       "bottom-right"
     );
-    this.map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), "bottom-right");
+    this.map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right");
 
     const host = document.createElement("div");
     host.id = "map-labels";
