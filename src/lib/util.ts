@@ -1,6 +1,11 @@
 import type { Facility } from "./data";
 
 export const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
+
+/* Jobs per megawatt — I&M's 2024 disclosure: data centers ~0.26 jobs/MW vs
+ * ~41 jobs/MW for other recent Indiana industry. The starkest economic stat. */
+export const JOBS_PER_MW_DC = 0.26;
+export const JOBS_PER_MW_OTHER = 41;
 export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 /* ---------- load severity ---------- */
@@ -157,6 +162,14 @@ export function servingUtility(
   const iou = hits.find((h) => utilKey(h.name) !== "other");
   const chosen = iou || hits.sort((a, b) => b.customers - a.customers)[0];
   return { name: chosen.name, key: utilKey(chosen.name) };
+}
+
+/** Which county contains a point? */
+export function countyAt(pt: [number, number], counties: GeoJSON.FeatureCollection): string | null {
+  for (const f of counties.features) {
+    if (pipGeom(pt, f.geometry)) return ((f.properties as any)?.county) ?? null;
+  }
+  return null;
 }
 
 /* shared app state */

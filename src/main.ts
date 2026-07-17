@@ -8,7 +8,9 @@ import { Controls } from "./lib/controls";
 import { Timeline } from "./lib/timeline";
 import { Card } from "./lib/card";
 import { Reticle } from "./lib/reticle";
-import { openBillCalc, openAction, openAbout, closeModal } from "./lib/modals";
+import { openBillCalc, openAction, openAbout, openStats, closeModal } from "./lib/modals";
+import { servingUtility, UTIL_DISPLAY } from "./lib/util";
+import { fmtMW, esc } from "./lib/format";
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -72,6 +74,7 @@ class App {
     this.map = new GridMap("map", d, {
       onSelect: (id) => this.select(id),
       onHover: (f, pt) => { if (f && pt) this.reticle.show(f, pt); else this.reticle.hide(); },
+      onCounty: (county, lngLat) => { if (county) this.showCounty(county, lngLat); else this.select(null); },
     }, d.timeline.now);
 
     this.controls = new Controls($("controls"), d, this.map, { select: (id) => this.select(id) });
@@ -104,7 +107,47 @@ class App {
     this.syncUrl();
   }
 
+  showCounty(county: string, lngLat: [number, number]) {
+    this.selectedId = null;
+    this.map.select(null);
+    const d = this.data;
+    const util = servingUtility(lngLat, d.territories);
+    const key = util ? util.key : "other";
+    const utilName = util ? (key !== "other" ? UTIL_DISPLAY[key] : util.name.replace(/\b\w/g, (c) => c.toUpperCase())) : "Multiple / cooperative";
+    const inCounty = d.facilities.facilities.filter((f) => f.county === county && f.status !== "withdrawn");
+    const totalMW = inCounty.reduce((s, f) => s + (f.mw_full ?? f.mw_phase1 ?? 0), 0);
+    const restr = d.restrictions.counties.find((c) => c.name.toLowerCase() === county.toLowerCase());
+    const label = restr ? (restr.type === "ban" ? "BANNED" : "MORATORIUM") : "NO RESTRICTION";
+    const col = restr ? (restr.type === "ban" ? "#F85149" : "#E3A72B") : "#3FB950";
+    const model = util ? d.bill.utilities.find((u) => u.id === (key === "cp" ? "centerpoint" : key)) : null;
+    this.card.showContent(col, `
+      <div class="card-top">
+        <div class="card-sev-bar" style="background:${col}"></div>
+        <button class="card-close" aria-label="Close">✕</button>
+        <span class="card-status" style="border-color:${col};color:${col}">◱ ${label}</span>
+        <h2 class="card-name">${esc(county)} County</h2>
+        <div class="card-loc">Served by ${esc(utilName)}</div>
+      </div>
+      <div class="card-body">
+        <div class="stat-grid">
+          <div class="stat"><div class="k">Data centers</div><div class="v">${inCounty.length}</div></div>
+          <div class="stat"><div class="k">Combined load</div><div class="v">${fmtMW(totalMW)}<small> MW</small></div></div>
+        </div>
+        ${restr ? `<div class="card-notes" style="border-color:${col}"><b>${label}.</b> ${esc(restr.detail)}</div>` : ""}
+        ${inCounty.length
+          ? `<div class="card-sources"><span class="eyebrow">Data centers here</span>${inCounty.map((f) => `<a class="src-link" style="cursor:pointer" data-fac="${esc(f.id)}">${esc(f.name)} · ${fmtMW(f.mw_full ?? f.mw_phase1)} MW</a>`).join("")}</div>`
+          : `<div class="mini-note" style="margin-top:12px">No tracked data centers in this county — yet.</div>`}
+        ${model ? `<button class="docket-btn" id="cty-bill">▤ PROJECT MY BILL IMPACT · ${esc(model.display_name)}</button>` : ""}
+        <div class="verified">TAP ANY COUNTY FOR ITS PROFILE</div>
+      </div>`);
+    const el = document.getElementById("card")!;
+    el.querySelectorAll<HTMLElement>("[data-fac]").forEach((a) => a.addEventListener("click", () => this.select(a.dataset.fac!)));
+    el.querySelector("#cty-bill")?.addEventListener("click", () => openBillCalc(this.data, model!.id));
+    this.dismissHint();
+  }
+
   private wireTopbar() {
+    $("btn-stats").addEventListener("click", () => openStats(this.data));
     $("btn-bill").addEventListener("click", () => openBillCalc(this.data));
     $("btn-action").addEventListener("click", () => openAction(this.data));
     $("btn-about").addEventListener("click", () => openAbout(this.data));
@@ -155,7 +198,7 @@ class App {
     if (!fid && !county) return;
     this.map.whenReady(() => {
       if (fid && this.data.facilities.facilities.some((f) => f.id === fid)) this.select(fid);
-      if (county) this.map.flyToCounty(county);
+      if (county) { const c = this.map.flyToCounty(county); if (c) this.showCounty(county, c); }
     });
   }
 
