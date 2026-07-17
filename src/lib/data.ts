@@ -72,14 +72,15 @@ export interface TimelineFile {
 
 export interface UtilityModel {
   id: string; display_name: string; raw_match: string[];
-  customers: number; avg_rate_cents_kwh: number;
-  approved_increase: { pct: number; timing: string; source: Source };
+  customers: number; avg_rate_cents_kwh: number; typical_bill_1000kwh: number;
+  recent_increase: { pct: number; period: string; source: Source };
   cost_shifts: { usd: number; label: string; docket: string | null }[];
   notes: string; sources: Source[];
 }
 export interface BillFile {
   disclaimer: string;
-  statewide_context: { avg_bill_increase_this_year_pct: number; avg_bill_increase_decade_pct: number; source: Source };
+  equation: string;
+  statewide_context: { avg_bill_increase_this_year_pct: number; avg_bill_increase_decade_pct: number; avg_rate_cents_kwh: number; source: Source };
   assumptions: { amortize_years: number; uncertainty_band_pct: number; typical_household_kwh: number };
   utilities: UtilityModel[];
 }

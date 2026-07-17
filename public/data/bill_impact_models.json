@@ -1,55 +1,60 @@
 {
-  "last_updated": "2026-07-16",
-  "disclaimer": "PROJECTION, not a forecast. These ranges combine (1) each utility's IURC-approved residential rate change and (2) an illustrative even-split of data-center-driven infrastructure costs across that utility's customers, amortized over 5 years. Real cost allocation depends on rate-case outcomes and is contested. Figures are for civic orientation. See METHODOLOGY.md.",
+  "last_updated": "2026-07-17",
+  "disclaimer": "PROJECTION, not a forecast. The headline is the data-center-specific impact: infrastructure costs filed in IURC dockets, split across the utility's customers and amortized over 5 years. It is shown next to your current bill and this year's overall rate change for context. Real cost allocation is decided in rate cases and is contested. Update any figure in this file and every calculation updates automatically. See METHODOLOGY.md.",
   "statewide_context": {
     "avg_bill_increase_this_year_pct": 17,
     "avg_bill_increase_decade_pct": 30,
-    "source": { "label": "Mirror Indy / WNDU: why electric bills are up", "url": "https://mirrorindy.org/heres-why-electric-bills-are-up-across-indiana/" }
+    "avg_rate_cents_kwh": 17,
+    "source": { "label": "Indiana Capital Chronicle: the 'big five' defend rates", "url": "https://indianacapitalchronicle.com/2026/03/24/big-five-indiana-utilities-defend-rates-in-regulator-questioning/" }
   },
   "assumptions": {
     "amortize_years": 5,
     "uncertainty_band_pct": 45,
     "typical_household_kwh": 1000
   },
+  "equation": "current_bill = kwh × rate ; dc_impact_per_month = Σ(filed data-center infrastructure $) ÷ customers ÷ (amortize_years × 12) ; range = dc_impact × (1 ± uncertainty_band)",
   "utilities": [
-    {
-      "id": "aes",
-      "display_name": "AES Indiana",
-      "raw_match": ["Indianapolis Power & Light", "Indianapolis Power & Light Co"],
-      "customers": 519319,
-      "avg_rate_cents_kwh": 14.8,
-      "approved_increase": { "pct": 3.7, "timing": "two phases, Jul 2026 + Jan 2027", "source": { "label": "AES rate review", "url": "https://www.aesindiana.com/rate-review" } },
-      "cost_shifts": [
-        { "usd": 9000000, "label": "LEAP transmission share", "docket": null }
-      ],
-      "notes": "AES claims the Google Monrovia deal (Cause 46394) nets $770M in customer savings over 15 years — a contested framing.",
-      "sources": [ { "label": "Mirror Indy: AES rate increase", "url": "https://mirrorindy.org/aes-indiana-rate-increase-approved-electric-bill-2026-mike-braun/" } ]
-    },
     {
       "id": "duke",
       "display_name": "Duke Energy Indiana",
       "raw_match": ["Duke Energy Indiana", "Duke Energy Indiana, Llc"],
       "customers": 881328,
-      "avg_rate_cents_kwh": 15.5,
-      "approved_increase": { "pct": 4.0, "timing": "phased 2025-2026", "source": { "label": "CAC", "url": "https://www.citact.org/ai-data-centers" } },
+      "avg_rate_cents_kwh": 15.6,
+      "typical_bill_1000kwh": 156,
+      "recent_increase": { "pct": 20, "period": "past year", "source": { "label": "Indiana bill comparison 2026", "url": "https://utilitycheck.co/blog/indiana-electricity-rates-duke-aes" } },
       "cost_shifts": [
         { "usd": 216000000, "label": "Meta Jeffersonville network upgrades", "docket": "45647" },
-        { "usd": 210000000, "label": "LEAP transmission share", "docket": null }
+        { "usd": 210000000, "label": "Meta LEAP transmission share", "docket": null }
       ],
-      "notes": "Meta Jeffersonville is the largest power user in Duke's Indiana territory.",
+      "notes": "Meta Jeffersonville is the largest single load in Duke's Indiana territory; upgrade costs are recovered from all customers.",
       "sources": [ { "label": "CAC: AI Data Centers", "url": "https://www.citact.org/ai-data-centers" } ]
+    },
+    {
+      "id": "aes",
+      "display_name": "AES Indiana",
+      "raw_match": ["Indianapolis Power & Light", "Indianapolis Power & Light Co"],
+      "customers": 519319,
+      "avg_rate_cents_kwh": 15.8,
+      "typical_bill_1000kwh": 158,
+      "recent_increase": { "pct": 12, "period": "past year", "source": { "label": "Mirror Indy: AES rate increase", "url": "https://mirrorindy.org/aes-indiana-rate-increase-approved-electric-bill-2026-mike-braun/" } },
+      "cost_shifts": [
+        { "usd": 9000000, "label": "Meta LEAP transmission share", "docket": null }
+      ],
+      "notes": "AES claims the Google Monrovia deal (Cause 46394) nets $770M in customer savings over 15 years — a contested framing; Google is contracted to pay its own infrastructure.",
+      "sources": [ { "label": "AES rate review", "url": "https://www.aesindiana.com/rate-review" } ]
     },
     {
       "id": "im",
       "display_name": "Indiana Michigan Power (I&M)",
       "raw_match": ["Indiana Michigan Power", "Indiana Michigan Power Co"],
       "customers": 607710,
-      "avg_rate_cents_kwh": 17.5,
-      "approved_increase": { "pct": 5.0, "timing": "phased 2025-2026", "source": { "label": "CAC", "url": "https://www.citact.org/ai-data-centers" } },
+      "avg_rate_cents_kwh": 16.7,
+      "typical_bill_1000kwh": 167,
+      "recent_increase": { "pct": 4, "period": "past year", "source": { "label": "Indiana bill comparison 2026", "url": "https://utilitycheck.co/blog/indiana-electricity-rates-duke-aes" } },
       "cost_shifts": [
-        { "usd": 400000000, "label": "Google + Amazon interconnection", "docket": "46301" }
+        { "usd": 400000000, "label": "Google Fort Wayne + Amazon New Carlisle interconnection", "docket": "46301" }
       ],
-      "notes": "Also recovering uneconomic coal-contract costs through 2040 (Cause 45164 RA-5). Serving Google Fort Wayne + Amazon New Carlisle.",
+      "notes": "Serving Google Fort Wayne + Amazon New Carlisle. Also recovering uneconomic coal-contract costs through 2040 (Cause 45164 RA-5).",
       "sources": [ { "label": "Utility Dive", "url": "https://www.utilitydive.com/news/indiana-iurc-large-load-interconnection-data-center-aep-amazon-google/740452/" } ]
     },
     {
@@ -57,10 +62,11 @@
       "display_name": "NIPSCO",
       "raw_match": ["Northern Indiana Pub Serv Co", "Northern Indiana Public Service"],
       "customers": 485959,
-      "avg_rate_cents_kwh": 17.8,
-      "approved_increase": { "pct": 15.0, "timing": "final phase-in early 2026 (approved 20.15% revenue)", "source": { "label": "NIPSCO rate hike 2026", "url": "https://kilowattlogic.com/news/indiana-nipsco-commercial-electricity-rate-hike-2026" } },
+      "avg_rate_cents_kwh": 23.4,
+      "typical_bill_1000kwh": 234,
+      "recent_increase": { "pct": 27, "period": "past year", "source": { "label": "NIPSCO rate hike 2026", "url": "https://kilowattlogic.com/news/indiana-nipsco-commercial-electricity-rate-hike-2026" } },
       "cost_shifts": [],
-      "notes": "IURC approved a 20.15% overall revenue increase; small commercial customers face 15-17% hikes. A 2,600 MW gas plant for Amazon would withdraw 33 million gallons/day.",
+      "notes": "Highest residential rate in the state after a 27% jump. No single data-center infrastructure docket is broken out yet, but NIPSCO plans a 2,600 MW gas plant tied to Amazon (33M gallons/day water) whose cost would land in future rate cases.",
       "sources": [ { "label": "NIPSCO rate hike", "url": "https://kilowattlogic.com/news/indiana-nipsco-commercial-electricity-rate-hike-2026" } ]
     },
     {
@@ -68,10 +74,11 @@
       "display_name": "CenterPoint Energy (Vectren)",
       "raw_match": ["Southern Indiana Gas & Elec Co", "Southern Indiana Gas And Electric", "CenterPoint Energy", "CenterPoint", "Vectren"],
       "customers": 151007,
-      "avg_rate_cents_kwh": 16.5,
-      "approved_increase": { "pct": 4.0, "timing": "2025-2026", "source": { "label": "CAC", "url": "https://www.citact.org/ai-data-centers" } },
+      "avg_rate_cents_kwh": 22.1,
+      "typical_bill_1000kwh": 221,
+      "recent_increase": { "pct": 25, "period": "past year", "source": { "label": "Indiana rates 2026", "url": "https://utilitycheck.co/blog/indiana-electricity-rates-duke-aes" } },
       "cost_shifts": [],
-      "notes": "SW Indiana. A ~600 MW data center is proposed in Gibson/Posey county area in CenterPoint territory.",
+      "notes": "SW Indiana; second-highest rate after a 25% jump. A ~600 MW data center is proposed in the Gibson/Posey area in CenterPoint territory.",
       "sources": [ { "label": "CAC: AI Data Centers", "url": "https://www.citact.org/ai-data-centers" } ]
     }
   ]

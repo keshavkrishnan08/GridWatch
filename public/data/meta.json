@@ -2,15 +2,16 @@
   "last_updated": "2026-07-16",
   "state_peak_mw": 35000,
   "counts": {
-    "facilities_curated": 27,
+    "facilities_curated": 42,
     "facilities_tracked_statewide": 46,
     "by_status": {
       "construction": 5,
       "approved": 2,
-      "proposed": 15,
-      "withdrawn": 5
+      "proposed": 21,
+      "withdrawn": 10,
+      "rumored": 4
     },
-    "counties_with_projects": 15,
+    "counties_with_projects": 20,
     "power_plants": 205,
     "transmission_lines": 1237,
     "utility_territories": 114,
@@ -116,7 +117,7 @@
   "top_counties": [
     {
       "county": "St. Joseph",
-      "count": 2,
+      "count": 3,
       "mw": 3250,
       "utility": "Indiana Michigan Power (I&M)"
     },
@@ -152,7 +153,7 @@
     },
     {
       "county": "LaPorte",
-      "count": 2,
+      "count": 3,
       "mw": 538,
       "utility": "NIPSCO"
     },
@@ -178,7 +179,7 @@
   "utilities": [
     {
       "utility": "Indiana Michigan Power (I&M)",
-      "count": 4,
+      "count": 5,
       "mw": 4950
     },
     {
@@ -193,7 +194,7 @@
     },
     {
       "utility": "NIPSCO",
-      "count": 7,
+      "count": 13,
       "mw": 1302
     },
     {
@@ -203,7 +204,7 @@
     },
     {
       "utility": "Duke Energy Indiana",
-      "count": 2,
+      "count": 3,
       "mw": 457
     },
     {
@@ -218,6 +219,11 @@
     },
     {
       "utility": "Hoosier Energy / South Central REMC",
+      "count": 1,
+      "mw": 0
+    },
+    {
+      "utility": "Southern Indiana REMC / Duke",
       "count": 1,
       "mw": 0
     }
