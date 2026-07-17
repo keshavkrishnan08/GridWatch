@@ -2,7 +2,7 @@ import type { AppData, UtilityModel } from "./data";
 import { fmtUSD, fmtInt, esc, safeUrl } from "./format";
 
 const root = () => document.getElementById("modal-root")!;
-const BG_SELECTORS = ["#topbar", "#console", "#rail", "#timeline", "#card", "#map"];
+const BG_SELECTORS = ["#topbar", "#controls", "#timeline", "#card", "#map"];
 
 let lastFocus: HTMLElement | null = null;
 let inerted: Array<[HTMLElement, boolean]> = [];

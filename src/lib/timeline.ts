@@ -1,6 +1,4 @@
 import type { AppData } from "./data";
-import { totalsAt } from "./util";
-import { fmtMW, fmtPct } from "./format";
 
 export class Timeline {
   private root: HTMLElement;
@@ -35,12 +33,8 @@ export class Timeline {
     this.root.innerHTML = `
       <div class="tl-top">
         <button class="tl-play" id="tl-play" aria-label="Play timeline">▶</button>
-        <div class="tl-counters">
-          <div class="tl-counter"><div class="lab">Load Online</div><div class="val c-online" id="tl-online"><span class="n">—</span> <small>MW</small></div></div>
-          <div class="tl-counter"><div class="lab">In Pipeline</div><div class="val c-pipeline" id="tl-pipeline"><span class="n">—</span> <small>MW</small></div></div>
-          <div class="tl-counter"><div class="lab">% State Peak</div><div class="val c-year" id="tl-pct">—</div></div>
-        </div>
-        <div class="tl-counter tl-year-big"><div class="lab">Scrub Year</div><div class="val c-year" id="tl-year">2026</div></div>
+        <div class="tl-legend">GRID BUILD-OUT<span> · drag to scrub 2020–2035</span></div>
+        <div class="tl-year-big"><span class="val c-year" id="tl-year">2026</span></div>
       </div>
       <div class="tl-track-wrap" id="tl-wrap">
         <div class="tl-track"><div class="tl-fill" id="tl-fill"></div></div>
@@ -124,11 +118,6 @@ export class Timeline {
     const p = this.pct(this.year);
     this.playhead.style.left = `${p}%`;
     this.fill.style.width = `${p}%`;
-    const t = totalsAt(this.data.facilities.facilities, this.year);
-    const pct = (t.total / this.data.meta.state_peak_mw) * 100;
-    (this.root.querySelector("#tl-online .n") as HTMLElement).textContent = fmtMW(t.online);
-    (this.root.querySelector("#tl-pipeline .n") as HTMLElement).textContent = fmtMW(t.pipeline);
-    this.root.querySelector("#tl-pct")!.textContent = fmtPct(pct);
     this.root.querySelector("#tl-year")!.textContent = this.dateLabel(this.year);
     this.playhead.setAttribute("aria-valuenow", this.year.toFixed(1));
     if (!silent) this.onYear(this.year);
