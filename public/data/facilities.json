@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "last_updated": "2026-07-16",
-  "coverage_note": "46 data-center projects are tracked statewide across active, proposed, rumored, and withdrawn stages. This file curates the projects with locatable sites and at least one verifiable attribute. Aggregate counts and MW totals reference the AI Law Tracker Indiana inventory; flagship figures are cross-checked against IURC filings, utility filings, and news reporting cited per record.",
+  "coverage_note": "The AI Law Tracker inventory lists ~46 Indiana data-center projects across active, proposed, rumored, and withdrawn stages; other trackers (e.g., Cleanview) count 90+ planned facilities totaling ~14 GW. This file curates those with locatable sites and at least one verifiable attribute, and is refreshed as high-profile proposals land. Flagship figures are cross-checked against IURC filings, utility filings, and news reporting cited per record.",
   "primary_sources": [
     { "label": "AI Law Tracker — Indiana Data Center Map", "url": "https://ailawtracker.org/data-centers" },
     { "label": "Citizens Action Coalition — AI Data Centers", "url": "https://www.citact.org/ai-data-centers" },
@@ -163,17 +163,20 @@
       "city": "La Porte",
       "county": "LaPorte",
       "lat": 41.6100, "lng": -86.7228, "geo_precision": "city",
-      "status": "proposed",
+      "status": "construction",
       "mw_phase1": null, "mw_full": 538, "mw_estimated": false,
       "acres": null, "investment_usd": null,
       "water_mgd": null, "water_status": "unknown",
       "utility": "NIPSCO",
       "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
-      "announced_year": 2025, "online_year": 2028,
+      "announced_year": 2025, "online_year": 2032,
       "tax_note": null,
-      "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
-      "notes": "538 MW proposed in NIPSCO territory.",
-      "last_verified": "2026-07-16"
+      "sources": [
+        { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" },
+        { "label": "Microsoft Data Center Academy w/ Ivy Tech", "url": "https://www.datacenterknowledge.com/data-center-construction/new-data-center-developments-july-2026" }
+      ],
+      "notes": "538 MW; Microsoft broke ground July 2026 and opened Indiana's first Microsoft Data Center Academy with Ivy Tech.",
+      "last_verified": "2026-07-17"
     },
     {
       "id": "sentinel-hebron",
@@ -693,6 +696,26 @@
       "announced_year": 2024, "online_year": null, "tax_note": null,
       "sources": [ { "label": "AI Law Tracker — Indiana", "url": "https://ailawtracker.org/data-centers" } ],
       "notes": "343-acre proposal — withdrawn.", "last_verified": "2026-07-16"
+    },
+    {
+      "id": "prologis-shelbyville", "name": "Prologis Shelbyville Campus", "developer": "Prologis",
+      "city": "Shelbyville", "county": "Shelby", "lat": 39.5220, "lng": -85.7770, "geo_precision": "city",
+      "status": "proposed", "mw_phase1": null, "mw_full": 900, "mw_estimated": false,
+      "acres": null, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": "Duke Energy Indiana", "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2026, "online_year": 2028, "tax_note": null,
+      "sources": [ { "label": "Cleanview — Indiana data centers", "url": "https://cleanview.co/data-centers/indiana" } ],
+      "notes": "900 MW proposed SE of Indianapolis; among the larger recent proposals.", "last_verified": "2026-07-17"
+    },
+    {
+      "id": "powerhouse-hobart", "name": "PowerHouse Hobart Data Center", "developer": "PowerHouse Data Centers",
+      "city": "Hobart", "county": "Lake", "lat": 41.5500, "lng": -87.2400, "geo_precision": "city",
+      "status": "proposed", "mw_phase1": null, "mw_full": 450, "mw_estimated": false,
+      "acres": null, "investment_usd": null, "water_mgd": null, "water_status": "unknown",
+      "utility": "NIPSCO", "iurc_docket": null, "docket_url": "https://iurc.portal.in.gov/",
+      "announced_year": 2026, "online_year": 2027, "tax_note": null,
+      "sources": [ { "label": "Cleanview — Indiana data centers", "url": "https://cleanview.co/data-centers/indiana" } ],
+      "notes": "450 MW proposed in NW Indiana (NIPSCO territory).", "last_verified": "2026-07-17"
     }
   ]
 }

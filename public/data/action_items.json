@@ -34,13 +34,23 @@
       "priority": 2
     },
     {
+      "type": "decision",
+      "title": "Indianapolis data-center moratorium — Council vote",
+      "org": "Indianapolis City-County Council",
+      "detail": "A moratorium on new data centers through end-2027 advanced out of committee 10-3 on July 13, 2026; the full Council votes Aug 10, 2026, then it would go to the MDC. Residents can testify.",
+      "action": "Track / testify",
+      "url": "https://mirrorindy.org/indianapolis-data-centers-regulations-moratorium/",
+      "deadline": "2026-08-10 Council vote",
+      "priority": 1
+    },
+    {
       "type": "campaign",
-      "title": "Indianapolis data-center moratorium",
-      "org": "CAC / local coalition",
-      "detail": "Advocacy for a moratorium while Indianapolis writes data-center zoning rules (Martindale-Brightwood, Decatur Township).",
-      "action": "Learn / act",
-      "url": "https://www.citact.org/ai-data-centers",
-      "deadline": null,
+      "title": "County moratoriums &amp; bans",
+      "org": "Indiana University Environmental Resilience Institute",
+      "detail": "Nearly a third of Indiana counties now restrict data centers: 11+ have ordinances, 17+ have temporary moratoriums, and Marshall and Cass counties have banned them outright. Check your county's status.",
+      "action": "See the map",
+      "url": "https://www.datacenterbans.com/state/indiana",
+      "deadline": "Ongoing",
       "priority": 2
     },
     {
