@@ -9,7 +9,7 @@ import { Timeline } from "./lib/timeline";
 import { Card } from "./lib/card";
 import { Reticle } from "./lib/reticle";
 import { openBillCalc, openAction, openAbout, closeModal } from "./lib/modals";
-import { fmtInt } from "./lib/format";
+import { fmtInt, esc, safeUrl } from "./lib/format";
 import { sevColor } from "./lib/util";
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -98,6 +98,7 @@ class App {
 
     this.buildRail();
     this.wireTopbar();
+    this.setupPanels();
     this.wireKeys();
     this.applyDeepLink();
   }
@@ -115,6 +116,7 @@ class App {
     const d = this.data;
     const rail = $("rail");
     const c = d.meta.counts;
+    const topAction = [...d.action.items].sort((a, b) => a.priority - b.priority).slice(0, 3);
     const layers: [string, string, number, string][] = [
       ["datacenters", "Data Centers", c.facilities_curated, "var(--load-high)"],
       ["withdrawn", "Withdrawn (ghosts)", c.by_status.withdrawn || 0, "var(--text-dim)"],
@@ -143,8 +145,20 @@ class App {
           <div class="ls-row"><span class="ls-dot" style="background:#6B7684"></span> capacity undisclosed</div>
         </div>
         <div class="mini-note">Node size ∝ megawatts. Magenta = off the scale Indiana's grid was built for.</div>
+      </div>
+
+      <div class="panel bracket card-block rail-act">
+        <div class="block-head"><h3>Take Action</h3><span class="eyebrow">nonpartisan</span></div>
+        ${topAction.map((it) => `
+          <a class="r-item" href="${safeUrl(it.url)}" target="_blank" rel="noopener">
+            <span class="r-type ${it.type === "decision" || it.type === "comment" ? "hot" : "go"}">${esc(it.type)}</span>
+            <div class="r-title">${esc(it.title)}</div>
+            ${it.deadline ? `<div class="r-dead">⏱ ${esc(it.deadline)}</div>` : ""}
+          </a>`).join("")}
+        <button class="r-all" id="rail-action-all">VIEW ALL · DOCKETS &amp; HEARINGS ▸</button>
       </div>`;
 
+    rail.querySelector("#rail-action-all")!.addEventListener("click", () => openAction(this.data));
     rail.querySelectorAll<HTMLElement>(".layer-row").forEach((row) => {
       const key = row.dataset.layer!;
       this.map.setLayerVisible(key, initial[key]);
@@ -168,6 +182,21 @@ class App {
         btn.textContent = "COPY URL"; setTimeout(() => (btn.textContent = "SHARE"), 1600);
       }
     });
+  }
+
+  private setupPanels() {
+    const toggle = (panel: string, collapseBtn: string, reopenBtn: string, collapsed: boolean) => {
+      const p = $(panel);
+      p.classList.toggle("collapsed", collapsed);
+      p.inert = collapsed;
+      $(collapseBtn).hidden = collapsed;
+      $(reopenBtn).hidden = !collapsed;
+      this.map.reframe();
+    };
+    $("console-collapse").addEventListener("click", () => toggle("console", "console-collapse", "console-reopen", true));
+    $("console-reopen").addEventListener("click", () => toggle("console", "console-collapse", "console-reopen", false));
+    $("rail-collapse").addEventListener("click", () => toggle("rail", "rail-collapse", "rail-reopen", true));
+    $("rail-reopen").addEventListener("click", () => toggle("rail", "rail-collapse", "rail-reopen", false));
   }
 
   private wireKeys() {
