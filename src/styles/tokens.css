@@ -86,7 +86,8 @@
   /* layout */
   --topbar-h: 54px;
   --console-w: 346px;
-  --timeline-h: 112px;
+  --controls-w: 300px;
+  --timeline-h: 84px;
   --rail-w: 238px;
 
   color-scheme: dark;
