@@ -1,6 +1,6 @@
 import type { AppData, Facility } from "./data";
 import type { GridMap } from "./map";
-import { fmtInt, fmtMW, fmtPct, esc } from "./format";
+import { fmtInt, fmtMW, esc } from "./format";
 import {
   totalsAt, haversineMiles, servingUtility, utilKey, UTIL_DISPLAY,
   fuelColor, FUEL_LABEL, sevColor,
@@ -45,27 +45,22 @@ export class Console {
 
       <div class="panel bracket card-block" id="c-readout">
         <div class="block-head"><h3>Indiana Grid Status</h3><span class="eyebrow" id="ro-year">JUL 2026</span></div>
-        <div class="readout">
-          <div class="ro-cell">
-            <div class="ro-label">DC Load · Online</div>
-            <div class="ro-value committed" id="ro-online">—<small>MW</small></div>
+        <div class="readout2">
+          <div class="ro-hero">
+            <div>
+              <div class="ro-hero-num"><span id="ro-pct">—</span><span class="u">%</span></div>
+              <div class="ro-hero-cap">of ~${fmtInt(meta.state_peak_mw)} MW<br>state peak demand</div>
+            </div>
+            <div class="ro-hero-bar"><span id="ro-bar"></span></div>
           </div>
-          <div class="ro-cell">
-            <div class="ro-label">DC Load · Pipeline</div>
-            <div class="ro-value proposed" id="ro-pipeline">—<small>MW</small></div>
+          <div class="ro-split">
+            <div class="ro-stat"><span class="ro-k">DC Load · Online</span><span class="ro-v committed"><b id="ro-online">—</b> MW</span></div>
+            <div class="ro-stat"><span class="ro-k">DC Load · Pipeline</span><span class="ro-v proposed"><b id="ro-pipeline">—</b> MW</span></div>
           </div>
-          <div class="ro-cell wide">
-            <div class="ro-label">Share of State Peak Demand (~${fmtInt(meta.state_peak_mw)} MW)</div>
-            <div class="ro-value" id="ro-pct">—</div>
-            <div class="ro-bar"><span id="ro-bar" style="width:0%"></span></div>
-          </div>
-          <div class="ro-cell">
-            <div class="ro-label">Hyperscale Sites</div>
-            <div class="ro-value mega" id="ro-mega">${meta.mega_facilities.length}<small>&gt;500MW</small></div>
-          </div>
-          <div class="ro-cell">
-            <div class="ro-label">Active Dockets</div>
-            <div class="ro-value" id="ro-dockets">${this.data.dockets.dockets.length}</div>
+          <div class="ro-chips">
+            <span class="ro-chip mega"><b>${meta.mega_facilities.length}</b> hyperscale</span>
+            <span class="ro-chip"><b>${this.data.dockets.dockets.length}</b> active dockets</span>
+            <span class="ro-chip warn"><b>${fmtMW(meta.load_mw.withdrawn_avoided)}</b> MW withdrawn</span>
           </div>
         </div>
         <div class="mini-note" id="ro-note"></div>
@@ -77,18 +72,11 @@ export class Console {
         <div class="genmix-legend" id="c-genlegend"></div>
       </div>
 
-      <div class="console-actions">
-        <button class="panel big-btn" id="c-bill">
-          <span class="bb-ico">▤</span>
-          <span class="bb-title">BILL IMPACT</span>
-          <span class="bb-sub">What could it cost you?</span>
-        </button>
-        <button class="panel big-btn" id="c-action">
-          <span class="bb-ico">◈</span>
-          <span class="bb-title">TAKE ACTION</span>
-          <span class="bb-sub">Comment periods &amp; hearings</span>
-        </button>
-      </div>
+      <button class="panel big-btn" id="c-bill" style="width:100%">
+        <span class="bb-ico">▤</span>
+        <span class="bb-title">BILL IMPACT CALCULATOR</span>
+        <span class="bb-sub">What could data centers cost your household?</span>
+      </button>
     `;
 
     // generation mix
@@ -102,7 +90,6 @@ export class Console {
 
     // wire
     this.root.querySelector("#c-bill")!.addEventListener("click", () => this.h.openBill());
-    this.root.querySelector("#c-action")!.addEventListener("click", () => this.h.openAction());
     this.wireSearch();
     this.updateReadout(this.data.timeline.now);
   }
@@ -181,18 +168,19 @@ export class Console {
     const t = totalsAt(this.facs, year);
     const meta = this.data.meta;
     const pct = (t.total / meta.state_peak_mw) * 100;
-    const set = (id: string, html: string) => {
+    const txt = (id: string, s: string) => {
       const el = this.root.querySelector<HTMLElement>(id);
-      if (el) el.innerHTML = html;
+      if (el) el.textContent = s;
     };
-    set("#ro-online", `${fmtMW(t.online)}<small>MW</small>`);
-    set("#ro-pipeline", `${fmtMW(t.pipeline)}<small>MW</small>`);
-    set("#ro-pct", `${fmtPct(pct)}`);
+    txt("#ro-online", fmtMW(t.online));
+    txt("#ro-pipeline", fmtMW(t.pipeline));
+    txt("#ro-pct", pct.toFixed(1));
     const bar = this.root.querySelector<HTMLElement>("#ro-bar");
     if (bar) bar.style.width = `${Math.min(100, pct)}%`;
     const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
     const yr = Math.floor(year), mo = months[Math.min(11, Math.floor((year - yr) * 12))];
-    set("#ro-year", `${mo} ${yr}`);
-    set("#ro-note", `Showing <b>${t.nodes}</b> active of ${meta.counts.facilities_tracked_statewide} tracked · <b>${fmtMW(meta.load_mw.withdrawn_avoided)} MW</b> withdrawn after opposition`);
+    txt("#ro-year", `${mo} ${yr}`);
+    const note = this.root.querySelector<HTMLElement>("#ro-note");
+    if (note) note.innerHTML = `Showing <b>${t.nodes}</b> active of ${meta.counts.facilities_tracked_statewide} tracked projects`;
   }
 }
