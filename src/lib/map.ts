@@ -437,27 +437,55 @@ export class GridMap {
       const s = computeState(f, this.year);
       if (f.id === this.selectedId || f.id === this.hoveredId) return true;
       if (!s.visible || f.status === "withdrawn" || !matchFacility(f, this.filters)) return false;
-      return mw >= 500 && z >= 6.8; // ambient labels for hyperscalers once zoomed in a touch
+      return mw >= 500 && z >= 6.4; // ambient labels for hyperscalers
+    });
+    // biggest (and selected/hovered) win when labels would collide
+    wanted.sort((a, b) => {
+      const pa = a.id === this.selectedId || a.id === this.hoveredId ? 1e12 : (a.mw_full ?? 0);
+      const pb = b.id === this.selectedId || b.id === this.hoveredId ? 1e12 : (b.mw_full ?? 0);
+      return pb - pa;
     });
     const seen = new Set<string>();
+    const placed: Array<[number, number, number, number]> = [];
     for (const f of wanted) {
       seen.add(f.id);
       let el = this.labelHost.querySelector<HTMLElement>(`[data-lid="${f.id}"]`);
       if (!el) {
+        const mw = f.mw_full ?? f.mw_phase1 ?? 0;
         el = document.createElement("div");
         el.dataset.lid = f.id;
         el.className = "map-label";
-        el.style.cssText =
-          "position:absolute;transform:translate(-50%,-50%);font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;color:#cfe;white-space:nowrap;text-shadow:0 0 8px #000,0 1px 2px #000;padding:1px 5px;border-left:2px solid " +
-          sevColor(f.mw_full ?? 0) + ";background:rgba(7,11,16,.55);border-radius:2px;";
-        el.textContent = f.name.replace(/ (Campus|Data Center|Center)$/i, "");
+        el.style.setProperty("--lc", mw > 0 ? sevColor(mw) : "#8fa3b5");
+        const nm = document.createElement("span");
+        nm.className = "ml-name";
+        nm.textContent = f.name.replace(/ (Campus|Data Center|Center)$/i, "");
+        el.appendChild(nm);
+        if (mw) {
+          const mwEl = document.createElement("span");
+          mwEl.className = "ml-mw";
+          mwEl.textContent = mw >= 1000 ? `${(mw / 1000).toFixed(1)}GW` : `${mw}MW`;
+          el.appendChild(mwEl);
+        }
         this.labelHost.appendChild(el);
+        (el as any)._w = el.offsetWidth; (el as any)._h = el.offsetHeight;
       }
+      el.classList.toggle("sel", f.id === this.selectedId);
       const p = m.project([f.lng, f.lat]);
       const r = nodeRadius(f.mw_full ?? 0) * zoomFactor(z);
-      el.style.left = `${p.x}px`;
-      el.style.top = `${p.y - r - 11}px`;
-      el.style.opacity = f.id === this.selectedId ? "1" : z < 6 ? "0" : "0.82";
+      const w = (el as any)._w || 90, h = (el as any)._h || 18;
+      // clamp x so the chip never clips the viewport edges; flip below near the top
+      const lx = clamp(p.x, w / 2 + 6, window.innerWidth - w / 2 - 6);
+      let ly = p.y - r - 16;
+      const below = ly - h / 2 < 60;
+      if (below) ly = p.y + r + 16;
+      el.classList.toggle("below", below);
+      el.style.left = `${lx}px`;
+      el.style.top = `${ly}px`;
+      const x1 = lx - w / 2 - 3, y1 = ly - h / 2 - 3, x2 = lx + w / 2 + 3, y2 = ly + h / 2 + 3;
+      const always = f.id === this.selectedId || f.id === this.hoveredId;
+      const hit = placed.some(([a, b2, c, d]) => x1 < c && x2 > a && y1 < d && y2 > b2);
+      el.style.visibility = hit && !always ? "hidden" : "visible";
+      if (!hit || always) placed.push([x1, y1, x2, y2]);
     }
     this.labelHost.querySelectorAll<HTMLElement>("[data-lid]").forEach((el) => {
       if (!seen.has(el.dataset.lid!)) el.remove();

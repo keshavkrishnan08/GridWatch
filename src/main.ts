@@ -138,6 +138,11 @@ class App {
           ? `<div class="card-sources"><span class="eyebrow">Data centers here</span>${inCounty.map((f) => `<a class="src-link" style="cursor:pointer" data-fac="${esc(f.id)}">${esc(f.name)} · ${fmtMW(f.mw_full ?? f.mw_phase1)} MW</a>`).join("")}</div>`
           : `<div class="mini-note" style="margin-top:12px">No tracked data centers in this county — yet.</div>`}
         ${model ? `<button class="docket-btn" id="cty-bill">▤ PROJECT MY BILL IMPACT · ${esc(model.display_name)}</button>` : ""}
+        <div class="card-action" style="margin-top:11px">
+          <span class="eyebrow">Get involved</span>
+          <a class="act-link hot" href="https://www.citact.org/cac-email-sign-up" target="_blank" rel="noopener">◈ Citizens Action Coalition — join &amp; get alerts</a>
+          <a class="act-link" href="https://www.in.gov/iurc/" target="_blank" rel="noopener">◱ ${esc(county)} County meetings &amp; the public process</a>
+        </div>
         <div class="verified">TAP ANY COUNTY FOR ITS PROFILE</div>
       </div>`);
     const el = document.getElementById("card")!;
