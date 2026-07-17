@@ -42,3 +42,4 @@ scratch/
 smoke.mjs
 verify.mjs
 a11y-check.mjs
+redesign.mjs
