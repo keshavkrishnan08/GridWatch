@@ -87,12 +87,16 @@ npm run dev
 ```
 
 Units, currency, terminology ("county" vs "Kreis"), and the color scale adapt
-automatically; roads and cities come from the global basemap. Then bring your
-own facility data:
+automatically; roads and cities come from the global basemap.
+
+Then bring your region's data. **[`prompts/`](prompts/)** has LLM research
+prompts that produce it in the exact schema — facilities, bill models, civic
+process, plus an adversarial audit pass to run before you publish. Each is
+written so the model can't quietly invent figures: unknowns stay `null` and
+every number needs a citation.
 
 ```bash
-cp templates/facilities.template.json my-facilities.json   # documents every field
-npm run validate -- my-facilities.json                     # enforces the sourcing rule
+npm run validate -- my-facilities.json   # enforces the sourcing rule
 ```
 
 See **[FORKING.md](FORKING.md)** for the full guide.
