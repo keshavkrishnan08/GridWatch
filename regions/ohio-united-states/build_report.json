@@ -1,0 +1,17 @@
+{
+  "region": "Ohio, United States",
+  "slug": "ohio-united-states",
+  "providers": {
+    "osm_boundary": {
+      "ok": true,
+      "osm_id": 162061,
+      "bbox": [
+        -84.82034,
+        38.40406,
+        -80.51899,
+        42.32469
+      ],
+      "file": "boundary.geojson"
+    }
+  }
+}

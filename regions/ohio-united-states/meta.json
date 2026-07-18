@@ -1,0 +1,148 @@
+{
+ "last_updated": "2026-07-18",
+ "region": "Ohio, United States",
+ "state_peak_mw": null,
+ "counts": {
+  "facilities_curated": 43,
+  "facilities_tracked_statewide": 43,
+  "by_status": {
+   "rumored": 43
+  },
+  "counties_with_projects": 14,
+  "power_plants": 293,
+  "transmission_lines": 11095,
+  "utility_territories": 0,
+  "substations": 3105
+ },
+ "load_mw": {
+  "committed": 0,
+  "proposed": 0,
+  "active_total": 0,
+  "withdrawn_avoided": 0,
+  "pct_of_state_peak": null
+ },
+ "mega_facilities": [],
+ "generation_mix": [
+  {
+   "fuel": "gas",
+   "mw": 18506,
+   "pct": 56.9
+  },
+  {
+   "fuel": "coal",
+   "mw": 6888,
+   "pct": 21.2
+  },
+  {
+   "fuel": "solar",
+   "mw": 3327,
+   "pct": 10.2
+  },
+  {
+   "fuel": "nuclear",
+   "mw": 2155,
+   "pct": 6.6
+  },
+  {
+   "fuel": "wind",
+   "mw": 1102,
+   "pct": 3.4
+  },
+  {
+   "fuel": "oil",
+   "mw": 222,
+   "pct": 0.7
+  },
+  {
+   "fuel": "other",
+   "mw": 166,
+   "pct": 0.5
+  },
+  {
+   "fuel": "hydro",
+   "mw": 123,
+   "pct": 0.4
+  },
+  {
+   "fuel": "battery",
+   "mw": 29,
+   "pct": 0.1
+  },
+  {
+   "fuel": "biomass",
+   "mw": 4,
+   "pct": 0.0
+  }
+ ],
+ "total_generation_mw": 32523,
+ "top_counties": [
+  {
+   "county": "Licking",
+   "count": 12,
+   "mw": 0,
+   "utility": null
+  },
+  {
+   "county": "Franklin",
+   "count": 11,
+   "mw": 0,
+   "utility": null
+  },
+  {
+   "county": "Cuyahoga",
+   "count": 5,
+   "mw": 0,
+   "utility": null
+  },
+  {
+   "county": "Butler",
+   "count": 2,
+   "mw": 0,
+   "utility": null
+  },
+  {
+   "county": "Warren",
+   "count": 2,
+   "mw": 0,
+   "utility": null
+  },
+  {
+   "county": "Hamilton",
+   "count": 2,
+   "mw": 0,
+   "utility": null
+  },
+  {
+   "county": "Wood",
+   "count": 2,
+   "mw": 0,
+   "utility": null
+  },
+  {
+   "county": "Clark",
+   "count": 1,
+   "mw": 0,
+   "utility": null
+  },
+  {
+   "county": "Erie",
+   "count": 1,
+   "mw": 0,
+   "utility": null
+  },
+  {
+   "county": "Mahoning",
+   "count": 1,
+   "mw": 0,
+   "utility": null
+  }
+ ],
+ "utilities": [],
+ "sources": {
+  "facilities": "OpenStreetMap (auto-discovered) + curated records",
+  "power_plants": "OpenStreetMap power=plant",
+  "transmission": "OpenStreetMap power=line",
+  "territories": "not configured for this region",
+  "counties": "OpenStreetMap administrative boundaries"
+ }
+}

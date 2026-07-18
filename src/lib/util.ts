@@ -76,9 +76,15 @@ export interface FacState {
 }
 export function computeState(f: Facility, year: number): FacState {
   const planned = f.mw_full ?? f.mw_phase1 ?? 0;
-  const announced = f.announced_year ?? Infinity; // missing => treated as not-yet-announced
+  const announced = f.announced_year;
   if (f.status === "withdrawn") {
-    return { visible: year >= announced, planned, ramp: 0, online: false, phase: "ghost" };
+    return { visible: announced == null || year >= announced, planned, ramp: 0, online: false, phase: "ghost" };
+  }
+  /* No announce date — typical of auto-discovered sites, which are mapped
+     because they already exist. Show them across the whole timeline instead of
+     hiding them behind a date we don't have. */
+  if (announced == null) {
+    return { visible: true, planned, ramp: 1, online: true, phase: "online" };
   }
   if (year < announced) return { visible: false, planned, ramp: 0, online: false, phase: "none" };
   const online = f.online_year ?? announced + 3;

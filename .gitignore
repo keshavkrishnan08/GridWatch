@@ -69,3 +69,10 @@ smoke.mjs
 kpi.mjs
 region.mjs
 autoframe.mjs
+pipeline/.cache/
+ohio.mjs
+
+# Bootstrapped regions: keep the small config/report as examples,
+# ignore the bulky generated geo layers and activation backups.
+regions/*/*.geojson
+regions/_backup/

@@ -44,8 +44,9 @@ export function fmtCoord(lat: number, lng: number): string {
 export const fmtAcres = (n: number | null | undefined): string =>
   n == null ? "——" : `${n.toLocaleString("en-US")} ac`;
 
-/** 2026.54 -> "JUL 2026" ; integer years -> "2026" */
-export function fmtYear(y: number): string {
+/** 2026.54 -> "JUL 2026" ; integer years -> "2026" ; unknown -> "—" */
+export function fmtYear(y: number | null | undefined): string {
+  if (y == null) return "—";
   const yr = Math.floor(y);
   const frac = y - yr;
   if (Math.abs(frac) < 0.02) return `${yr}`;
@@ -64,6 +65,6 @@ export const STATUS_LABEL: Record<string, string> = {
 };
 
 /** compact "time since" for the verified date */
-export function verifiedLabel(dateStr: string): string {
-  return `SRC VERIFIED ${dateStr}`;
+export function verifiedLabel(dateStr: string | null | undefined): string {
+  return dateStr ? `SRC VERIFIED ${dateStr}` : "NOT YET SOURCE-VERIFIED";
 }

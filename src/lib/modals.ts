@@ -74,6 +74,20 @@ export function openBillCalc(data: AppData, prefillId?: string) {
   track("bill_open", { prefill: prefillId ?? null });
   const utils = data.bill.utilities;
   const a = data.bill.assumptions;
+
+  // A freshly bootstrapped region has no local rate data yet. Say so plainly
+  // rather than rendering a model built from another region's numbers.
+  if (!utils.length) {
+    openModal("Bill Impact", `
+      <div class="prose">
+        <p>No bill-impact model is configured for this region yet.</p>
+        <p>Rates, customer counts, and filed cost-shifts have to come from local
+        utility and regulator filings — GridWatch won't estimate them. Add them to
+        <code>public/data/bill_impact_models.json</code> and this calculator turns on.</p>
+        <p style="color:var(--text-dim);font-size:11px;font-family:var(--mono)">${esc(data.bill.disclaimer || "")}</p>
+      </div>`);
+    return;
+  }
   const options = utils.map((u) => `<option value="${esc(u.id)}">${esc(u.display_name)}</option>`).join("");
 
   openModal("Bill Impact · Data Centers", `
@@ -319,7 +333,9 @@ export function openStats(data: AppData) {
   openModal("Indiana at a Glance", `
     <div class="stats-hero">
       <div class="sh-cell"><div class="sh-num phos">${fmtMW(total)}<small>MW</small></div><div class="sh-lab">Active data-center load</div></div>
-      <div class="sh-cell"><div class="sh-num" style="color:var(--load-high)">${m.load_mw.pct_of_state_peak}<small>%</small></div><div class="sh-lab">of state peak demand</div></div>
+      ${m.load_mw.pct_of_state_peak != null
+        ? `<div class="sh-cell"><div class="sh-num" style="color:var(--load-high)">${m.load_mw.pct_of_state_peak}<small>%</small></div><div class="sh-lab">of peak demand</div></div>`
+        : `<div class="sh-cell"><div class="sh-num" style="color:var(--text-dim);font-size:20px">—</div><div class="sh-lab">peak demand not configured</div></div>`}
     </div>
     <div class="stats-grid">
       <div class="sg"><span class="sg-v" style="color:var(--phosphor-bright)">${fmtMW(m.load_mw.committed)}</span><span class="sg-k">MW online / building</span></div>
@@ -330,7 +346,7 @@ export function openStats(data: AppData) {
       <div class="sg"><span class="sg-v">${fmtMW(m.load_mw.withdrawn_avoided)}</span><span class="sg-k">MW withdrawn</span></div>
     </div>
 
-    <div class="prose"><h3>Existing generation mix — ${fmtInt(m.total_generation_mw)} MW</h3></div>
+    ${mix.length ? `<div class="prose"><h3>Existing generation mix — ${fmtInt(m.total_generation_mw)} MW mapped</h3></div>` : ""}
     <div class="genmix">${mix.map((g) => `<span style="width:${g.pct}%;background:${fuelColor(g.fuel)}" title="${FUEL_LABEL[g.fuel]} ${g.pct}%"></span>`).join("")}</div>
     <div class="genmix-legend">${mix.slice(0, 6).map((g) => `<span class="gl-item"><span class="gl-swatch" style="background:${fuelColor(g.fuel)}"></span>${FUEL_LABEL[g.fuel]} ${g.pct}%</span>`).join("")}</div>
 
@@ -352,13 +368,19 @@ export function openStats(data: AppData) {
 export function openAbout(data: AppData) {
   track("about_open");
   const m = data.meta;
-  const committedPct = ((m.load_mw.committed / m.state_peak_mw) * 100).toFixed(0);
+  const committedPct = m.state_peak_mw
+    ? ((m.load_mw.committed / m.state_peak_mw) * 100).toFixed(0)
+    : null;
   openModal("About GridWatch Indiana", `
     <div class="prose">
       <p><strong>GridWatch Indiana</strong> maps every proposed and existing data center in the state against the power grid — megawatts, water, dockets, and projected bill impact — from public records. It's built to be genuinely useful to residents, reporters, and officials, and it's open-source under MIT so anyone can fork it for their own state.</p>
 
       <h3>What you're looking at</h3>
-      <p>${m.counts.facilities_curated} curated facilities of <strong>${m.counts.facilities_tracked_statewide} tracked statewide</strong>, drawn against ${fmtInt(m.counts.power_plants)} power plants, ${fmtInt(m.counts.transmission_lines)} transmission segments, and ${m.counts.utility_territories} utility service territories. Proposed and committed data-center load already totals <strong>${m.load_mw.pct_of_state_peak}% of Indiana's peak demand</strong> (about ${committedPct}% is committed/under construction), on a grid that is ${m.generation_mix[0]?.pct}% ${m.generation_mix[0]?.fuel}.</p>
+      <p>${m.counts.facilities_curated} curated facilities of <strong>${m.counts.facilities_tracked_statewide} tracked statewide</strong>, drawn against ${fmtInt(m.counts.power_plants)} power plants, ${fmtInt(m.counts.transmission_lines)} transmission segments, and ${m.counts.utility_territories} utility service territories. Proposed and committed data-center load totals <strong>${fmtMW(m.load_mw.active_total)} MW</strong>${
+        m.load_mw.pct_of_state_peak != null
+          ? ` — <strong>${m.load_mw.pct_of_state_peak}% of peak demand</strong>${committedPct ? ` (about ${committedPct}% committed/under construction)` : ""}`
+          : ""
+      }${m.generation_mix[0] ? `, on a grid that is ${m.generation_mix[0].pct}% ${m.generation_mix[0].fuel}` : ""}.</p>
 
       <h3>How the numbers are sourced</h3>
       <p>Every facility carries its sources and a verification date. Megawatt and cost figures come from IURC filings, utility filings, county records, and reporting — cited per record. Where a developer redacts a figure, the card flags it <span class="redaction-chip">◈ redacted</span> rather than guessing. Nothing here is invented.</p>
