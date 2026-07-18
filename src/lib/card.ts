@@ -59,13 +59,13 @@ export class Card {
     const involveBlock = f.status === "withdrawn"
       ? `<div class="card-action">
           <span class="eyebrow">Withdrawn after public opposition</span>
-          <a class="act-link" href="https://www.citact.org/ai-data-centers" target="_blank" rel="noopener">◈ How residents pushed back — Citizens Action Coalition</a>
+          <a class="act-link" data-civic="cac-story" href="https://www.citact.org/ai-data-centers" target="_blank" rel="noopener">◈ How residents pushed back — Citizens Action Coalition</a>
         </div>`
       : `<div class="card-action">
           <span class="eyebrow">Get involved${prospective ? " · this one is still in play" : ""}</span>
-          <a class="act-link hot" href="https://www.citact.org/cac-email-sign-up" target="_blank" rel="noopener">◈ Citizens Action Coalition — join &amp; get alerts</a>
-          <a class="act-link" href="https://www.in.gov/oucc/2504.htm" target="_blank" rel="noopener">✎ File a public comment on ${f.iurc_docket ? "Cause " + esc(f.iurc_docket) : "this case"} (OUCC)</a>
-          <a class="act-link" href="https://www.in.gov/iurc/" target="_blank" rel="noopener">◱ Find ${esc(f.county)} County's plan-commission meeting</a>
+          <a class="act-link hot" data-letter-fac="${esc(f.id)}">✉ Write your official about this project</a>
+          <a class="act-link" data-civic="cac" href="https://www.citact.org/cac-email-sign-up" target="_blank" rel="noopener">◈ Citizens Action Coalition — join &amp; get alerts</a>
+          <a class="act-link" data-civic="oucc" href="https://www.in.gov/oucc/2504.htm" target="_blank" rel="noopener">✎ File a public comment on ${f.iurc_docket ? "Cause " + esc(f.iurc_docket) : "this case"} (OUCC)</a>
         </div>`;
 
     this.root.className = "";

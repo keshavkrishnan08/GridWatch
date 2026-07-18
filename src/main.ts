@@ -9,9 +9,10 @@ import { Timeline } from "./lib/timeline";
 import { Card } from "./lib/card";
 import { Reticle } from "./lib/reticle";
 import { Newsletter } from "./lib/newsletter";
-import { openBillCalc, openAction, openAbout, openStats, closeModal } from "./lib/modals";
+import { openBillCalc, openAction, openAbout, openStats, openImpact, openLetter, closeModal } from "./lib/modals";
 import { servingUtility, UTIL_DISPLAY } from "./lib/util";
 import { fmtMW, esc } from "./lib/format";
+import { track, initAnalytics } from "./lib/track";
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -40,6 +41,7 @@ async function boot() {
     return;
   }
 
+  initAnalytics();
   const app = new App(data);
   app.start();
 
@@ -98,14 +100,28 @@ class App {
     this.wireTopbar();
     this.setupPanels();
     this.wireKeys();
+    this.setupActions();
     this.applyDeepLink();
+  }
+
+  /** Delegated handlers for the civic-action links sprinkled through cards/modals. */
+  private setupActions() {
+    document.addEventListener("click", (e) => {
+      const t = e.target as HTMLElement;
+      const lf = t.closest<HTMLElement>("[data-letter-fac]");
+      if (lf) { const f = this.data.facilities.facilities.find((x) => x.id === lf.dataset.letterFac); if (f) openLetter(this.data, { facility: f }); return; }
+      const lc = t.closest<HTMLElement>("[data-letter-cty]");
+      if (lc) { openLetter(this.data, { county: lc.dataset.letterCty! }); return; }
+      const cv = t.closest<HTMLElement>("[data-civic]");
+      if (cv) track("civic_click", { target: cv.dataset.civic });
+    });
   }
 
   select(id: string | null) {
     const f = id ? this.data.facilities.facilities.find((x) => x.id === id) ?? null : null;
     this.selectedId = f ? f.id : null;
     this.map.select(this.selectedId);
-    if (f) { this.card.show(f); this.dismissHint(); }
+    if (f) { this.card.show(f); this.dismissHint(); track("facility_view", { id: f.id, status: f.status, mw: f.mw_full ?? f.mw_phase1 ?? 0 }); }
     else { this.card.hide(); }
     this.syncUrl();
   }
@@ -113,6 +129,7 @@ class App {
   showCounty(county: string, lngLat: [number, number]) {
     this.selectedId = null;
     this.map.select(null);
+    track("county_view", { county });
     const d = this.data;
     const util = servingUtility(lngLat, d.territories);
     const key = util ? util.key : "other";
@@ -143,8 +160,9 @@ class App {
         ${model ? `<button class="docket-btn" id="cty-bill">▤ PROJECT MY BILL IMPACT · ${esc(model.display_name)}</button>` : ""}
         <div class="card-action" style="margin-top:11px">
           <span class="eyebrow">Get involved</span>
-          <a class="act-link hot" href="https://www.citact.org/cac-email-sign-up" target="_blank" rel="noopener">◈ Citizens Action Coalition — join &amp; get alerts</a>
-          <a class="act-link" href="https://www.in.gov/iurc/" target="_blank" rel="noopener">◱ ${esc(county)} County meetings &amp; the public process</a>
+          <a class="act-link hot" data-letter-cty="${esc(county)}">✉ Write your official about ${esc(county)} County</a>
+          <a class="act-link" data-civic="cac" href="https://www.citact.org/cac-email-sign-up" target="_blank" rel="noopener">◈ Citizens Action Coalition — join &amp; get alerts</a>
+          <a class="act-link" data-civic="county" href="https://www.in.gov/iurc/" target="_blank" rel="noopener">◱ ${esc(county)} County meetings &amp; the public process</a>
         </div>
         <div class="verified">TAP ANY COUNTY FOR ITS PROFILE</div>
       </div>`);
@@ -155,6 +173,7 @@ class App {
   }
 
   private wireTopbar() {
+    $("btn-impact").addEventListener("click", () => openImpact(this.data));
     $("btn-stats").addEventListener("click", () => openStats(this.data));
     $("btn-bill").addEventListener("click", () => openBillCalc(this.data));
     $("btn-action").addEventListener("click", () => openAction(this.data));
@@ -166,6 +185,7 @@ class App {
       try { await navigator.clipboard.writeText(location.href); btn.textContent = "✓"; }
       catch { btn.textContent = "⧉"; }
       setTimeout(() => (btn.textContent = prev), 1500);
+      track("share", { kind: this.selectedId ? "facility" : "map" });
     });
   }
 
