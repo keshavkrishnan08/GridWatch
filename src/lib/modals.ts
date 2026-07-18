@@ -6,6 +6,7 @@ import {
 } from "./util";
 import { newsletterFormHTML, wireNewsletterForm } from "./newsletter";
 import { track } from "./track";
+import { freshness, FRESH_COLOR, staleRecords } from "./freshness";
 
 const root = () => document.getElementById("modal-root")!;
 const BG_SELECTORS = ["#topbar", "#controls", "#timeline", "#card", "#map"];
@@ -325,6 +326,7 @@ export function openAction(data: AppData) {
 export function openStats(data: AppData) {
   track("stats_open");
   const m = data.meta;
+  const sfr = freshness(m.last_updated);
   const mix = m.generation_mix.filter((g) => g.pct >= 0.3);
   const total = m.load_mw.active_total;
   const dcJobs = Math.round(total * JOBS_PER_MW_DC);
@@ -368,6 +370,8 @@ export function openStats(data: AppData) {
 export function openAbout(data: AppData) {
   track("about_open");
   const m = data.meta;
+  const fr = freshness(m.last_updated);
+  const stale = staleRecords(data.facilities.facilities);
   const committedPct = m.state_peak_mw
     ? ((m.load_mw.committed / m.state_peak_mw) * 100).toFixed(0)
     : null;
@@ -398,7 +402,16 @@ export function openAbout(data: AppData) {
       <h3>Use it, cite it, fork it</h3>
       <p>MIT-licensed and static — no account required. Reporters and officials are welcome to cite it; the full dataset lives in version-controlled JSON at <code>/public/data</code>. Corrections and new filings are welcome as pull requests, and the whole atlas can be re-pointed at any other state, country, or region (see <code>FORKING.md</code>).</p>
       <button class="docket-btn" id="ab-csv">⭳ DOWNLOAD THE DATASET · CSV</button>
-      <p style="color:var(--text-dim);font-size:11px;font-family:var(--mono)">DATASET UPDATED ${esc(m.last_updated)} · NONPARTISAN · NOT LEGAL OR FINANCIAL ADVICE</p>
+      <h3>How current is this?</h3>
+      <div class="fresh-line" style="--fc:${FRESH_COLOR[fr.level]}">
+        <span class="fresh-dot"></span>
+        <span>Dataset <strong>${esc(fr.label)}</strong> (${esc(m.last_updated)})${
+          stale ? ` · ${stale} record${stale === 1 ? "" : "s"} not re-verified in 6 months` : ""}</span>
+      </div>
+      ${fr.note ? `<p class="mini-note" style="border-left:2px solid ${FRESH_COLOR[fr.level]};padding-left:10px">${esc(fr.note)}</p>` : ""}
+      <p>Every record carries its own <code>last_verified</code> date, and the whole dataset is
+      version-controlled — so you can always see what changed and when.</p>
+      <p style="color:var(--text-dim);font-size:11px;font-family:var(--mono)">NONPARTISAN · NOT LEGAL OR FINANCIAL ADVICE</p>
     </div>
   `, (el) => {
     el.querySelector("#ab-csv")?.addEventListener("click", () => exportCSV(data));

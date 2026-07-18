@@ -54,6 +54,7 @@ npm install
 npm run dev        # local dev server at http://localhost:5173
 npm run build      # production build → dist/
 npm run preview    # serve the production build
+npm run test:all   # typecheck + TS tests + pipeline tests
 ```
 
 Refresh the underlying data any time:
@@ -74,17 +75,41 @@ It's a static site, so deployment is one step:
 
 Because `vite.config.ts` uses a relative base, the same build runs from any host or sub-path.
 
-## Fork it for your state
+## Fork it for anywhere in the world
 
-That keyless, static architecture is the whole point. An Ohio resident could clone this into "GridWatch Ohio" in an afternoon:
+Indiana is the reference implementation; the engine underneath is
+region-agnostic. One command maps any region on Earth — outline, subdivisions,
+power plants, transmission, substations — and re-tunes the whole atlas to it:
 
-1. Swap `public/data/facilities.json` for your state's projects (keep the schema and the `sources` on every record).
-2. Point `pipeline/fetch_geo.py` at your state (change `IN_BBOX` and the county FIPS filter).
-3. Re-run the pipeline and `build_dataset.py`. Done.
+```bash
+npm run region -- --region "Ohio, United States" --activate
+npm run dev
+```
+
+Units, currency, terminology ("county" vs "Kreis"), and the color scale adapt
+automatically; roads and cities come from the global basemap. Then bring your
+own facility data:
+
+```bash
+cp templates/facilities.template.json my-facilities.json   # documents every field
+npm run validate -- my-facilities.json                     # enforces the sourcing rule
+```
+
+See **[FORKING.md](FORKING.md)** for the full guide.
 
 ## Contributing
 
-Corrections and new filings are welcome. A data center moved, a docket got decided, a redacted figure became public? Open a PR against `public/data/facilities.json` with a source link, or file an issue. Every record carries a `last_verified` date — help keep them fresh.
+Corrections and new filings are welcome — they're the most valuable contribution
+here. A data center moved, a docket got decided, a redacted figure became
+public? Open a PR against `public/data/facilities.json` with a source link, or
+file an issue.
+
+One rule governs everything: **if you can't cite it, don't add it.** Read
+**[CONTRIBUTING.md](CONTRIBUTING.md)** before your first PR.
+
+Data decays, so staleness is tracked rather than ignored: `npm run freshness`
+reports the dataset's age, and the app shows visitors a banner automatically
+once it's six months old.
 
 ## Project structure
 
