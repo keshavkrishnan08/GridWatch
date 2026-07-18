@@ -1,0 +1,20 @@
+{
+ "_todo": "Not yet configured for OHIO. Replace this file with real, sourced local data before publishing \u2014 the atlas deliberately shows nothing rather than another region's figures.",
+ "disclaimer": "No bill-impact model is configured for OHIO yet. Rates and cost-shift figures must come from local utility filings.",
+ "equation": "dc_impact_per_month = filed_infrastructure_usd / customers / (amortize_years * 12)",
+ "statewide_context": {
+  "avg_bill_increase_this_year_pct": null,
+  "avg_bill_increase_decade_pct": null,
+  "avg_rate_cents_kwh": null,
+  "source": {
+   "label": "not configured",
+   "url": ""
+  }
+ },
+ "assumptions": {
+  "amortize_years": 20,
+  "uncertainty_band_pct": 25,
+  "typical_household_kwh": 1000
+ },
+ "utilities": []
+}
