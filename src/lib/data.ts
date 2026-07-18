@@ -105,9 +105,40 @@ export interface DocketFile { portal: string; note: string; dockets: Docket[]; }
 export interface CountyRestriction { name: string; type: "ban" | "moratorium"; detail: string; }
 export interface RestrictionFile { note: string; sources: Source[]; counties: CountyRestriction[]; }
 
+/* Region config — de-hardcodes Indiana so the atlas can be forked for any
+   state / country / region. Everything the map needs to frame + label a
+   region lives here; bounds are derived from the boundary polygon. */
+export interface RegionConfig {
+  name: string;
+  region_label: string;
+  tagline: string;
+  boundary_file: string;
+  subdivisions_file: string;
+  subdivision_key: string;
+  subdivision_singular: string;
+  home_center: [number, number] | null;
+  home_zoom_boost: number;
+  min_zoom: number;
+  max_zoom: number;
+}
+export const DEFAULT_REGION: RegionConfig = {
+  name: "GridWatch Indiana",
+  region_label: "INDIANA",
+  tagline: "DATA CENTER ATLAS",
+  boundary_file: "indiana.geojson",
+  subdivisions_file: "counties.geojson",
+  subdivision_key: "county",
+  subdivision_singular: "county",
+  home_center: [-86.43, 39.76],
+  home_zoom_boost: 0.42,
+  min_zoom: 3.5,
+  max_zoom: 16,
+};
+
 export type FC = GeoJSON.FeatureCollection;
 
 export interface AppData {
+  region: RegionConfig;
   facilities: FacilitiesFile;
   meta: Meta;
   timeline: TimelineFile;
@@ -137,6 +168,7 @@ async function getFC(path: string): Promise<FC> {
 }
 
 export async function loadAll(): Promise<AppData> {
+  const region = await get<RegionConfig>("region.json").catch(() => DEFAULT_REGION);
   const [
     facilities, meta, timeline, bill, action, dockets, restrictions,
     counties, indiana, powerPlants, transmission, territories, substations,
@@ -148,12 +180,12 @@ export async function loadAll(): Promise<AppData> {
     get<ActionFile>("action_items.json"),
     get<DocketFile>("dockets.json"),
     get<RestrictionFile>("county_restrictions.json"),
-    getFC("counties.geojson"),
-    getFC("indiana.geojson"),
+    getFC(region.subdivisions_file),
+    getFC(region.boundary_file),
     getFC("power_plants.geojson"),
     getFC("transmission.geojson"),
     getFC("utility_territories.geojson"),
     getFC("substations.geojson"),
   ]);
-  return { facilities, meta, timeline, bill, action, dockets, restrictions, counties, indiana, powerPlants, transmission, territories, substations };
+  return { region, facilities, meta, timeline, bill, action, dockets, restrictions, counties, indiana, powerPlants, transmission, territories, substations };
 }
