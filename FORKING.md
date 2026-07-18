@@ -1,11 +1,15 @@
 # Build a GridWatch for anywhere in the world
 
-GridWatch is a **toolkit**, not one state's map. Indiana is the reference
+GridWatch is an **interface**, not one state's map. Indiana is the reference
 implementation; the engine underneath is region-agnostic.
 
-You bring a region name and your own facility data. The toolkit brings the map,
-the rendering, the color science, the civic-action tooling, and the honesty
-guardrails.
+You bring a region name and your own facility data. The interface brings the
+map, the rendering, the color science, the civic-action tooling, and the
+honesty guardrails.
+
+Don't have the data yet? That's the expected case. [`prompts/`](prompts/) has
+LLM research prompts that produce it in the exact schema — see
+[Getting your data](#getting-your-data) below.
 
 ```bash
 npm run region -- --region "Bavaria, Germany" --activate
@@ -102,10 +106,33 @@ statuses, and phase capacity exceeding full capacity.
 
 ---
 
-## Optional: auto-discovery
+## Getting your data
+
+The map layers are automatic. The facilities are yours to research — and
+[`prompts/`](prompts/) turns that from weeks of docket-reading into an
+afternoon:
+
+| Prompt | Produces |
+|---|---|
+| [`01-facilities.md`](prompts/01-facilities.md) | your data centers |
+| [`02-utilities-and-bills.md`](prompts/02-utilities-and-bills.md) | the bill calculator |
+| [`03-civic-process.md`](prompts/03-civic-process.md) | regulator, dockets, local restrictions |
+| [`04-audit.md`](prompts/04-audit.md) | corrections — run before publishing |
+
+Replace `{{REGION}}`, paste into an LLM with web search, save the JSON, then
+`npm run validate`. Each prompt is written to stop the model inventing figures:
+unknowns stay `null`, every number needs a citation, and step 4 is an
+adversarial pass with a fresh model.
+
+Using Claude Code? `.claude/skills/gridwatch-region/` runs the whole flow.
+
+**Verify by hand before publishing.** The validator checks structure, not truth.
+Open a few source links yourself.
+
+### Optional: auto-discovery as a starting point
 
 The bootstrap can also sweep OpenStreetMap for data centers already mapped in
-your region, as a starting point:
+your region:
 
 ```bash
 npm run region -- --region "Ohio, United States"
