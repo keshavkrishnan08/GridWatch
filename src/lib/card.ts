@@ -2,7 +2,8 @@ import type { Facility } from "./data";
 import {
   fmtMW, fmtUSD, fmtAcres, fmtCoord, fmtYear, fmtGpd, fmtInt, STATUS_LABEL, verifiedLabel, esc, safeUrl,
 } from "./format";
-import { sevColor, sevClass, utilKey, UTIL_DISPLAY, JOBS_PER_MW_DC, JOBS_PER_MW_OTHER } from "./util";
+import { sevColor, sevClass, utilKey, UTIL_DISPLAY, jobsModel } from "./util";
+import { withSub, theme } from "./theme";
 
 export class Card {
   private root: HTMLElement;
@@ -37,16 +38,17 @@ export class Card {
     const geoNote = f.geo_precision === "parcel" ? "parcel"
       : f.geo_precision === "site" ? "approx. site" : f.geo_precision === "city" ? "city-level" : "county-level";
 
-    const jobs = f.jobs ?? (mw ? Math.round(mw * JOBS_PER_MW_DC) : null);
-    const otherJobs = mw ? Math.round(mw * JOBS_PER_MW_OTHER) : null;
+    const jm = jobsModel();
+    const jobs = f.jobs ?? (mw ? Math.round(mw * jm.datacenter) : null);
+    const otherJobs = mw && jm.comparison ? Math.round(mw * jm.comparison) : null;
     const impactRows = [
-      jobs != null ? `<div class="card-row"><span class="rk">Permanent jobs</span><span class="rv">${fmtInt(jobs)}${f.jobs == null ? ` <span style="color:var(--text-faint)">est · 0.26/MW</span>` : ""}</span></div>` : "",
+      jobs != null ? `<div class="card-row"><span class="rk">Permanent jobs</span><span class="rv">${fmtInt(jobs)}${f.jobs == null ? ` <span style="color:var(--text-faint)">est · ${jm.datacenter}/MW</span>` : ""}</span></div>` : "",
       f.water_source ? `<div class="card-row"><span class="rk">Water source</span><span class="rv" style="max-width:58%">${esc(f.water_source)}</span></div>` : "",
       f.diesel_generators ? `<div class="card-row"><span class="rk">Backup diesel</span><span class="rv" style="color:var(--warning)">${fmtInt(f.diesel_generators)} gens${f.diesel_gallons_m ? ` · ${f.diesel_gallons_m}M gal` : ""}</span></div>` : "",
       f.wetland_acres ? `<div class="card-row"><span class="rk">Wetland destroyed</span><span class="rv" style="color:var(--warning)">${f.wetland_acres} acres</span></div>` : "",
     ].join("");
     const jobsCompare = otherJobs
-      ? `<div class="mini-note" style="margin-top:8px">At <b>41 jobs/MW</b> (typical Indiana industry) this ${fmtMW(mw)} MW would support ~<b>${fmtInt(otherJobs)}</b> jobs; data centers average <b>~0.26 jobs/MW</b>.</div>`
+      ? `<div class="mini-note" style="margin-top:8px">At <b>${jm.comparison} jobs/MW</b> (${esc(jm.comparison_label)}) this ${fmtMW(mw)} MW would support ~<b>${fmtInt(otherJobs)}</b> jobs; data centers average <b>~${jm.datacenter} jobs/MW</b>.</div>`
       : "";
     const impactBlock = (impactRows || jobsCompare)
       ? `<div class="card-impact"><span class="eyebrow">Local impact</span>${impactRows}${jobsCompare}</div>` : "";
@@ -65,7 +67,7 @@ export class Card {
           <span class="eyebrow">Get involved${prospective ? " · this one is still in play" : ""}</span>
           <a class="act-link hot" data-letter-fac="${esc(f.id)}">✉ Write your official about this project</a>
           <a class="act-link" data-civic="cac" href="https://www.citact.org/cac-email-sign-up" target="_blank" rel="noopener">◈ Citizens Action Coalition — join &amp; get alerts</a>
-          <a class="act-link" data-civic="oucc" href="https://www.in.gov/oucc/2504.htm" target="_blank" rel="noopener">✎ File a public comment on ${f.iurc_docket ? "Cause " + esc(f.iurc_docket) : "this case"} (OUCC)</a>
+          <a class="act-link" data-civic="oucc" href="${theme().terminology.consumer_advocate_url || "#"}" target="_blank" rel="noopener">✎ File a public comment on ${f.iurc_docket ? "Cause " + esc(f.iurc_docket) : "this case"}${theme().terminology.consumer_advocate ? " (" + esc(theme().terminology.consumer_advocate) + ")" : ""}</a>
         </div>`;
 
     this.root.className = "";
@@ -76,7 +78,7 @@ export class Card {
         <button class="card-close" aria-label="Close">✕</button>
         <span class="card-status ${sevClass(mw)}">${STATUS_LABEL[f.status] ?? "TRACKED"}</span>
         <h2 class="card-name">${esc(f.name)}</h2>
-        <div class="card-loc">${esc(f.city)}, ${esc(f.county)} County · ${fmtCoord(f.lat, f.lng)} <span style="color:var(--text-faint)">(${geoNote})</span></div>
+        <div class="card-loc">${esc(f.city)}, ${esc(withSub(f.county))} · ${fmtCoord(f.lat, f.lng)} <span style="color:var(--text-faint)">(${geoNote})</span></div>
       </div>
       <div class="card-body">
         ${chatterBlock}

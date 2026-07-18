@@ -28,7 +28,7 @@ import time
 
 from .core.geo import bbox_of, dedupe_sites
 from .providers import RegionContext, resolve
-from .scaffold import write_civic_stubs, write_meta
+from .scaffold import write_civic_stubs, write_meta, write_theme
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REGIONS_DIR = os.path.join(ROOT, "regions")
@@ -40,7 +40,7 @@ ACTIVATE_FILES = [
     "transmission.geojson", "substations.geojson", "utility_territories.geojson",
     "facilities.json", "region.json", "meta.json", "timeline_events.json",
     "bill_impact_models.json", "action_items.json", "dockets.json",
-    "county_restrictions.json",
+    "county_restrictions.json", "theme.json",
 ]
 
 
@@ -195,9 +195,13 @@ def main() -> int:
     # ---- files the auto-pull can't invent: computed stats + honest empty stubs
     meta = write_meta(out_dir, args.region, merged)
     stubs = write_civic_stubs(out_dir, args.region, label)
+    write_theme(out_dir, label, ctx.subdivision_key, ctx.country_code)
     print(f"  [ok ] meta.json             {meta['counts']['power_plants']} plants, "
           f"{len(meta['generation_mix'])} fuel types, {meta['total_generation_mw']} MW mapped")
     print(f"  [ok ] civic stubs           {len(stubs)} files (empty until you localize them)")
+    print(f"  [ok ] theme.json            auto scale · "
+          f"{'imperial' if (ctx.country_code or '') in ('US','LR','MM') else 'metric'} units · "
+          f"'{ctx.subdivision_key}' terminology")
 
     if args.activate:
         os.makedirs(PUBLIC_DATA, exist_ok=True)

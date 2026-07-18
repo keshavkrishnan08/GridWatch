@@ -76,3 +76,5 @@ ohio.mjs
 # ignore the bulky generated geo layers and activation backups.
 regions/*/*.geojson
 regions/_backup/
+diag5.mjs
+kpi2.mjs

@@ -20,7 +20,8 @@
     "preview": "vite preview --port 4173 --host",
     "typecheck": "tsc --noEmit",
     "data": "python3 pipeline/build_dataset.py",
-    "validate": "python3 pipeline/validate.py"
+    "validate": "python3 -m pipeline.validate_input",
+    "region": "python3 -m pipeline.bootstrap"
   },
   "dependencies": {
     "d3": "^7.9.0",
