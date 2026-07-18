@@ -1,0 +1,14 @@
+{
+  "name": "GridWatch Indiana",
+  "region_label": "INDIANA",
+  "tagline": "DATA CENTER ATLAS",
+  "boundary_file": "indiana.geojson",
+  "subdivisions_file": "counties.geojson",
+  "subdivision_key": "county",
+  "subdivision_singular": "county",
+  "home_center": [-86.43, 39.76],
+  "home_zoom_boost": 0.42,
+  "min_zoom": 3.5,
+  "max_zoom": 16,
+  "_note": "Fork this: replace the data files + these fields to re-point the atlas at any state, country, or region. Bounds auto-derive from boundary_file. See FORKING.md."
+}

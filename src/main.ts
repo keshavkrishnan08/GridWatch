@@ -72,6 +72,7 @@ class App {
 
   start() {
     const d = this.data;
+    this.applyBranding();
     this.card = new Card($("card"), () => this.select(null));
     this.reticle = new Reticle($("reticle"), $("telemetry"));
     this.newsletter = new Newsletter($("newsletter"));
@@ -102,6 +103,16 @@ class App {
     this.wireKeys();
     this.setupActions();
     this.applyDeepLink();
+  }
+
+  /** Re-brand the header + tab from region.json so forks only edit config. */
+  private applyBranding() {
+    const r = this.data.region;
+    const sub = document.querySelector(".brand-sub");
+    const tag = document.querySelector(".brand-tag");
+    if (sub) sub.textContent = ` / ${r.region_label}`;
+    if (tag) tag.textContent = r.tagline;
+    if (r.name) document.title = r.name;
   }
 
   /** Delegated handlers for the civic-action links sprinkled through cards/modals. */
