@@ -164,12 +164,26 @@ export function servingUtility(
   return { name: chosen.name, key: utilKey(chosen.name) };
 }
 
-/** Which county contains a point? */
-export function countyAt(pt: [number, number], counties: GeoJSON.FeatureCollection): string | null {
+/** Which subdivision (county/province/…) contains a point? */
+export function countyAt(pt: [number, number], counties: GeoJSON.FeatureCollection, key = "county"): string | null {
   for (const f of counties.features) {
-    if (pipGeom(pt, f.geometry)) return ((f.properties as any)?.county) ?? null;
+    if (pipGeom(pt, f.geometry)) return ((f.properties as any)?.[key]) ?? null;
   }
   return null;
+}
+
+/** Bounding box of a FeatureCollection as [[minLng,minLat],[maxLng,maxLat]]. */
+export function bboxOf(fc: GeoJSON.FeatureCollection): [[number, number], [number, number]] | null {
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  const scan = (c: any) => {
+    if (typeof c[0] === "number") {
+      minX = Math.min(minX, c[0]); maxX = Math.max(maxX, c[0]);
+      minY = Math.min(minY, c[1]); maxY = Math.max(maxY, c[1]);
+    } else if (Array.isArray(c)) c.forEach(scan);
+  };
+  for (const f of fc.features) if (f.geometry && "coordinates" in f.geometry) scan((f.geometry as any).coordinates);
+  if (!isFinite(minX)) return null;
+  return [[minX, minY], [maxX, maxY]];
 }
 
 /** Representative interior point (bbox center) for a named subdivision. */

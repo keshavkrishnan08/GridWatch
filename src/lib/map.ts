@@ -2,12 +2,12 @@ import maplibregl, { Map as MLMap, LngLatBoundsLike } from "maplibre-gl";
 import type { AppData, Facility } from "./data";
 import {
   computeState, sevColor, fuelColor, utilColor, clamp,
-  matchFacility, countyAt, ALL_FILTERS, type Filters,
+  matchFacility, countyAt, bboxOf, ALL_FILTERS, type Filters,
 } from "./util";
 
-// snug to the state so the whole outline fills the frame
-const INDIANA_BOUNDS: LngLatBoundsLike = [[-88.12, 37.74], [-84.74, 41.79]];
-const INDIANA_CENTER: [number, number] = [-86.3, 39.9];
+// fallback framing if the boundary polygon is missing (defaults to Indiana)
+const FALLBACK_BOUNDS: LngLatBoundsLike = [[-88.12, 37.74], [-84.74, 41.79]];
+const FALLBACK_CENTER: [number, number] = [-86.3, 39.9];
 const UPCOMING = new Set(["proposed", "approved", "rumored"]); // get dashed "targeting" rings
 
 /** Base pixel radius of a facility node, by megawatts. Kept small so nodes
@@ -113,6 +113,10 @@ export class GridMap {
   private filters: Filters = ALL_FILTERS;
   private labelHost: HTMLDivElement;
   private reduceMotion: boolean;
+  // region framing, derived from the boundary polygon + region.json
+  private regionBounds: LngLatBoundsLike;
+  private regionCenter: [number, number];
+  private subKey: string;
 
   constructor(container: string, data: AppData, handlers: MapHandlers, year: number) {
     this.data = data;
@@ -120,14 +124,21 @@ export class GridMap {
     this.year = year;
     this.reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    // bounds auto-derive from the boundary; center honors region.json or bbox mid
+    const bb = bboxOf(data.indiana);
+    this.regionBounds = bb ?? FALLBACK_BOUNDS;
+    this.regionCenter = data.region.home_center
+      ?? (bb ? [(bb[0][0] + bb[1][0]) / 2, (bb[0][1] + bb[1][1]) / 2] : FALLBACK_CENTER);
+    this.subKey = data.region.subdivision_key || "county";
+
     this.map = new maplibregl.Map({
       container,
       // keyless dark vector basemap: roads, water, labels, building footprints
       style: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
-      center: INDIANA_CENTER,
+      center: this.regionCenter,
       zoom: this.reduceMotion ? 7.2 : 4.6, // flat top-down; brief zoom-in
-      minZoom: 3.5,
-      maxZoom: 16,
+      minZoom: data.region.min_zoom,
+      maxZoom: data.region.max_zoom,
       pitch: 0,
       bearing: 0,
       dragRotate: false,
@@ -232,10 +243,10 @@ export class GridMap {
     /* ---- county restriction overlay (bans / moratoriums) ---- */
     const rBy = new Map(this.data.restrictions.counties.map((c) => [c.name.toLowerCase(), c.type]));
     const rFeats = this.data.counties.features
-      .filter((f) => rBy.has((((f.properties as any)?.county) || "").toLowerCase()))
+      .filter((f) => rBy.has((((f.properties as any)?.[this.subKey]) || "").toLowerCase()))
       .map((f) => ({
         type: "Feature" as const, geometry: f.geometry,
-        properties: { county: (f.properties as any).county, rtype: rBy.get(((f.properties as any).county).toLowerCase()) },
+        properties: { county: (f.properties as any)[this.subKey], rtype: rBy.get(((f.properties as any)[this.subKey]).toLowerCase()) },
       }));
     m.addSource("restrictions", { type: "geojson", data: { type: "FeatureCollection", features: rFeats } as any });
     m.addLayer({ id: "restrict-fill", type: "fill", source: "restrictions", layout: { visibility: "none" },
@@ -329,14 +340,14 @@ export class GridMap {
    *  cameraForBounds can return an implausible zoom before layout settles, so
    *  we sanity-check and fall back to a fixed Indiana framing. */
   private homeCamera(): { center: [number, number]; zoom: number } {
-    // fixed geographic center of the state; setPadding handles the offset for
-    // the filter panel, so Indiana stays balanced in the clear area.
-    const center: [number, number] = [-86.43, 39.76];
+    // region center; setPadding handles the panel offset so the region stays
+    // balanced in the clear area. Bounds + boost come from region.json.
+    const center = this.regionCenter;
     let zoom = window.innerWidth > 820 ? 6.4 : 5.8;
     try {
-      const cam: any = this.map.cameraForBounds(INDIANA_BOUNDS, { padding: this.pad(), maxZoom: 9 });
+      const cam: any = this.map.cameraForBounds(this.regionBounds, { padding: this.pad(), maxZoom: 9 });
       if (cam && typeof cam.zoom === "number" && cam.zoom >= 5.5) {
-        zoom = Math.min(9, cam.zoom + 0.42);
+        zoom = Math.min(9, cam.zoom + this.data.region.home_zoom_boost);
       }
     } catch { /* keep fallback zoom */ }
     return { center, zoom };
@@ -375,7 +386,7 @@ export class GridMap {
     m.on("click", (e) => {
       const hits = m.queryRenderedFeatures(e.point, { layers: ["dc-core", "dc-ghost"] });
       if (hits.length) return; // facility click handlers fire instead
-      this.handlers.onCounty(countyAt([e.lngLat.lng, e.lngLat.lat], this.data.counties), [e.lngLat.lng, e.lngLat.lat]);
+      this.handlers.onCounty(countyAt([e.lngLat.lng, e.lngLat.lat], this.data.counties, this.subKey), [e.lngLat.lng, e.lngLat.lat]);
     });
   }
 
@@ -385,7 +396,7 @@ export class GridMap {
 
   private computeCentroids() {
     for (const f of this.data.counties.features) {
-      const name = (f.properties as any)?.county as string;
+      const name = (f.properties as any)?.[this.subKey] as string;
       if (!name) continue;
       const b = bbox(f.geometry as any);
       this.centroids.set(name.toLowerCase(), [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2]);
@@ -601,7 +612,7 @@ export class GridMap {
     this.map.flyTo({ ...this.homeCamera(), pitch: 0, bearing: 0, duration: 1400, essential: true });
   }
 
-  fitIndiana() { this.map.fitBounds(INDIANA_BOUNDS, { padding: 60, duration: 1200 }); }
+  fitIndiana() { this.map.fitBounds(this.regionBounds, { padding: 60, duration: 1200 }); }
 
   destroy() {
     cancelAnimationFrame(this.raf);
