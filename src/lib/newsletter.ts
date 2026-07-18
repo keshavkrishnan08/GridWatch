@@ -9,6 +9,8 @@
    them, and the visitor still gets an honest confirmation.
    ------------------------------------------------------------------ */
 
+import { track } from "./track";
+
 const KEY_STATE = "gw-news";     // "sub" | "closed"
 const KEY_EMAILS = "gw-news-emails";
 const SINK = "gw-news-sink";     // hidden iframe target for the no-CORS POST
@@ -86,6 +88,7 @@ export function wireNewsletterForm(scope: HTMLElement, onDone?: () => void) {
     }
     remember(val);
     postToProvider(val);
+    track("newsletter_subscribe", { where: scope.id || "embed" });
     localStorage.setItem(KEY_STATE, "sub");
     form.classList.add("done");
     msg.innerHTML = `<span class="nl-ok">✓ You're on the list.</span> Watch for the first GridWatch brief.`;

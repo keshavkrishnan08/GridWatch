@@ -172,6 +172,28 @@ export function countyAt(pt: [number, number], counties: GeoJSON.FeatureCollecti
   return null;
 }
 
+/** Representative interior point (bbox center) for a named subdivision. */
+export function countyCentroid(
+  name: string,
+  counties: GeoJSON.FeatureCollection,
+  key = "county"
+): [number, number] | null {
+  const feat = counties.features.find(
+    (f) => String((f.properties as any)?.[key] ?? "").toLowerCase() === name.toLowerCase()
+  );
+  if (!feat) return null;
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  const scan = (c: any) => {
+    if (typeof c[0] === "number") {
+      minX = Math.min(minX, c[0]); maxX = Math.max(maxX, c[0]);
+      minY = Math.min(minY, c[1]); maxY = Math.max(maxY, c[1]);
+    } else c.forEach(scan);
+  };
+  scan((feat.geometry as any).coordinates);
+  if (!isFinite(minX)) return null;
+  return [(minX + maxX) / 2, (minY + maxY) / 2];
+}
+
 /* shared app state */
 export interface AppState {
   year: number;

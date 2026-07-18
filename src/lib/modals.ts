@@ -1,7 +1,11 @@
-import type { AppData, UtilityModel } from "./data";
+import type { AppData, UtilityModel, Facility } from "./data";
 import { fmtUSD, fmtInt, fmtMW, esc, safeUrl } from "./format";
-import { fuelColor, FUEL_LABEL, JOBS_PER_MW_DC, JOBS_PER_MW_OTHER } from "./util";
+import {
+  fuelColor, FUEL_LABEL, JOBS_PER_MW_DC, JOBS_PER_MW_OTHER,
+  servingUtility, countyCentroid, UTIL_DISPLAY,
+} from "./util";
 import { newsletterFormHTML, wireNewsletterForm } from "./newsletter";
+import { track } from "./track";
 
 const root = () => document.getElementById("modal-root")!;
 const BG_SELECTORS = ["#topbar", "#controls", "#timeline", "#card", "#map"];
@@ -67,6 +71,7 @@ function project(u: UtilityModel, kwh: number, a: AppData["bill"]["assumptions"]
 }
 
 export function openBillCalc(data: AppData, prefillId?: string) {
+  track("bill_open", { prefill: prefillId ?? null });
   const utils = data.bill.utilities;
   const a = data.bill.assumptions;
   const options = utils.map((u) => `<option value="${esc(u.id)}">${esc(u.display_name)}</option>`).join("");
@@ -110,7 +115,11 @@ export function openBillCalc(data: AppData, prefillId?: string) {
         <div class="mini-note" style="margin-top:12px">${esc(u.notes)} <a href="${safeUrl(u.recent_increase.source.url)}" target="_blank" rel="noopener">Source ▸</a></div>
         <div class="mini-note" style="margin-top:8px;font-size:9px;color:var(--text-faint)">${esc(data.bill.equation)}</div>`;
     };
-    sel.addEventListener("change", compute);
+    sel.addEventListener("change", () => {
+      const u = utils.find((x) => x.id === sel.value) ?? utils[0];
+      track("bill_estimate", { utility: u.id });
+      compute();
+    });
     kwh.addEventListener("input", () => {
       el.querySelectorAll(".bc-chip").forEach((c) => c.classList.remove("on"));
       compute();
@@ -126,8 +135,141 @@ export function openBillCalc(data: AppData, prefillId?: string) {
   });
 }
 
+/* ---------------- Check My Area · personalized exposure ----------------
+   A single, shareable conversion: pick your county → your utility, the
+   data centers near you, and the projected bill hit. Each run is a KPI. */
+export function openImpact(data: AppData) {
+  const names = [...new Set(
+    data.counties.features.map((f) => String((f.properties as any)?.county ?? "")).filter(Boolean)
+  )].sort();
+  const options = names.map((c) => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
+  openModal("Check My Area · Your Exposure", `
+    <div class="prose" style="margin-bottom:12px">Pick your county to see who powers your home, what's being built nearby, and the projected hit to your bill — all from public records.</div>
+    <div class="bc-field">
+      <label for="im-county">Your county</label>
+      <select class="bc-select" id="im-county"><option value="">Select a county…</option>${options}</select>
+    </div>
+    <div id="im-result"></div>
+  `, (el) => {
+    const sel = el.querySelector<HTMLSelectElement>("#im-county")!;
+    const a = data.bill.assumptions;
+    sel.addEventListener("change", () => {
+      const county = sel.value;
+      const out = el.querySelector("#im-result")!;
+      if (!county) { out.innerHTML = ""; return; }
+      const centroid = countyCentroid(county, data.counties);
+      const util = centroid ? servingUtility(centroid, data.territories) : null;
+      const key = util ? util.key : "other";
+      const utilName = util ? (key !== "other" ? UTIL_DISPLAY[key] : util.name.replace(/\b\w/g, (c) => c.toUpperCase())) : "Multiple / cooperative";
+      const inCounty = data.facilities.facilities.filter((f) => f.county === county && f.status !== "withdrawn");
+      const totalMW = inCounty.reduce((s, f) => s + (f.mw_full ?? f.mw_phase1 ?? 0), 0);
+      const model = util ? data.bill.utilities.find((u) => u.id === (key === "cp" ? "centerpoint" : key)) : null;
+      const p = model ? project(model, a.typical_household_kwh, a) : null;
+      const restr = data.restrictions.counties.find((c) => c.name.toLowerCase() === county.toLowerCase());
+      track("impact_report_run", { county, utility: key, facilities: inCounty.length, monthly: p ? +p.dcMonthly.toFixed(2) : 0 });
+      out.innerHTML = `
+        <div class="stats-hero" style="margin-top:12px">
+          <div class="sh-cell"><div class="sh-num phos">${inCounty.length}</div><div class="sh-lab">data center${inCounty.length === 1 ? "" : "s"} in ${esc(county)}</div></div>
+          <div class="sh-cell"><div class="sh-num" style="color:var(--load-high)">${fmtMW(totalMW)}<small>MW</small></div><div class="sh-lab">combined load</div></div>
+        </div>
+        <div class="bc-break">
+          <div class="bc-line"><span class="bl-k">Your electric utility</span><span class="bl-v">${esc(utilName)}</span></div>
+          ${p && p.dcTotal > 0
+            ? `<div class="bc-line"><span class="bl-k">Projected bill impact (filed DC infrastructure)</span><span class="bl-v">+$${p.low.toFixed(0)}–$${p.high.toFixed(0)}/mo</span></div>`
+            : `<div class="bc-line"><span class="bl-k">Projected bill impact</span><span class="bl-v">no DC docket filed yet</span></div>`}
+          <div class="bc-line"><span class="bl-k">Local restriction</span><span class="bl-v">${restr ? (restr.type === "ban" ? "BANNED" : "MORATORIUM") : "none"}</span></div>
+        </div>
+        ${inCounty.length
+          ? `<div class="card-sources" style="margin-top:10px"><span class="eyebrow">Near you</span>${inCounty.slice(0, 8).map((f) => `<span class="src-link">${esc(f.name)} · ${fmtMW(f.mw_full ?? f.mw_phase1)} MW</span>`).join("")}</div>`
+          : `<div class="mini-note" style="margin-top:10px">No tracked data centers in ${esc(county)} — yet. It can change fast.</div>`}
+        <div class="card-action" style="margin-top:12px">
+          <span class="eyebrow">Make your voice count</span>
+          <a class="act-link hot" data-letter-cty="${esc(county)}">✉ Write your official about ${esc(county)} County</a>
+          <a class="act-link" data-civic="oucc" href="https://www.in.gov/oucc/2504.htm" target="_blank" rel="noopener">◈ File a public comment (OUCC)</a>
+          ${model ? `<a class="act-link" data-bill="${esc(model.id)}">▤ See the full bill breakdown</a>` : ""}
+        </div>`;
+      out.querySelector<HTMLElement>("[data-letter-cty]")?.addEventListener("click", () => openLetter(data, { county }));
+      out.querySelector<HTMLElement>("[data-bill]")?.addEventListener("click", () => model && openBillCalc(data, model.id));
+    });
+  });
+}
+
+/* ---------------- Write Your Official · advocacy letter generator ----------------
+   Generates an editable, sourced letter for a project or county. Copy or open
+   in email. Every letter generated is a distinct civic-action KPI. */
+export function openLetter(data: AppData, opts: { facility?: Facility; county?: string } = {}) {
+  const f = opts.facility;
+  const county = f ? f.county : (opts.county || "your");
+  const subjectName = f ? f.name : `${county} County data center`;
+  const docket = f?.iurc_docket ? ` (IURC Cause ${f.iurc_docket})` : "";
+  const mw = f ? (f.mw_full ?? f.mw_phase1) : null;
+  const mwLine = mw ? ` The project is sized at roughly ${fmtMW(mw)} MW —` : "";
+  const proj = f ? f.name : `data-center development in ${county} County`;
+  const body = `To the ${county} County Plan Commission and the Indiana Office of Utility Consumer Counselor,
+
+I am a resident writing about ${proj}${docket}.${mwLine} I have serious questions about its impact on our electric rates, our water, and our community.
+
+Data centers this size draw enormous amounts of power. When utilities build new generation and transmission to serve them, those costs can land on every household's bill unless regulators make the developer pay its own way. I am asking you to:
+
+  1. Require the developer to cover the full cost of the power and infrastructure it needs, with binding rate protections for existing customers.
+  2. Make water use, backup diesel generators, and true megawatt demand public, not redacted.
+  3. Hold accessible public hearings before any approval.
+
+Please enter my comment into the record and keep residents informed of upcoming meetings and decisions.
+
+Thank you,
+[Your name]
+[Your address / ZIP]`;
+  openModal("Write Your Official", `
+    <div class="prose" style="margin-bottom:10px">A ready-to-send letter about <strong>${esc(subjectName)}</strong>. Make it yours, then copy it or open it in your email app. It takes two minutes and it goes on the public record.</div>
+    <textarea class="letter-box" id="lt-body" spellcheck="true" rows="16">${esc(body)}</textarea>
+    <div class="letter-actions">
+      <button class="docket-btn" id="lt-copy">⧉ COPY LETTER</button>
+      <a class="docket-btn" id="lt-mail" href="#">✉ OPEN IN EMAIL</a>
+    </div>
+    <div class="card-action" style="margin-top:12px">
+      <span class="eyebrow">Where to send it</span>
+      <a class="act-link hot" data-civic="oucc" href="https://www.in.gov/oucc/2504.htm" target="_blank" rel="noopener">◈ File it with the OUCC (utility consumer counselor)</a>
+      <a class="act-link" data-civic="county" href="https://www.in.gov/iurc/" target="_blank" rel="noopener">◱ Find ${esc(county)} County's plan-commission contact</a>
+    </div>
+  `, (el) => {
+    const box = el.querySelector<HTMLTextAreaElement>("#lt-body")!;
+    const target = f ? f.id : county;
+    const mail = el.querySelector<HTMLAnchorElement>("#lt-mail")!;
+    const setMail = () => { mail.href = `mailto:?subject=${encodeURIComponent("Public comment: " + subjectName)}&body=${encodeURIComponent(box.value)}`; };
+    setMail(); box.addEventListener("input", setMail);
+    mail.addEventListener("click", () => track("letter_generated", { target, via: "email" }));
+    el.querySelector("#lt-copy")!.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(box.value); } catch { /* clipboard may be blocked */ }
+      const b = el.querySelector<HTMLElement>("#lt-copy")!; const t = b.textContent;
+      b.textContent = "✓ COPIED"; setTimeout(() => (b.textContent = t), 1500);
+      track("letter_generated", { target, via: "copy" });
+    });
+  });
+}
+
+/* ---------------- Open dataset · CSV export ----------------
+   Reinforces the open-source story and gives a reporter/researcher KPI. */
+export function exportCSV(data: AppData) {
+  const cols = ["id", "name", "developer", "city", "county", "status", "mw_full", "mw_phase1",
+    "mw_estimated", "acres", "investment_usd", "water_status", "utility", "iurc_docket",
+    "announced_year", "online_year", "lat", "lng", "last_verified"];
+  const cell = (v: unknown) => { const s = v == null ? "" : String(v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+  const rows = [cols.join(",")].concat(
+    data.facilities.facilities.map((f) => cols.map((c) => cell((f as any)[c])).join(","))
+  );
+  const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "gridwatch-indiana-datacenters.csv";
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+  track("dataset_download", { format: "csv", rows: data.facilities.facilities.length });
+}
+
 /* ---------------- Action layer ---------------- */
 export function openAction(data: AppData) {
+  track("action_open");
   const items = [...data.action.items].sort((x, y) => x.priority - y.priority);
   const dockets = data.dockets.dockets;
   const typeClass = (t: string) => (/^[a-z]+$/.test(t) ? t : "howto");
@@ -167,6 +309,7 @@ export function openAction(data: AppData) {
 
 /* ---------------- Indiana at a glance ---------------- */
 export function openStats(data: AppData) {
+  track("stats_open");
   const m = data.meta;
   const mix = m.generation_mix.filter((g) => g.pct >= 0.3);
   const total = m.load_mw.active_total;
@@ -207,6 +350,7 @@ export function openStats(data: AppData) {
 
 /* ---------------- About / methodology ---------------- */
 export function openAbout(data: AppData) {
+  track("about_open");
   const m = data.meta;
   const committedPct = ((m.load_mw.committed / m.state_peak_mw) * 100).toFixed(0);
   openModal("About GridWatch Indiana", `
@@ -230,8 +374,11 @@ export function openAbout(data: AppData) {
       <p>The <strong>timeline</strong> uses projected energization years to animate build-out — a projection, labeled as such. The <strong>bill calculator</strong> is an illustrative model (approved rate increases plus an even split of filed infrastructure costs), not a forecast. Coordinates for some sites are city- or county-level approximations, flagged on each card. See <code>METHODOLOGY.md</code> in the repo for the full method.</p>
 
       <h3>Use it, cite it, fork it</h3>
-      <p>MIT-licensed and static — no accounts, no tracking, no API keys. Reporters and officials are welcome to cite it; the data lives in version-controlled JSON at <code>/public/data</code>. Corrections and new filings are welcome as pull requests.</p>
+      <p>MIT-licensed and static — no account required. Reporters and officials are welcome to cite it; the full dataset lives in version-controlled JSON at <code>/public/data</code>. Corrections and new filings are welcome as pull requests, and the whole atlas can be re-pointed at any other state, country, or region (see <code>FORKING.md</code>).</p>
+      <button class="docket-btn" id="ab-csv">⭳ DOWNLOAD THE DATASET · CSV</button>
       <p style="color:var(--text-dim);font-size:11px;font-family:var(--mono)">DATASET UPDATED ${esc(m.last_updated)} · NONPARTISAN · NOT LEGAL OR FINANCIAL ADVICE</p>
     </div>
-  `);
+  `, (el) => {
+    el.querySelector("#ab-csv")?.addEventListener("click", () => exportCSV(data));
+  });
 }
