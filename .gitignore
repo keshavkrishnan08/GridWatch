@@ -78,3 +78,4 @@ regions/*/*.geojson
 regions/_backup/
 diag5.mjs
 kpi2.mjs
+stale.mjs

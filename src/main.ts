@@ -14,6 +14,7 @@ import { servingUtility, UTIL_DISPLAY } from "./lib/util";
 import { fmtMW, esc } from "./lib/format";
 import { track, initAnalytics } from "./lib/track";
 import { configureTheme, autoScale, subName, withSub, theme } from "./lib/theme";
+import { freshness } from "./lib/freshness";
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -104,11 +105,24 @@ class App {
       this.controls.updateCount();
     });
 
+    this.showStalenessBanner();
     this.wireTopbar();
     this.setupPanels();
     this.wireKeys();
     this.setupActions();
     this.applyDeepLink();
+  }
+
+  /** If the dataset has gone stale, say so on the map rather than in a footnote. */
+  private showStalenessBanner() {
+    const fr = freshness(this.data.meta.last_updated);
+    if (fr.level !== "stale") return;
+    const el = document.createElement("div");
+    el.id = "stale-banner";
+    el.innerHTML = `<span class="sb-mark">⚠</span><span>Dataset ${esc(fr.label)} — verify against current filings before citing.</span>
+      <button class="sb-close" aria-label="Dismiss">✕</button>`;
+    el.querySelector(".sb-close")!.addEventListener("click", () => el.remove());
+    document.getElementById("app")!.appendChild(el);
   }
 
   /** Re-brand the header + tab from region.json so forks only edit config. */

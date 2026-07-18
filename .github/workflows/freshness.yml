@@ -1,0 +1,52 @@
+name: Data freshness
+
+# Data like this doesn't break when it goes stale — it just quietly becomes
+# wrong while still looking authoritative. This turns that into a visible,
+# scheduled reminder instead of a surprise.
+
+on:
+  schedule:
+    - cron: "0 13 1 * *"   # 1st of each month
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check dataset age
+        id: fresh
+        run: |
+          python3 -m pipeline.check_freshness | tee freshness.txt
+          if grep -q "STALE" freshness.txt; then
+            echo "stale=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open a refresh reminder
+        if: steps.fresh.outputs.stale == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = "The dataset has gone stale. Visitors are already seeing the "
+              + "staleness banner.\n\n```\n" + fs.readFileSync('freshness.txt', 'utf8') + "```\n\n"
+              + "Refresh the records against current filings and update `last_updated`.";
+            const title = "Dataset refresh due";
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: 'open', labels: 'data-freshness',
+            });
+            if (existing.data.length === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title, body, labels: ['data-freshness'],
+              });
+            }

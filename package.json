@@ -21,7 +21,12 @@
     "typecheck": "tsc --noEmit",
     "data": "python3 pipeline/build_dataset.py",
     "validate": "python3 -m pipeline.validate_input",
-    "region": "python3 -m pipeline.bootstrap"
+    "region": "python3 -m pipeline.bootstrap",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:py": "python3 -m unittest discover -s pipeline/tests -t .",
+    "test:all": "npm run typecheck && npm run test && npm run test:py",
+    "freshness": "python3 -m pipeline.check_freshness"
   },
   "dependencies": {
     "d3": "^7.9.0",
@@ -31,6 +36,7 @@
     "@types/d3": "^7.4.3",
     "playwright": "^1.61.1",
     "typescript": "^5.6.3",
-    "vite": "^5.4.10"
+    "vite": "^5.4.10",
+    "vitest": "^2.1.9"
   }
 }
