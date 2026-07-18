@@ -1,140 +1,167 @@
-# Fork GridWatch for your state, country, or region
+# Build a GridWatch for anywhere in the world
 
-GridWatch ships pointed at Indiana, but nothing about the engine is
-Indiana-specific. One command pulls a whole region from public data and writes a
-ready-to-serve atlas:
+GridWatch is a **toolkit**, not one state's map. Indiana is the reference
+implementation; the engine underneath is region-agnostic.
+
+You bring a region name and your own facility data. The toolkit brings the map,
+the rendering, the color science, the civic-action tooling, and the honesty
+guardrails.
 
 ```bash
-python3 -m pipeline.bootstrap --region "Ohio, United States" --activate
+npm run region -- --region "Bavaria, Germany" --activate
 npm run dev
 ```
 
-That's it. You get the region's outline, its counties (or départements, or
-municípios), its power plants, transmission lines, substations, and every data
-center currently mapped in OpenStreetMap — de-duplicated, framed, and rendered.
+Two things happen automatically: the region is mapped (outline, subdivisions,
+grid infrastructure), and the whole atlas re-tunes to it (units, currency,
+terminology, color scale). Roads, cities, water, and building footprints come
+from the global basemap at render time — they already work everywhere and need
+no configuration at all.
 
-Roads, cities, water, and building footprints come from the global basemap at
-render time, so they already work everywhere. You never fetch or configure them.
+---
 
-## Try it
+## What the toolkit gives you
 
-```bash
-python3 -m pipeline.bootstrap --region "Ireland"
-python3 -m pipeline.bootstrap --region "Bavaria, Germany"
-python3 -m pipeline.bootstrap --region "Virginia, United States" --activate
-```
+**Region mapping.** Name any region on Earth. The outline, its subdivisions
+(counties, départements, Kreise, municípios — whatever that country uses), and
+the grid around it resolve from OpenStreetMap. The camera frames itself from the
+boundary; the spotlight mask clips to it.
 
-Each run writes a self-contained folder under `regions/<slug>/`. Nothing is
-overwritten until you pass `--activate`, and activating over a *different*
-region requires `--force` (a backup is written either way).
+**Color + scale science.** Load severity is a configurable band scale. Set
+`scale_mode: "auto"` and the bands re-derive from *your* data's distribution, so
+colors stay meaningful whether you're mapping one county or an entire country.
+Fuel palette, utility colors, and the undisclosed-capacity color are all config.
 
-## What it pulls, and from where
+**Units and language that fit.** A German fork reads hectares, m³/day, €, and
+"Kreise". A US fork reads acres, MGD, $, and "counties". The bootstrap infers
+this from the region and writes it into `theme.json`.
 
-| Layer | Source | Global? |
-|---|---|---|
-| Region outline | OSM / Nominatim | yes |
-| Subdivisions | OSM admin boundaries | yes |
-| Data centers | OSM (`telecom`/`building`/`man_made=data_center`) + name sweep | yes |
-| Power plants | OSM `power=plant` (with fuel + capacity where tagged) | yes |
-| Transmission | OSM `power=line` | yes |
-| Substations | OSM `power=substation` | yes |
-| Roads · cities · water | CARTO basemap, at render time | yes |
+**Civic tooling.** The letter generator, "check my area" exposure report, bill
+calculator, filters, timeline, and share/analytics layer all come along, wired
+to your region's regulator once you name it.
 
-No API keys. No accounts.
+**Honesty guardrails.** Missing data renders as "not configured" rather than
+another region's numbers; unverified records are visibly flagged; a failed
+fetch reports failure instead of writing an empty file.
 
-## The honest part: what auto-discovery can and can't do
+---
 
-**It finds sites, not filings.** OpenStreetMap knows where many data centers
-are. It does not know megawatts, water use, project stage, or who's paying for
-the grid upgrades. So every auto-discovered record is written as:
+## The three files you control
 
-- `status: "rumored"` — a lead, not a confirmed project
-- `mw`, `water`, `investment`: `null` — never guessed
-- `_auto: true`, with its OSM object linked as the source
-
-The app shows these with a **CHATTER** banner. That's deliberate: this project's
-one rule is that no number is ever invented, and an auto-pull must not be able
-to launder a guess into a fact.
-
-**It is a starting inventory, not a complete one.** Unannounced, private, and
-brand-new sites aren't in OSM. Your region almost certainly has more than the
-pull finds. Treat the output as the scaffold you then enrich with filings and
-reporting — which is exactly how the Indiana dataset was built.
-
-**Failures are loud.** If a source is unreachable, the provider reports `FAIL`
-and writes nothing, rather than emitting an empty file that would read as "no
-data centers here."
-
-## Merging your curated research
-
-Auto-discovery gets you started; hand-verified records make it authoritative.
-
-```bash
-python3 -m pipeline.bootstrap --region "Ohio, United States" \
-  --merge-curated my_research.json --activate
-```
-
-Curated records win every conflict, and de-duplication merges them with the
-auto-discovered site describing the same place (name similarity + proximity), so
-one facility never appears twice. Each merge records what it absorbed in
-`_merged_from`, so the provenance stays auditable.
-
-## What you still have to localize
-
-Some things are civic facts the pull can't invent. The bootstrap writes them
-**empty**, with a `_todo` note, so the app shows nothing rather than another
-region's figures:
-
-- `bill_impact_models.json` — your utilities, rates, customer counts, filed cost-shifts
-- `action_items.json`, `dockets.json` — your regulator, comment process, hearings
-- `county_restrictions.json` — local bans and moratoriums
-- `meta.json` → `state_peak_mw` — published by your grid operator
-
-`meta.json` is otherwise **computed** from what was actually fetched (generation
-mix, plant counts, load totals), so it's accurate on day one.
-
-The letter template and civic links in `src/lib/card.ts`, `src/lib/main.ts`, and
-`src/lib/modals.ts` reference Indiana's OUCC/IURC — point those at your own
-regulator.
-
-## Configuration
-
-`public/data/region.json` (generated, and editable by hand):
+### 1. `region.json` — what and where
 
 ```json
 {
-  "name": "GridWatch Ohio",
-  "region_label": "OHIO",
+  "name": "GridWatch Bavaria",
+  "region_label": "BAVARIA",
   "boundary_file": "boundary.geojson",
   "subdivisions_file": "subdivisions.geojson",
   "subdivision_key": "county",
-  "home_center": null,
-  "home_zoom_boost": 0.42
+  "home_center": null
 }
 ```
 
-- `name` / `region_label` re-brand the tab and header — no code edits.
-- `subdivision_key` is the property holding each subdivision's name.
-- `home_center: null` auto-frames from the boundary's bounding box.
+`home_center: null` auto-frames from the boundary. Generated for you, editable
+by hand.
 
-Useful flags:
+### 2. `theme.json` — how it looks and reads
+
+```json
+{
+  "scale_mode": "auto",
+  "bands": [
+    { "key": "low",  "label": "Small",  "max": 50,   "color": "#3FB950" },
+    { "key": "mega", "label": "Mega",   "max": null, "color": "#FF6BFF" }
+  ],
+  "utilities": [
+    { "id": "eon", "display": "E.ON Bayern", "color": "#4E7BE8", "match": ["e.on", "eon"] }
+  ],
+  "units":       { "system": "metric", "currency": { "code": "EUR", "symbol": "€" }, "water": "m3d" },
+  "terminology": { "subdivision": "Kreis", "subdivision_plural": "Kreise", "regulator": "BNetzA" },
+  "jobs":        { "datacenter": 0.26, "comparison": null }
+}
+```
+
+Change a band color and the nodes, legend, filter chips, and card accents all
+follow. Add a utility and it appears in the filter dropdown, the territory
+colors, and every card. Nothing in the code needs editing.
+
+### 3. `facilities.json` — your data
+
+Start from [`templates/facilities.template.json`](templates/facilities.template.json),
+which documents every field. Only `id`, `name`, `lat`, `lng`, `status`, and
+`sources` are required — leave anything you can't source as `null`.
+
+```bash
+npm run validate -- my_region/facilities.json --subdivisions public/data/subdivisions.geojson
+```
+
+The validator enforces the project's core rule: **every facility carries at
+least one source.** It also catches duplicate ids, bad coordinates, unknown
+statuses, and phase capacity exceeding full capacity.
+
+---
+
+## Optional: auto-discovery
+
+The bootstrap can also sweep OpenStreetMap for data centers already mapped in
+your region, as a starting point:
+
+```bash
+npm run region -- --region "Ohio, United States"
+# 88 counties · 293 plants · 11,095 transmission segments · 43 sites found
+```
+
+Be clear-eyed about what this is. OSM knows *where* some data centers are; it
+does not know megawatts, water use, or project stage, and it misses
+unannounced and brand-new sites. So every auto-discovered record is written
+`status: "rumored"` with null capacity and its OSM object cited, and the app
+shows it behind a **CHATTER** banner. It's a lead list to verify, never a
+finished dataset.
+
+Merge your researched records over it — curated always wins, and de-duplication
+(proximity + name similarity) means one site never appears twice:
+
+```bash
+npm run region -- --region "Ohio, United States" --merge-curated my_research.json --activate
+```
+
+---
+
+## What stays empty until you fill it
+
+Civic facts can't be inferred. The bootstrap writes these **empty**, each with a
+`_todo`, so the app shows nothing rather than something false:
+
+- `bill_impact_models.json` — your utilities, rates, filed cost-shifts
+- `action_items.json`, `dockets.json` — your regulator, comment process, hearings
+- `county_restrictions.json` — local bans and moratoriums
+- `meta.json → state_peak_mw` — published by your grid operator
+
+Everything else in `meta.json` (generation mix, plant counts, load totals) is
+**computed** from what was actually fetched, so it's accurate on day one.
+
+---
+
+## Flags
 
 | Flag | What it does |
 |---|---|
-| `--label`, `--name` | override the header text and title |
+| `--region` | any region name, e.g. `"Ireland"`, `"Bavaria, Germany"` |
+| `--label`, `--name` | override header text and title |
+| `--subdivision-key` | rename `county` to `kreis`, `council`, … |
 | `--subdivision-level N` | force an OSM `admin_level` if the default picks wrong |
-| `--subdivision-key` | rename `county` to `province`, `council`, … |
 | `--providers ...` | run a subset, e.g. `--providers osm_power_plants` |
 | `--merge-curated FILE` | merge your researched facilities |
-| `--activate` / `--force` | publish into `public/data/` |
+| `--activate` / `--force` | publish into `public/data/` (backs up first) |
 
-## Adding a source
+## Adding a data source
 
-Providers are independent and registered in one list. Write a class with `key`,
-`outputs`, and `run(ctx)` (see `pipeline/providers/base.py`), add it to
-`DEFAULT_CHAIN` in `pipeline/providers/__init__.py`, and it joins the pipeline.
-A national regulator's API, a state ArcGIS server, or your own CSV all plug in
-the same way — the core never changes.
+Providers are independent modules behind a small protocol. Write a class with
+`key`, `outputs`, and `run(ctx)` (see `pipeline/providers/base.py`), register it
+in `pipeline/providers/__init__.py`, and it joins the pipeline. A national
+regulator's API, a government ArcGIS server, or your own CSV all plug in the
+same way — the core never changes.
 
 ## Analytics (optional, off by default)
 

@@ -49,10 +49,12 @@ def geocode(query: str, *, polygon: bool = True) -> dict | None:
         "format": "json",
         "limit": 1,
         "polygon_geojson": 1 if polygon else 0,
+        # country code drives units/currency/subdivision level downstream
+        "addressdetails": 1,
     }
     res = get_json(
         NOMINATIM, params, min_gap=1.2, timeout=60,
-        cache_key=f"nominatim:{query}:{polygon}",
+        cache_key=f"nominatim:v2:{query}:{polygon}",
     )
     if not res:
         return None

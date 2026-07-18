@@ -1,0 +1,60 @@
+{
+  "_doc": "Visual + semantic toolkit for this region. Colors, load-severity bands, utilities, units, and terminology. Change these and the whole atlas re-tunes — legend, node colors, filter chips, cards, stats. See FORKING.md.",
+
+  "_scale_mode_doc": "'fixed' uses the bands below as written. 'auto' keeps the labels/colors but re-derives the MW bounds from your data, so colors stay meaningful whether you map one county or a whole country.",
+  "scale_mode": "fixed",
+  "bands": [
+    { "key": "low",  "label": "Small",  "max": 50,   "color": "#3FB950" },
+    { "key": "med",  "label": "Medium", "max": 250,  "color": "#E3A72B" },
+    { "key": "high", "label": "Large",  "max": 500,  "color": "#F85149" },
+    { "key": "mega", "label": "Mega",   "max": null, "color": "#FF6BFF" }
+  ],
+  "unknown_color": "#6B7684",
+
+  "fuels": {
+    "coal":    { "label": "Coal",    "color": "#B24A45" },
+    "gas":     { "label": "Gas",     "color": "#E3862B" },
+    "solar":   { "label": "Solar",   "color": "#EBCB3E" },
+    "wind":    { "label": "Wind",    "color": "#47C7B0" },
+    "nuclear": { "label": "Nuclear", "color": "#B06BE0" },
+    "hydro":   { "label": "Hydro",   "color": "#3D9BE0" },
+    "battery": { "label": "Battery", "color": "#3FB950" },
+    "oil":     { "label": "Oil",     "color": "#8A6A55" },
+    "biomass": { "label": "Biomass", "color": "#7F9A4E" },
+    "other":   { "label": "Other",   "color": "#6B7684" }
+  },
+
+  "_utilities_doc": "The utilities serving this region. 'match' holds lowercase substrings used to recognize the utility in raw data; anything unmatched falls back to other_utility.",
+  "utilities": [
+    { "id": "aes",    "display": "AES Indiana",            "color": "#4E7BE8", "match": ["aes", "indianapolis power"] },
+    { "id": "duke",   "display": "Duke Energy Indiana",    "color": "#4F9E6B", "match": ["duke"] },
+    { "id": "im",     "display": "Indiana Michigan Power", "color": "#C7743A", "match": ["indiana michigan", "i&m", "i and m"] },
+    { "id": "nipsco", "display": "NIPSCO",                 "color": "#9A5BD0", "match": ["nipsco", "northern indiana"] },
+    { "id": "cp",     "display": "CenterPoint Energy",     "color": "#C74A78", "match": ["centerpoint", "vectren", "southern indiana gas"] }
+  ],
+  "other_utility": { "display": "Municipal / Cooperative", "color": "#46586B" },
+
+  "units": {
+    "system": "imperial",
+    "currency": { "code": "USD", "symbol": "$" },
+    "water": "mgd",
+    "locale": "en-US"
+  },
+
+  "terminology": {
+    "subdivision": "county",
+    "subdivision_plural": "counties",
+    "regulator": "IURC",
+    "regulator_url": "https://www.in.gov/iurc/",
+    "consumer_advocate": "OUCC",
+    "consumer_advocate_url": "https://www.in.gov/oucc/2504.htm"
+  },
+
+  "_jobs_doc": "Permanent jobs per MW. The comparison figure is what the same load would support in other industry — set comparison to null to hide it.",
+  "jobs": {
+    "datacenter": 0.26,
+    "comparison": 41,
+    "comparison_label": "typical Indiana industry",
+    "source": "I&M 2024 disclosure"
+  }
+}
