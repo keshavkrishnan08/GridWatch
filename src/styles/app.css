@@ -127,6 +127,22 @@ a:hover { text-decoration: underline; }
   transition: all var(--t-fast) var(--ease);
 }
 .tb-btn:hover { color: var(--phosphor-bright); border-color: var(--phosphor-dim); box-shadow: 0 0 14px -2px var(--phosphor-glow); }
+.tb-btn.primary {
+  color: var(--phosphor-bright); border-color: var(--phosphor-dim);
+  background: rgba(63,185,80,0.14); box-shadow: 0 0 14px -3px var(--phosphor-glow);
+}
+.tb-btn.primary:hover { background: rgba(63,185,80,0.24); box-shadow: 0 0 18px -2px var(--phosphor-glow); }
+
+/* letter generator */
+.letter-box {
+  width: 100%; min-height: 300px; resize: vertical; margin-top: 4px;
+  background: var(--void-2); border: var(--hair-2); border-radius: var(--r-sm);
+  color: var(--text-hi); font-family: var(--mono); font-size: 12px; line-height: 1.55;
+  padding: 12px 13px;
+}
+.letter-box:focus { outline: none; border-color: var(--phosphor); box-shadow: 0 0 0 3px rgba(63,185,80,0.12); }
+.letter-actions { display: flex; gap: 8px; margin-top: 10px; }
+.letter-actions .docket-btn { margin-top: 0; flex: 1; cursor: pointer; }
 
 /* ---------- command console ---------- */
 #console {
