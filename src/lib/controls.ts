@@ -1,7 +1,7 @@
 import type { AppData, Facility } from "./data";
 import type { GridMap } from "./map";
 import { fmtInt, fmtMW, esc } from "./format";
-import { SEV_COLOR, UTIL_DISPLAY, type Sev, type UtilKey, type Filters } from "./util";
+import { SEV_COLOR, UTIL_DISPLAY, sevBands, type Sev, type UtilKey, type Filters } from "./util";
 
 const STATUS_CHIPS = [
   { k: "proposed", label: "Proposed" },
@@ -10,12 +10,9 @@ const STATUS_CHIPS = [
   { k: "rumored", label: "Rumored" },
   { k: "withdrawn", label: "Withdrawn" },
 ];
-const SIZE_CHIPS: { k: Sev; label: string }[] = [
-  { k: "mega", label: "Mega" },
-  { k: "high", label: "Large" },
-  { k: "med", label: "Medium" },
-  { k: "low", label: "Small" },
-];
+/* Size chips mirror the theme's scale bands, largest first. */
+const sizeChips = (): { k: Sev; label: string }[] =>
+  sevBands().slice().reverse().map((b) => ({ k: b.key, label: b.label }));
 const UTIL_OPTS: [UtilKey | "all", string][] = [
   ["all", "All utilities"], ["aes", "AES Indiana"], ["duke", "Duke Energy"],
   ["im", "Indiana Michigan (I&M)"], ["nipsco", "NIPSCO"], ["cp", "CenterPoint"],
@@ -62,7 +59,7 @@ export class Controls {
         <div class="ctrl-lab">Size · MW</div>
         <div class="chips" data-group="size">
           <button class="chip on" data-all="1">All</button>
-          ${SIZE_CHIPS.map((c) => `<button class="chip dot" data-val="${c.k}" style="--dot:${SEV_COLOR[c.k]}"><i></i>${c.label}</button>`).join("")}
+          ${sizeChips().map((c) => `<button class="chip dot" data-val="${c.k}" style="--dot:${SEV_COLOR[c.k]}"><i></i>${c.label}</button>`).join("")}
         </div>
       </div>
       <div class="ctrl-group">

@@ -13,6 +13,7 @@ import { openBillCalc, openAction, openAbout, openStats, openImpact, openLetter,
 import { servingUtility, UTIL_DISPLAY } from "./lib/util";
 import { fmtMW, esc } from "./lib/format";
 import { track, initAnalytics } from "./lib/track";
+import { configureTheme, autoScale, subName, withSub, theme } from "./lib/theme";
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -40,6 +41,11 @@ async function boot() {
     $("intro").innerHTML = `<div class="fatal">Failed to load data.<br><span class="mono" style="font-size:11px">${(e as Error).message}</span></div>`;
     return;
   }
+
+  // Theme first: colors, scale bands, units and terminology must be live
+  // before any component reads them.
+  configureTheme(data.theme);
+  autoScale(data.facilities.facilities.map((f) => f.mw_full ?? f.mw_phase1 ?? 0));
 
   initAnalytics();
   const app = new App(data);
@@ -156,7 +162,7 @@ class App {
         <div class="card-sev-bar" style="background:${col}"></div>
         <button class="card-close" aria-label="Close">✕</button>
         <span class="card-status" style="border-color:${col};color:${col}">◱ ${label}</span>
-        <h2 class="card-name">${esc(county)} County</h2>
+        <h2 class="card-name">${esc(withSub(county))}</h2>
         <div class="card-loc">Served by ${esc(utilName)}</div>
       </div>
       <div class="card-body">
@@ -171,11 +177,11 @@ class App {
         ${model ? `<button class="docket-btn" id="cty-bill">▤ PROJECT MY BILL IMPACT · ${esc(model.display_name)}</button>` : ""}
         <div class="card-action" style="margin-top:11px">
           <span class="eyebrow">Get involved</span>
-          <a class="act-link hot" data-letter-cty="${esc(county)}">✉ Write your official about ${esc(county)} County</a>
+          <a class="act-link hot" data-letter-cty="${esc(county)}">✉ Write your official about ${esc(withSub(county))}</a>
           <a class="act-link" data-civic="cac" href="https://www.citact.org/cac-email-sign-up" target="_blank" rel="noopener">◈ Citizens Action Coalition — join &amp; get alerts</a>
-          <a class="act-link" data-civic="county" href="https://www.in.gov/iurc/" target="_blank" rel="noopener">◱ ${esc(county)} County meetings &amp; the public process</a>
+          <a class="act-link" data-civic="county" href="${theme().terminology.regulator_url || "#"}" target="_blank" rel="noopener">◱ ${esc(withSub(county))} meetings &amp; the public process</a>
         </div>
-        <div class="verified">TAP ANY COUNTY FOR ITS PROFILE</div>
+        <div class="verified">TAP ANY ${esc(subName().toUpperCase())} FOR ITS PROFILE</div>
       </div>`);
     const el = document.getElementById("card")!;
     el.querySelectorAll<HTMLElement>("[data-fac]").forEach((a) => a.addEventListener("click", () => this.select(a.dataset.fac!)));

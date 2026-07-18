@@ -135,10 +135,14 @@ export const DEFAULT_REGION: RegionConfig = {
   max_zoom: 16,
 };
 
+/** Shape of public/data/theme.json — see src/lib/theme.ts for the full type. */
+export type ThemeConfigFile = import("./theme").Theme;
+
 export type FC = GeoJSON.FeatureCollection;
 
 export interface AppData {
   region: RegionConfig;
+  theme: Partial<ThemeConfigFile> | null;
   facilities: FacilitiesFile;
   meta: Meta;
   timeline: TimelineFile;
@@ -169,6 +173,8 @@ async function getFC(path: string): Promise<FC> {
 
 export async function loadAll(): Promise<AppData> {
   const region = await get<RegionConfig>("region.json").catch(() => DEFAULT_REGION);
+  // theme.json is optional: absent means the built-in defaults
+  const themeCfg = await get<Partial<ThemeConfigFile>>("theme.json").catch(() => null);
   const [
     facilities, meta, timeline, bill, action, dockets, restrictions,
     counties, indiana, powerPlants, transmission, territories, substations,
@@ -187,5 +193,5 @@ export async function loadAll(): Promise<AppData> {
     getFC("utility_territories.geojson"),
     getFC("substations.geojson"),
   ]);
-  return { region, facilities, meta, timeline, bill, action, dockets, restrictions, counties, indiana, powerPlants, transmission, territories, substations };
+  return { region, theme: themeCfg, facilities, meta, timeline, bill, action, dockets, restrictions, counties, indiana, powerPlants, transmission, territories, substations };
 }

@@ -1,56 +1,60 @@
 import type { Facility } from "./data";
+import { theme } from "./theme";
 
 export const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
-/* Jobs per megawatt — I&M's 2024 disclosure: data centers ~0.26 jobs/MW vs
- * ~41 jobs/MW for other recent Indiana industry. The starkest economic stat. */
-export const JOBS_PER_MW_DC = 0.26;
+/* Jobs per megawatt. Region-configurable in theme.json — Indiana ships I&M's
+ * 2024 disclosure: data centers ~0.26 jobs/MW vs ~41 for other industry. */
+export const JOBS_PER_MW_DC = 0.26;      // legacy re-export; prefer jobsModel()
 export const JOBS_PER_MW_OTHER = 41;
 export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
-/* ---------- load severity ---------- */
-export type Sev = "low" | "med" | "high" | "mega";
+/* ---------- load severity (driven by theme.json) ---------- */
+export type Sev = string;
 export function sevOf(mw: number | null | undefined): Sev {
   const v = mw ?? 0;
-  if (v > 500) return "mega";
-  if (v >= 250) return "high";
-  if (v >= 50) return "med";
-  return "low";
+  const bands = theme().bands;
+  for (const b of bands) if (b.max == null || v < b.max) return b.key;
+  return bands[bands.length - 1].key;
 }
-export const SEV_COLOR: Record<Sev, string> = {
-  low: "#3FB950", med: "#E3A72B", high: "#F85149", mega: "#FF6BFF",
-};
+/** Live view of band colors — read after configureTheme() at boot. */
+export const SEV_COLOR = new Proxy({} as Record<Sev, string>, {
+  get: (_t, k: string) => theme().bands.find((b) => b.key === k)?.color ?? theme().unknown_color,
+  ownKeys: () => theme().bands.map((b) => b.key),
+  getOwnPropertyDescriptor: () => ({ enumerable: true, configurable: true }),
+});
+export const sevBands = () => theme().bands;
 export const sevColor = (mw: number | null | undefined) => SEV_COLOR[sevOf(mw)];
 export const sevClass = (mw: number | null | undefined) => `sev-${sevOf(mw)}`;
+export const unknownColor = () => theme().unknown_color;
+
+/* jobs model — per-MW employment, from theme.json */
+export const jobsModel = () => theme().jobs;
 
 /* ---------- fuel colors ---------- */
-export const FUEL_COLOR: Record<string, string> = {
-  coal: "#B24A45", gas: "#E3862B", solar: "#EBCB3E", wind: "#47C7B0",
-  nuclear: "#B06BE0", hydro: "#3D9BE0", battery: "#3FB950", oil: "#8A6A55",
-  biomass: "#7F9A4E", other: "#6B7684",
-};
-export const fuelColor = (f: string) => FUEL_COLOR[f] || FUEL_COLOR.other;
-export const FUEL_LABEL: Record<string, string> = {
-  coal: "Coal", gas: "Gas", solar: "Solar", wind: "Wind", nuclear: "Nuclear",
-  hydro: "Hydro", battery: "Battery", oil: "Oil", biomass: "Biomass", other: "Other",
-};
+export const fuelColor = (f: string) =>
+  theme().fuels[f]?.color ?? theme().fuels.other?.color ?? "#6B7684";
+export const FUEL_LABEL = new Proxy({} as Record<string, string>, {
+  get: (_t, k: string) => theme().fuels[k]?.label ?? k,
+});
 
-/* ---------- utility identity ---------- */
-export type UtilKey = "aes" | "duke" | "im" | "nipsco" | "cp" | "other";
-export const UTIL_COLOR: Record<UtilKey, string> = {
-  aes: "#4E7BE8", duke: "#4F9E6B", im: "#C7743A", nipsco: "#9A5BD0", cp: "#C74A78", other: "#46586B",
-};
-export const UTIL_DISPLAY: Record<UtilKey, string> = {
-  aes: "AES Indiana", duke: "Duke Energy Indiana", im: "Indiana Michigan Power",
-  nipsco: "NIPSCO", cp: "CenterPoint Energy", other: "Municipal / Cooperative",
-};
+/* ---------- utility identity (region-defined) ---------- */
+export type UtilKey = string;
+export const UTIL_COLOR = new Proxy({} as Record<UtilKey, string>, {
+  get: (_t, k: string) =>
+    theme().utilities.find((u) => u.id === k)?.color ?? theme().other_utility.color,
+});
+export const UTIL_DISPLAY = new Proxy({} as Record<UtilKey, string>, {
+  get: (_t, k: string) =>
+    theme().utilities.find((u) => u.id === k)?.display ?? theme().other_utility.display,
+});
+export const utilityList = () => theme().utilities;
 export function utilKey(name: string | null | undefined): UtilKey {
   const n = (name || "").toLowerCase();
-  if (n.includes("aes") || n.includes("indianapolis power")) return "aes";
-  if (n.includes("duke")) return "duke";
-  if (n.includes("indiana michigan") || /\bi&m\b/.test(n) || n.includes("i and m")) return "im";
-  if (n.includes("nipsco") || n.includes("northern indiana")) return "nipsco";
-  if (n.includes("centerpoint") || n.includes("vectren") || n.includes("southern indiana gas")) return "cp";
+  if (!n) return "other";
+  for (const u of theme().utilities) {
+    if (u.match.some((m) => n.includes(m.toLowerCase()))) return u.id;
+  }
   return "other";
 }
 export const utilColor = (name: string | null | undefined) => UTIL_COLOR[utilKey(name)];

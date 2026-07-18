@@ -1,0 +1,63 @@
+{
+  "_doc": "Copy this to your region and fill in the facilities array. Only id, name, lat, lng, status and sources are required — leave anything you can't source as null. Validate with: python3 -m pipeline.validate_input <yourfile.json>",
+
+  "schema_version": "1.0",
+  "region": "Your Region, Country",
+  "coverage_note": "Describe what this dataset covers and how it was assembled.",
+
+  "_field_guide": {
+    "id": "REQUIRED. Unique slug, e.g. 'acme-springfield'.",
+    "name": "REQUIRED. Facility name as reported.",
+    "lat / lng": "REQUIRED. Decimal degrees.",
+    "status": "REQUIRED. proposed | approved | construction | operational | rumored | withdrawn",
+    "sources": "REQUIRED. At least one {label, url}. Every figure must be traceable.",
+    "developer": "Company, or 'Undisclosed'.",
+    "city / county": "county must match a name in your subdivisions file. Leave '' to auto-fill by location.",
+    "geo_precision": "parcel | site | city | county — how exact the coordinates are.",
+    "mw_phase1 / mw_full": "Capacity in MW. null if not disclosed — never estimate silently.",
+    "mw_estimated": "true if the MW figure came from reporting rather than a filing.",
+    "acres / investment_usd": "null if unknown. Acres convert automatically for metric regions.",
+    "water_mgd": "Million gallons/day; converts to m³/d for metric regions.",
+    "water_status": "known | redacted | unknown — 'redacted' shows the transparency flag.",
+    "utility": "Serving utility. Matched against theme.json utilities.",
+    "iurc_docket / docket_url": "Regulator case number and portal link, if any.",
+    "announced_year / online_year": "null if unknown. A null announce date means the site shows across the whole timeline.",
+    "jobs": "Permanent jobs if disclosed; otherwise derived from theme.json jobs.datacenter.",
+    "diesel_generators / diesel_gallons_m / wetland_acres / water_source": "Optional local-impact detail.",
+    "tax_note": "Subsidies or abatements, with the figure's source in sources.",
+    "notes": "Plain-language context. Say what's unconfirmed.",
+    "last_verified": "YYYY-MM-DD you last checked the sources."
+  },
+
+  "facilities": [
+    {
+      "id": "example-site",
+      "name": "Example Data Center Campus",
+      "developer": "Example Corp",
+      "city": "Springfield",
+      "county": "Example",
+      "lat": 40.0,
+      "lng": -83.0,
+      "geo_precision": "site",
+      "status": "proposed",
+      "mw_phase1": 200,
+      "mw_full": 600,
+      "mw_estimated": false,
+      "acres": 400,
+      "investment_usd": 2000000000,
+      "water_mgd": null,
+      "water_status": "redacted",
+      "utility": "Example Power",
+      "iurc_docket": null,
+      "docket_url": null,
+      "announced_year": 2025,
+      "online_year": 2028,
+      "tax_note": null,
+      "sources": [
+        { "label": "Local paper — rezoning approved", "url": "https://example.com/article" }
+      ],
+      "notes": "600 MW at full build. Water use redacted in the filing.",
+      "last_verified": "2026-01-01"
+    }
+  ]
+}
