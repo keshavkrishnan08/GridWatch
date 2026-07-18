@@ -1,89 +1,142 @@
-# Forking GridWatch for your state, country, or region
+# Fork GridWatch for your state, country, or region
 
-GridWatch ships pointed at Indiana, but the map engine is region-agnostic. The
-basemap (CARTO dark-matter) renders roads, water, and building footprints for
-anywhere on Earth, and the atlas frames itself from whatever boundary you give
-it. Re-pointing it is mostly swapping data files and editing one config.
+GridWatch ships pointed at Indiana, but nothing about the engine is
+Indiana-specific. One command pulls a whole region from public data and writes a
+ready-to-serve atlas:
 
-Here's the whole job.
+```bash
+python3 -m pipeline.bootstrap --region "Ohio, United States" --activate
+npm run dev
+```
 
-## What you swap
+That's it. You get the region's outline, its counties (or départements, or
+municípios), its power plants, transmission lines, substations, and every data
+center currently mapped in OpenStreetMap — de-duplicated, framed, and rendered.
 
-1. **A boundary polygon** — one GeoJSON file for your region's outline. This
-   drives the spotlight mask (everything outside is dimmed) and the camera. The
-   map's zoom and framing are derived from this file's bounding box, so you
-   don't hand-tune coordinates.
+Roads, cities, water, and building footprints come from the global basemap at
+render time, so they already work everywhere. You never fetch or configure them.
 
-2. **A subdivisions layer** — GeoJSON of the clickable pieces inside your
-   region: US counties, UK councils, German Kreise, whatever fits. Each feature
-   needs a name property (see `subdivision_key` below).
+## Try it
 
-3. **Your facility data** — `public/data/facilities.json`, same schema as the
-   Indiana file. Every record carries its own sources; nothing is invented.
+```bash
+python3 -m pipeline.bootstrap --region "Ireland"
+python3 -m pipeline.bootstrap --region "Bavaria, Germany"
+python3 -m pipeline.bootstrap --region "Virginia, United States" --activate
+```
 
-4. **`public/data/region.json`** — the config that ties it together.
+Each run writes a self-contained folder under `regions/<slug>/`. Nothing is
+overwritten until you pass `--activate`, and activating over a *different*
+region requires `--force` (a backup is written either way).
 
-## region.json
+## What it pulls, and from where
+
+| Layer | Source | Global? |
+|---|---|---|
+| Region outline | OSM / Nominatim | yes |
+| Subdivisions | OSM admin boundaries | yes |
+| Data centers | OSM (`telecom`/`building`/`man_made=data_center`) + name sweep | yes |
+| Power plants | OSM `power=plant` (with fuel + capacity where tagged) | yes |
+| Transmission | OSM `power=line` | yes |
+| Substations | OSM `power=substation` | yes |
+| Roads · cities · water | CARTO basemap, at render time | yes |
+
+No API keys. No accounts.
+
+## The honest part: what auto-discovery can and can't do
+
+**It finds sites, not filings.** OpenStreetMap knows where many data centers
+are. It does not know megawatts, water use, project stage, or who's paying for
+the grid upgrades. So every auto-discovered record is written as:
+
+- `status: "rumored"` — a lead, not a confirmed project
+- `mw`, `water`, `investment`: `null` — never guessed
+- `_auto: true`, with its OSM object linked as the source
+
+The app shows these with a **CHATTER** banner. That's deliberate: this project's
+one rule is that no number is ever invented, and an auto-pull must not be able
+to launder a guess into a fact.
+
+**It is a starting inventory, not a complete one.** Unannounced, private, and
+brand-new sites aren't in OSM. Your region almost certainly has more than the
+pull finds. Treat the output as the scaffold you then enrich with filings and
+reporting — which is exactly how the Indiana dataset was built.
+
+**Failures are loud.** If a source is unreachable, the provider reports `FAIL`
+and writes nothing, rather than emitting an empty file that would read as "no
+data centers here."
+
+## Merging your curated research
+
+Auto-discovery gets you started; hand-verified records make it authoritative.
+
+```bash
+python3 -m pipeline.bootstrap --region "Ohio, United States" \
+  --merge-curated my_research.json --activate
+```
+
+Curated records win every conflict, and de-duplication merges them with the
+auto-discovered site describing the same place (name similarity + proximity), so
+one facility never appears twice. Each merge records what it absorbed in
+`_merged_from`, so the provenance stays auditable.
+
+## What you still have to localize
+
+Some things are civic facts the pull can't invent. The bootstrap writes them
+**empty**, with a `_todo` note, so the app shows nothing rather than another
+region's figures:
+
+- `bill_impact_models.json` — your utilities, rates, customer counts, filed cost-shifts
+- `action_items.json`, `dockets.json` — your regulator, comment process, hearings
+- `county_restrictions.json` — local bans and moratoriums
+- `meta.json` → `state_peak_mw` — published by your grid operator
+
+`meta.json` is otherwise **computed** from what was actually fetched (generation
+mix, plant counts, load totals), so it's accurate on day one.
+
+The letter template and civic links in `src/lib/card.ts`, `src/lib/main.ts`, and
+`src/lib/modals.ts` reference Indiana's OUCC/IURC — point those at your own
+regulator.
+
+## Configuration
+
+`public/data/region.json` (generated, and editable by hand):
 
 ```json
 {
   "name": "GridWatch Ohio",
   "region_label": "OHIO",
-  "tagline": "DATA CENTER ATLAS",
-  "boundary_file": "ohio.geojson",
-  "subdivisions_file": "ohio_counties.geojson",
+  "boundary_file": "boundary.geojson",
+  "subdivisions_file": "subdivisions.geojson",
   "subdivision_key": "county",
-  "subdivision_singular": "county",
   "home_center": null,
-  "home_zoom_boost": 0.42,
-  "min_zoom": 3.5,
-  "max_zoom": 16
+  "home_zoom_boost": 0.42
 }
 ```
 
-- `name` sets the browser-tab title; `region_label` and `tagline` set the
-  header. Change these and the whole app re-brands — no code edits.
-- `boundary_file` / `subdivisions_file` are paths under `public/data/`.
-- `subdivision_key` is the property on each subdivision feature that holds its
-  name (Indiana uses `"county"`). Match it to your GeoJSON's properties.
-- `home_center` — leave `null` to auto-center on the boundary's bounding box,
-  or set `[lng, lat]` to nudge the framing (Indiana offsets slightly so the
-  state sits clear of the filter panel).
-- `home_zoom_boost` tightens the fit; `min_zoom` / `max_zoom` cap the range.
+- `name` / `region_label` re-brand the tab and header — no code edits.
+- `subdivision_key` is the property holding each subdivision's name.
+- `home_center: null` auto-frames from the boundary's bounding box.
 
-## Steps
+Useful flags:
 
-1. Drop your boundary and subdivisions GeoJSON into `public/data/`.
-2. Edit `public/data/region.json` to point at them and set the labels.
-3. Replace `public/data/facilities.json` with your region's projects.
-4. `npm install && npm run dev` — the map frames your region, renders its roads,
-   and clips the spotlight to your outline automatically.
+| Flag | What it does |
+|---|---|
+| `--label`, `--name` | override the header text and title |
+| `--subdivision-level N` | force an OSM `admin_level` if the default picks wrong |
+| `--subdivision-key` | rename `county` to `province`, `council`, … |
+| `--providers ...` | run a subset, e.g. `--providers osm_power_plants` |
+| `--merge-curated FILE` | merge your researched facilities |
+| `--activate` / `--force` | publish into `public/data/` |
 
-That's the map. Roads and shapes "just work" because they come from the global
-basemap, not from your data.
+## Adding a source
 
-## Region-specific content to review
+Providers are independent and registered in one list. Write a class with `key`,
+`outputs`, and `run(ctx)` (see `pipeline/providers/base.py`), add it to
+`DEFAULT_CHAIN` in `pipeline/providers/__init__.py`, and it joins the pipeline.
+A national regulator's API, a state ArcGIS server, or your own CSV all plug in
+the same way — the core never changes.
 
-Some copy is Indiana civic context, not map logic. Edit these for a faithful
-fork:
+## Analytics (optional, off by default)
 
-- `public/data/bill_impact_models.json` — your utilities, rates, and dockets.
-- `public/data/action_items.json` and `dockets.json` — your public-comment
-  process, regulators, and hearings.
-- `public/data/county_restrictions.json` — local bans/moratoriums.
-- `public/data/meta.json` — headline stats and generation mix.
-- The action links and letter template in `src/lib/card.ts`, `src/lib/main.ts`,
-  and `src/lib/modals.ts` reference Indiana's OUCC/IURC. Point them at your own
-  regulators.
-
-## Analytics (optional)
-
-Set `VITE_META_PIXEL_ID` and/or `VITE_POSTHOG_KEY` in `.env.local` to turn on
-conversion tracking. Off by default — nothing is sent until you configure it.
-
-## Building the geo layers
-
-`pipeline/fetch_geo.py` pulls US grid, plant, and territory data (HIFLD, EIA,
-Census) and dissolves a state boundary from its counties. For a US state, point
-it at your FIPS code. For other countries, supply your own boundary and
-subdivisions GeoJSON directly — the app only needs the files, not the pipeline.
+Set `VITE_META_PIXEL_ID` and/or `VITE_POSTHOG_KEY` in `.env.local`. Nothing is
+sent until you do.

@@ -26,12 +26,12 @@ export interface Facility {
   utility: string | null;
   iurc_docket: string | null;
   docket_url: string | null;
-  announced_year: number;
+  announced_year: number | null;
   online_year: number | null;
   tax_note: string | null;
   sources: Source[];
   notes: string;
-  last_verified: string;
+  last_verified: string | null;
 }
 
 export interface FacilitiesFile {
@@ -44,7 +44,7 @@ export interface FacilitiesFile {
 
 export interface Meta {
   last_updated: string;
-  state_peak_mw: number;
+  state_peak_mw: number | null;
   counts: {
     facilities_curated: number;
     facilities_tracked_statewide: number;
@@ -57,7 +57,7 @@ export interface Meta {
   };
   load_mw: {
     committed: number; proposed: number; active_total: number;
-    withdrawn_avoided: number; pct_of_state_peak: number;
+    withdrawn_avoided: number; pct_of_state_peak: number | null;
   };
   mega_facilities: { name: string; mw: number; county: string }[];
   generation_mix: { fuel: string; mw: number; pct: number }[];
