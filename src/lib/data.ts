@@ -86,7 +86,15 @@ export interface BillFile {
   disclaimer: string;
   equation: string;
   statewide_context: { avg_bill_increase_this_year_pct: number; avg_bill_increase_decade_pct: number; avg_rate_cents_kwh: number; source: Source };
-  assumptions: { amortize_years: number; uncertainty_band_pct: number; typical_household_kwh: number };
+  assumptions: {
+    amortize_years: number;
+    uncertainty_band_pct: number;
+    typical_household_kwh: number;
+    /* Revenue-requirement inputs. When carrying_charge_pct is present the model
+       uses it instead of straight-line amortization — see project() in modals.ts. */
+    carrying_charge_pct?: number | null;
+    residential_allocation_pct?: number | null;
+  };
   utilities: UtilityModel[];
 }
 
@@ -138,11 +146,15 @@ export const DEFAULT_REGION: RegionConfig = {
 /** Shape of public/data/theme.json — see src/lib/theme.ts for the full type. */
 export type ThemeConfigFile = import("./theme").Theme;
 
+/** ZIP -> [lng, lat]. Absent outside the US; the UI falls back to a picker. */
+export interface ZipFile { _source?: string; zips: Record<string, [number, number]>; }
+
 export type FC = GeoJSON.FeatureCollection;
 
 export interface AppData {
   region: RegionConfig;
   theme: Partial<ThemeConfigFile> | null;
+  zips: ZipFile | null;
   facilities: FacilitiesFile;
   meta: Meta;
   timeline: TimelineFile;
@@ -175,6 +187,7 @@ export async function loadAll(): Promise<AppData> {
   const region = await get<RegionConfig>("region.json").catch(() => DEFAULT_REGION);
   // theme.json is optional: absent means the built-in defaults
   const themeCfg = await get<Partial<ThemeConfigFile>>("theme.json").catch(() => null);
+  const zips = await get<ZipFile>("zip_centroids.json").catch(() => null);
   const [
     facilities, meta, timeline, bill, action, dockets, restrictions,
     counties, indiana, powerPlants, transmission, territories, substations,
@@ -193,5 +206,5 @@ export async function loadAll(): Promise<AppData> {
     getFC("utility_territories.geojson"),
     getFC("substations.geojson"),
   ]);
-  return { region, theme: themeCfg, facilities, meta, timeline, bill, action, dockets, restrictions, counties, indiana, powerPlants, transmission, territories, substations };
+  return { region, theme: themeCfg, zips, facilities, meta, timeline, bill, action, dockets, restrictions, counties, indiana, powerPlants, transmission, territories, substations };
 }
