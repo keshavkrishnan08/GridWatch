@@ -9,7 +9,7 @@ import { Timeline } from "./lib/timeline";
 import { Card } from "./lib/card";
 import { Reticle } from "./lib/reticle";
 import { Newsletter } from "./lib/newsletter";
-import { openBillCalc, openAction, openAbout, openStats, openImpact, openLetter, closeModal } from "./lib/modals";
+import { openBillCalc, openAction, openAbout, openStats, openImpact, openLetter, setFacilityOpener, closeModal } from "./lib/modals";
 import { servingUtility, UTIL_DISPLAY } from "./lib/util";
 import { fmtMW, esc } from "./lib/format";
 import { track, initAnalytics } from "./lib/track";
@@ -105,6 +105,7 @@ class App {
       this.controls.updateCount();
     });
 
+    setFacilityOpener((id) => this.select(id));
     this.showStalenessBanner();
     this.wireTopbar();
     this.setupPanels();

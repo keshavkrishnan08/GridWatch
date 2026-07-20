@@ -2,9 +2,10 @@ import type { AppData, UtilityModel, Facility } from "./data";
 import { fmtUSD, fmtInt, fmtMW, esc, safeUrl } from "./format";
 import {
   fuelColor, FUEL_LABEL, JOBS_PER_MW_DC, JOBS_PER_MW_OTHER,
-  servingUtility, countyCentroid, UTIL_DISPLAY,
+  servingUtility, countyCentroid, countyAt, UTIL_DISPLAY,
 } from "./util";
 import { newsletterFormHTML, wireNewsletterForm } from "./newsletter";
+import { subName, withSub, theme } from "./theme";
 import { track } from "./track";
 import { freshness, FRESH_COLOR, staleRecords } from "./freshness";
 
@@ -63,12 +64,41 @@ export function openModal(title: string, bodyHTML: string, onMount?: (el: HTMLEl
    Headline = data-center-specific impact: filed infrastructure $ split across
    customers and amortized. Fully data-driven — edit bill_impact_models.json and
    every number here recomputes. */
+/**
+ * What a utility's data-center capital spending costs a residential customer.
+ *
+ * Preferred method (revenue requirement): ratepayers don't repay capital
+ * straight-line — they fund an annual revenue requirement covering the
+ * utility's authorized return on the investment, depreciation, and taxes.
+ * That's `capital × carrying_charge_pct`. Only the residential class's share
+ * of that lands on residential bills, hence `residential_allocation_pct`.
+ *
+ * If those assumptions aren't configured, it falls back to the simpler
+ * straight-line split so a partially-configured region still works.
+ *
+ * Both are shown to the user with the equation, so the math can be checked.
+ */
 function project(u: UtilityModel, kwh: number, a: AppData["bill"]["assumptions"]) {
   const base = kwh * (u.avg_rate_cents_kwh / 100);
-  const dcTotal = u.cost_shifts.reduce((s, c) => s + c.usd, 0);
-  const dcMonthly = dcTotal / u.customers / (a.amortize_years * 12);
+  const capital = u.cost_shifts.reduce((s, c) => s + c.usd, 0);
+
+  const carrying = a.carrying_charge_pct ?? null;
+  const resShare = (a.residential_allocation_pct ?? 100) / 100;
+  const annual = carrying != null
+    ? capital * (carrying / 100) * resShare        // revenue requirement
+    : capital / Math.max(1, a.amortize_years);     // legacy straight-line
+
+  const dcMonthly = u.customers > 0 ? annual / u.customers / 12 : 0;
   const band = a.uncertainty_band_pct / 100;
-  return { base, dcTotal, dcMonthly, low: dcMonthly * (1 - band), high: dcMonthly * (1 + band) };
+  const low = dcMonthly * (1 - band);
+  const high = dcMonthly * (1 + band);
+  const pct = (v: number) => (base > 0 ? (v / base) * 100 : 0);
+
+  return {
+    base, dcTotal: capital, dcMonthly, low, high,
+    dcPct: pct(dcMonthly), pctLow: pct(low), pctHigh: pct(high),
+    method: carrying != null ? "revenue_requirement" : "straight_line",
+  };
 }
 
 export function openBillCalc(data: AppData, prefillId?: string) {
@@ -116,8 +146,9 @@ export function openBillCalc(data: AppData, prefillId?: string) {
       const k = Math.max(100, Math.min(5000, +kwh.value || a.typical_household_kwh));
       const p = project(u, k, a);
       const headline = p.dcTotal > 0
-        ? `<div class="bc-headline">+$${p.low.toFixed(0)}–$${p.high.toFixed(0)}<small> / mo</small></div>
-           <div class="bc-sub">from data-center infrastructure filed to date · ≈ +$${(p.low * 12).toFixed(0)}–$${(p.high * 12).toFixed(0)} / yr, spread over ~${a.amortize_years} yrs</div>`
+        ? `<div class="bc-headline">+$${p.low.toFixed(0)}–$${p.high.toFixed(0)}<small> / mo</small>
+             <span class="bc-pct">+${p.pctLow.toFixed(1)}–${p.pctHigh.toFixed(1)}%</span></div>
+           <div class="bc-sub">from data-center infrastructure filed to date · ≈ +$${(p.low * 12).toFixed(0)}–$${(p.high * 12).toFixed(0)} / yr</div>`
         : `<div class="bc-headline" style="color:var(--text-mid);font-size:22px">No DC docket filed yet</div>
            <div class="bc-sub">No single data-center infrastructure cost is broken out for this utility — but rates are climbing (see below).</div>`;
       el.querySelector("#bc-result")!.innerHTML = `
@@ -151,63 +182,164 @@ export function openBillCalc(data: AppData, prefillId?: string) {
 }
 
 /* ---------------- Check My Area · personalized exposure ----------------
-   A single, shareable conversion: pick your county → your utility, the
-   data centers near you, and the projected bill hit. Each run is a KPI. */
+   Enter a ZIP and what you actually use, get your utility, what's being built
+   near you, and the projected impact in both dollars and percent. Each run is
+   a KPI. */
 export function openImpact(data: AppData) {
+  const zipData = data.zips?.zips || null;
+  const a = data.bill.assumptions;
   const names = [...new Set(
     data.counties.features.map((f) => String((f.properties as any)?.county ?? "")).filter(Boolean)
   )].sort();
   const options = names.map((c) => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
+  const sub = subName().toLowerCase();
+
   openModal("Check My Area · Your Exposure", `
-    <div class="prose" style="margin-bottom:12px">Pick your county to see who powers your home, what's being built nearby, and the projected hit to your bill — all from public records.</div>
-    <div class="bc-field">
-      <label for="im-county">Your county</label>
-      <select class="bc-select" id="im-county"><option value="">Select a county…</option>${options}</select>
+    <div class="prose" style="margin-bottom:12px">See who powers your home, what's being built nearby, and the projected impact on your bill — all from public records.</div>
+
+    <div class="im-inputs">
+      ${zipData ? `
+        <div class="bc-field">
+          <label for="im-zip">Your ZIP code</label>
+          <input class="bc-input" id="im-zip" type="text" inputmode="numeric" maxlength="5"
+                 placeholder="46032" autocomplete="postal-code" />
+          <div class="im-hint" id="im-zip-hint"></div>
+        </div>` : ""}
+      <div class="bc-field">
+        <label for="im-cty">${zipData ? `Or pick your ${esc(sub)}` : `Your ${esc(sub)}`}</label>
+        <select class="bc-select" id="im-cty"><option value="">Select…</option>${options}</select>
+      </div>
+      <div class="bc-field">
+        <label for="im-kwh">Your monthly usage (kWh)</label>
+        <input class="bc-input" id="im-kwh" type="number" min="100" max="6000" value="${a.typical_household_kwh}" />
+        <div class="bc-usage-btns">
+          <button class="bc-chip on" data-k="${a.typical_household_kwh}">Typical</button>
+          <button class="bc-chip" data-k="700">Small home</button>
+          <button class="bc-chip" data-k="1500">Large home</button>
+          <button class="bc-chip" data-k="2200">All-electric</button>
+        </div>
+        <div class="im-hint">On your bill as “kWh used.” Adjust it for a result that matches your household.</div>
+      </div>
     </div>
+
     <div id="im-result"></div>
   `, (el) => {
-    const sel = el.querySelector<HTMLSelectElement>("#im-county")!;
-    const a = data.bill.assumptions;
-    sel.addEventListener("change", () => {
-      const county = sel.value;
-      const out = el.querySelector("#im-result")!;
+    const zipEl = el.querySelector<HTMLInputElement>("#im-zip");
+    const ctyEl = el.querySelector<HTMLSelectElement>("#im-cty")!;
+    const kwhEl = el.querySelector<HTMLInputElement>("#im-kwh")!;
+    const hint = el.querySelector<HTMLElement>("#im-zip-hint");
+    const out = el.querySelector<HTMLElement>("#im-result")!;
+
+    let pt: [number, number] | null = null;
+    let county = "";
+
+    const kwh = () => Math.max(100, Math.min(6000, +kwhEl.value || a.typical_household_kwh));
+
+    const render = () => {
       if (!county) { out.innerHTML = ""; return; }
-      const centroid = countyCentroid(county, data.counties);
-      const util = centroid ? servingUtility(centroid, data.territories) : null;
+      const util = pt ? servingUtility(pt, data.territories) : null;
       const key = util ? util.key : "other";
-      const utilName = util ? (key !== "other" ? UTIL_DISPLAY[key] : util.name.replace(/\b\w/g, (c) => c.toUpperCase())) : "Multiple / cooperative";
+      const utilName = util
+        ? (key !== "other" ? UTIL_DISPLAY[key] : util.name.replace(/\b\w/g, (c) => c.toUpperCase()))
+        : "Multiple / cooperative";
+      const model = data.bill.utilities.find((u) => u.id === (key === "cp" ? "centerpoint" : key)) || null;
       const inCounty = data.facilities.facilities.filter((f) => f.county === county && f.status !== "withdrawn");
       const totalMW = inCounty.reduce((s, f) => s + (f.mw_full ?? f.mw_phase1 ?? 0), 0);
-      const model = util ? data.bill.utilities.find((u) => u.id === (key === "cp" ? "centerpoint" : key)) : null;
-      const p = model ? project(model, a.typical_household_kwh, a) : null;
       const restr = data.restrictions.counties.find((c) => c.name.toLowerCase() === county.toLowerCase());
-      track("impact_report_run", { county, utility: key, facilities: inCounty.length, monthly: p ? +p.dcMonthly.toFixed(2) : 0 });
+      const k = kwh();
+      const p = model ? project(model, k, a) : null;
+
+      track("impact_report_run", {
+        county, utility: key, kwh: k,
+        facilities: inCounty.length,
+        monthly: p ? +p.dcMonthly.toFixed(2) : 0,
+        pct: p ? +p.dcPct.toFixed(2) : 0,
+      });
+
+      const headline = p && p.dcTotal > 0
+        ? `<div class="im-headline">
+             <div class="imh-main">+$${p.low.toFixed(0)}–$${p.high.toFixed(0)}<small>/mo</small></div>
+             <div class="imh-pct">+${p.pctLow.toFixed(1)}–${p.pctHigh.toFixed(1)}%<small> of your bill</small></div>
+           </div>
+           <div class="bc-sub">≈ +$${(p.low * 12).toFixed(0)}–$${(p.high * 12).toFixed(0)} per year, from data-center infrastructure filed to date</div>`
+        : `<div class="im-headline"><div class="imh-main" style="color:var(--text-mid);font-size:22px">No filed DC cost yet</div></div>
+           <div class="bc-sub">No data-center infrastructure cost is broken out for ${esc(utilName)} yet — but rates are still climbing.</div>`;
+
       out.innerHTML = `
-        <div class="stats-hero" style="margin-top:12px">
-          <div class="sh-cell"><div class="sh-num phos">${inCounty.length}</div><div class="sh-lab">data center${inCounty.length === 1 ? "" : "s"} in ${esc(county)}</div></div>
-          <div class="sh-cell"><div class="sh-num" style="color:var(--load-high)">${fmtMW(totalMW)}<small>MW</small></div><div class="sh-lab">combined load</div></div>
-        </div>
+        ${headline}
         <div class="bc-break">
+          <div class="bc-line"><span class="bl-k">Your ${esc(sub)}</span><span class="bl-v">${esc(withSub(county))}</span></div>
           <div class="bc-line"><span class="bl-k">Your electric utility</span><span class="bl-v">${esc(utilName)}</span></div>
-          ${p && p.dcTotal > 0
-            ? `<div class="bc-line"><span class="bl-k">Projected bill impact (filed DC infrastructure)</span><span class="bl-v">+$${p.low.toFixed(0)}–$${p.high.toFixed(0)}/mo</span></div>`
-            : `<div class="bc-line"><span class="bl-k">Projected bill impact</span><span class="bl-v">no DC docket filed yet</span></div>`}
+          ${p ? `<div class="bc-line"><span class="bl-k">Your bill now (${fmtInt(k)} kWh)</span><span class="bl-v">$${p.base.toFixed(0)}/mo</span></div>` : ""}
+          ${model ? `<div class="bc-line"><span class="bl-k">Rate change already approved, ${esc(model.recent_increase.period)}</span><span class="bl-v">+${model.recent_increase.pct}%</span></div>` : ""}
+          <div class="bc-line"><span class="bl-k">Data centers in ${esc(withSub(county))}</span><span class="bl-v">${inCounty.length}${totalMW ? ` · ${fmtMW(totalMW)} MW` : ""}</span></div>
           <div class="bc-line"><span class="bl-k">Local restriction</span><span class="bl-v">${restr ? (restr.type === "ban" ? "BANNED" : "MORATORIUM") : "none"}</span></div>
         </div>
         ${inCounty.length
-          ? `<div class="card-sources" style="margin-top:10px"><span class="eyebrow">Near you</span>${inCounty.slice(0, 8).map((f) => `<span class="src-link">${esc(f.name)} · ${fmtMW(f.mw_full ?? f.mw_phase1)} MW</span>`).join("")}</div>`
-          : `<div class="mini-note" style="margin-top:10px">No tracked data centers in ${esc(county)} — yet. It can change fast.</div>`}
+          ? `<div class="card-sources" style="margin-top:10px"><span class="eyebrow">Near you</span>${inCounty.slice(0, 8).map((f) => `<a class="src-link" style="cursor:pointer" data-fac="${esc(f.id)}">${esc(f.name)} · ${fmtMW(f.mw_full ?? f.mw_phase1)} MW</a>`).join("")}</div>`
+          : `<div class="mini-note" style="margin-top:10px">No tracked data centers in ${esc(withSub(county))} — yet.</div>`}
+        ${p && p.dcTotal > 0 ? `<div class="mini-note" style="margin-top:10px;font-size:9px;color:var(--text-faint)">${esc(data.bill.equation)}</div>` : ""}
+        <div class="bc-disclaim">${esc(data.bill.disclaimer)}</div>
         <div class="card-action" style="margin-top:12px">
           <span class="eyebrow">Make your voice count</span>
-          <a class="act-link hot" data-letter-cty="${esc(county)}">✉ Write your official about ${esc(county)} County</a>
-          <a class="act-link" data-civic="oucc" href="https://www.in.gov/oucc/2504.htm" target="_blank" rel="noopener">◈ File a public comment (OUCC)</a>
-          ${model ? `<a class="act-link" data-bill="${esc(model.id)}">▤ See the full bill breakdown</a>` : ""}
+          <a class="act-link hot" data-letter-cty="${esc(county)}">✉ Write your official about ${esc(withSub(county))}</a>
+          <a class="act-link" data-civic="oucc" href="${theme().terminology.consumer_advocate_url || "#"}" target="_blank" rel="noopener">◈ File a public comment</a>
+          ${model ? `<a class="act-link" data-bill="${esc(model.id)}">▤ Compare every utility</a>` : ""}
         </div>`;
-      out.querySelector<HTMLElement>("[data-letter-cty]")?.addEventListener("click", () => openLetter(data, { county }));
+
+      out.querySelectorAll<HTMLElement>("[data-fac]").forEach((n) =>
+        n.addEventListener("click", () => { closeModal(); onFacility?.(n.dataset.fac!); }));
       out.querySelector<HTMLElement>("[data-bill]")?.addEventListener("click", () => model && openBillCalc(data, model.id));
+    };
+
+    // ZIP drives both the utility (point-in-territory) and the subdivision
+    zipEl?.addEventListener("input", () => {
+      const z = zipEl.value.replace(/\D/g, "").slice(0, 5);
+      zipEl.value = z;
+      if (z.length < 5) { if (hint) hint.textContent = ""; return; }
+      const loc = zipData?.[z];
+      if (!loc) {
+        if (hint) { hint.textContent = "Not an Indiana ZIP we recognize — pick your " + sub + " instead."; hint.className = "im-hint warn"; }
+        return;
+      }
+      pt = loc;
+      const c = countyAt(loc, data.counties, data.region.subdivision_key);
+      if (c) {
+        county = c;
+        ctyEl.value = c;
+        if (hint) { hint.textContent = `${withSub(c)}`; hint.className = "im-hint ok"; }
+        render();
+      }
     });
+
+    // picking a subdivision directly uses its centroid
+    ctyEl.addEventListener("change", () => {
+      county = ctyEl.value;
+      pt = county ? countyCentroid(county, data.counties, data.region.subdivision_key) : null;
+      if (zipEl) zipEl.value = "";
+      if (hint) hint.textContent = "";
+      render();
+    });
+
+    kwhEl.addEventListener("input", () => {
+      el.querySelectorAll(".bc-chip").forEach((c) => c.classList.remove("on"));
+      render();
+    });
+    el.querySelectorAll<HTMLElement>(".bc-chip").forEach((c) =>
+      c.addEventListener("click", () => {
+        el.querySelectorAll(".bc-chip").forEach((x) => x.classList.remove("on"));
+        c.classList.add("on");
+        kwhEl.value = c.dataset.k!;
+        render();
+      }));
+
+    setTimeout(() => zipEl?.focus(), 60);
   });
 }
+
+/** Set by the app so the impact panel can open a facility card. */
+let onFacility: ((id: string) => void) | null = null;
+export const setFacilityOpener = (fn: (id: string) => void) => { onFacility = fn; };
 
 /* ---------------- Write Your Official · advocacy letter generator ----------------
    Generates an editable, sourced letter for a project or county. Copy or open
