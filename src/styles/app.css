@@ -617,6 +617,29 @@ a:hover { text-decoration: underline; }
 }
 .nl-embed-head { margin-top: 5px; font-size: 13px; font-weight: 600; color: var(--text-hi); }
 
+/* ---------- check my area ---------- */
+.im-inputs { display: flex; flex-direction: column; gap: 12px; }
+.im-hint { font-size: 10.5px; font-family: var(--mono); color: var(--text-dim); margin-top: 5px; min-height: 13px; }
+.im-hint.ok { color: var(--phosphor-bright); }
+.im-hint.warn { color: var(--load-med); }
+.im-headline {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 16px;
+  margin-top: 16px; padding-bottom: 10px; border-bottom: var(--hair);
+}
+.imh-main {
+  font-family: var(--mono); font-size: 32px; font-weight: 650; letter-spacing: -0.02em;
+  color: var(--load-high); text-shadow: 0 0 22px rgba(248,81,73,0.32);
+}
+.imh-main small, .imh-pct small { font-size: 12px; font-weight: 400; color: var(--text-dim); letter-spacing: 0; }
+.imh-pct {
+  font-family: var(--mono); font-size: 19px; font-weight: 600;
+  color: var(--load-med); text-shadow: 0 0 16px rgba(227,167,43,0.28);
+}
+.bc-pct {
+  font-family: var(--mono); font-size: 15px; font-weight: 600; margin-left: 10px;
+  color: var(--load-med);
+}
+
 /* ---------- data freshness ---------- */
 .fresh-line {
   display: flex; align-items: center; gap: 9px; margin: 10px 0;
