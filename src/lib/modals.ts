@@ -79,11 +79,17 @@ export function openModal(title: string, bodyHTML: string, onMount?: (el: HTMLEl
  * Both are shown to the user with the equation, so the math can be checked.
  */
 function project(u: UtilityModel, kwh: number, a: AppData["bill"]["assumptions"]) {
-  const base = kwh * (u.avg_rate_cents_kwh / 100);
+  /* Bill = fixed monthly charge + volumetric energy charge, when the tariff is
+     known. A single blended rate would overstate small households and
+     understate large ones, which is exactly what a usage input must get right. */
+  const base = u.energy_rate_cents_kwh != null
+    ? (u.fixed_charge_monthly ?? 0) + kwh * (u.energy_rate_cents_kwh / 100)
+    : kwh * (u.avg_rate_cents_kwh / 100);
   const capital = u.cost_shifts.reduce((s, c) => s + c.usd, 0);
 
   const carrying = a.carrying_charge_pct ?? null;
-  const resShare = (a.residential_allocation_pct ?? 100) / 100;
+  /* Per-utility share (EIA-861) wins over the global default when we have it. */
+  const resShare = (u.residential_revenue_share_pct ?? a.residential_allocation_pct ?? 100) / 100;
   const annual = carrying != null
     ? capital * (carrying / 100) * resShare        // revenue requirement
     : capital / Math.max(1, a.amortize_years);     // legacy straight-line

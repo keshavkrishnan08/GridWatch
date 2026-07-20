@@ -61,13 +61,23 @@
       "id": "nipsco",
       "display_name": "NIPSCO",
       "raw_match": ["Northern Indiana Pub Serv Co", "Northern Indiana Public Service"],
-      "customers": 485959,
-      "avg_rate_cents_kwh": 23.4,
-      "typical_bill_1000kwh": 234,
-      "recent_increase": { "pct": 27, "period": "past year", "source": { "label": "NIPSCO rate hike 2026", "url": "https://kilowattlogic.com/news/indiana-nipsco-commercial-electricity-rate-hike-2026" } },
+      "customers": 430648,
+      "residential_revenue_share_pct": 36.4,
+      "fixed_charge_monthly": 14.00,
+      "energy_rate_cents_kwh": 20.5,
+      "avg_rate_cents_kwh": 21.9,
+      "typical_bill_1000kwh": 219,
+      "recent_increase": { "pct": 16.75, "period": "2025 rate case, at 672 kWh", "source": { "label": "IURC Cause 46120 final order (June 26, 2025)", "url": "https://www.nipsco.com/docs/librariesprovider11/rates-and-tariffs/electric-rates/46120_june-26-2025-rate-case-order.pdf" } },
       "cost_shifts": [],
-      "notes": "Highest residential rate in the state after a 27% jump. No single data-center infrastructure docket is broken out yet, but NIPSCO plans a 2,600 MW gas plant tied to Amazon (33M gallons/day water) whose cost would land in future rate cases.",
-      "sources": [ { "label": "NIPSCO rate hike", "url": "https://kilowattlogic.com/news/indiana-nipsco-commercial-electricity-rate-hike-2026" } ]
+      "notes": "Amazon (Cause 46322, approved June 17 2026) and Alphabet/Google (Cause 46393, filed April 16 2026) are served under customer-specific contracts through NIPSCO Generation LLC, not from rate base — so their ~$7B of generation and transmission is not charged to ratepayers. NIPSCO projects the reverse: a residential credit of $7-9/month by 2032 via the Shared System Charge, about half of it guaranteed. Two open exposures kept out of this number because they are not quantified: the OUCC has appealed the ring-fencing order (Cause 46183) to the Indiana Court of Appeals, and NIPSCO's regulated 2024 IRP adds up to 3,835 MW of gas whose only load-growth driver, per OUCC comments, is data centers.",
+      "sources": [
+        { "label": "IURC Cause 46120 final order (June 26, 2025)", "url": "https://www.nipsco.com/docs/librariesprovider11/rates-and-tariffs/electric-rates/46120_june-26-2025-rate-case-order.pdf" },
+        { "label": "NIPSCO Electric Service Tariff, Rate 611 (eff. 03/01/2026)", "url": "https://www.nipsco.com/docs/librariesprovider11/rates-and-tariffs/electric-rates/2025-to-current/Electric-Service-Tariff-Entire-Book.pdf" },
+        { "label": "EIA-861 2024 bundled retail sales — residential", "url": "https://www.eia.gov/electricity/sales_revenue_price/pdf/table_6.pdf" },
+        { "label": "NiSource — regulatory approvals, data center strategy (June 23, 2026)", "url": "https://www.nisource.com/news/article/regulatory-approvals-underscore-strength-of-nisource-s-customer-focused-data-center-strategy-supporting-growth-in-indiana" },
+        { "label": "OUCC comments on NIPSCO 2024 IRP (Apr 17, 2025)", "url": "https://www.in.gov/iurc/files/NIPSCO-2024-IRP-OUCC-Comments-4-17-2025.pdf" },
+        { "label": "OUCC Notice of Appeal, Cause 46183 (Oct 22, 2025)", "url": "https://iurc.portal.in.gov/" }
+      ]
     },
     {
       "id": "centerpoint",
