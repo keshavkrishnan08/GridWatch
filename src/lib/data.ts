@@ -77,7 +77,18 @@ export interface TimelineFile {
 
 export interface UtilityModel {
   id: string; display_name: string; raw_match: string[];
-  customers: number; avg_rate_cents_kwh: number; typical_bill_1000kwh: number;
+  /** RESIDENTIAL customers (not total meters) — the denominator for per-household cost. */
+  customers: number;
+  avg_rate_cents_kwh: number; typical_bill_1000kwh: number;
+  /** Real tariff structure, when known: a fixed monthly charge plus a volumetric
+   *  rate. Modelling both makes low- and high-usage households come out right,
+   *  where a single blended rate would misstate them. Falls back to
+   *  avg_rate_cents_kwh when absent. */
+  fixed_charge_monthly?: number | null;
+  energy_rate_cents_kwh?: number | null;
+  /** Residential share of the utility's retail revenue (EIA-861). Infrastructure
+   *  costs are spread across all classes, so only this share reaches residential bills. */
+  residential_revenue_share_pct?: number | null;
   recent_increase: { pct: number; period: string; source: Source };
   cost_shifts: { usd: number; label: string; docket: string | null }[];
   notes: string; sources: Source[];
