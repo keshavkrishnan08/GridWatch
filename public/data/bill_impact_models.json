@@ -5,91 +5,235 @@
     "avg_bill_increase_this_year_pct": 17,
     "avg_bill_increase_decade_pct": 30,
     "avg_rate_cents_kwh": 17,
-    "source": { "label": "Indiana Capital Chronicle: the 'big five' defend rates", "url": "https://indianacapitalchronicle.com/2026/03/24/big-five-indiana-utilities-defend-rates-in-regulator-questioning/" }
+    "source": {
+      "label": "Indiana Capital Chronicle: the 'big five' defend rates",
+      "url": "https://indianacapitalchronicle.com/2026/03/24/big-five-indiana-utilities-defend-rates-in-regulator-questioning/"
+    }
   },
   "assumptions": {
     "amortize_years": 5,
     "uncertainty_band_pct": 45,
     "typical_household_kwh": 1000
   },
-  "equation": "current_bill = kwh × rate ; dc_impact_per_month = Σ(filed data-center infrastructure $) ÷ customers ÷ (amortize_years × 12) ; range = dc_impact × (1 ± uncertainty_band)",
+  "equation": "current_bill = kwh \u00d7 rate ; dc_impact_per_month = \u03a3(filed data-center infrastructure $) \u00f7 customers \u00f7 (amortize_years \u00d7 12) ; range = dc_impact \u00d7 (1 \u00b1 uncertainty_band)",
   "utilities": [
     {
       "id": "duke",
       "display_name": "Duke Energy Indiana",
-      "raw_match": ["Duke Energy Indiana", "Duke Energy Indiana, Llc"],
-      "customers": 881328,
+      "raw_match": [
+        "Duke Energy Indiana",
+        "Duke Energy Indiana, Llc"
+      ],
+      "customers": 796265,
       "avg_rate_cents_kwh": 15.6,
       "typical_bill_1000kwh": 156,
-      "recent_increase": { "pct": 20, "period": "past year", "source": { "label": "Indiana bill comparison 2026", "url": "https://utilitycheck.co/blog/indiana-electricity-rates-duke-aes" } },
+      "recent_increase": {
+        "pct": 20,
+        "period": "past year",
+        "source": {
+          "label": "Indiana bill comparison 2026",
+          "url": "https://utilitycheck.co/blog/indiana-electricity-rates-duke-aes"
+        }
+      },
       "cost_shifts": [
-        { "usd": 216000000, "label": "Meta Jeffersonville network upgrades", "docket": "45647" },
-        { "usd": 210000000, "label": "Meta LEAP transmission share", "docket": null }
+        {
+          "usd": 216000000,
+          "label": "Meta Jeffersonville network upgrades",
+          "docket": "45647",
+          "_verify": "Cause 45647 is Duke's TDSIC plan; the Meta-specific share is unconfirmed from the docket."
+        },
+        {
+          "usd": 210000000,
+          "label": "Meta LEAP transmission share",
+          "docket": null
+        }
       ],
       "notes": "Meta Jeffersonville is the largest single load in Duke's Indiana territory; upgrade costs are recovered from all customers.",
-      "sources": [ { "label": "CAC: AI Data Centers", "url": "https://www.citact.org/ai-data-centers" } ]
+      "sources": [
+        {
+          "label": "CAC: AI Data Centers",
+          "url": "https://www.citact.org/ai-data-centers"
+        }
+      ],
+      "residential_revenue_share_pct": 42.7,
+      "eia_avg_rate_cents_kwh": 12.75
     },
     {
       "id": "aes",
       "display_name": "AES Indiana",
-      "raw_match": ["Indianapolis Power & Light", "Indianapolis Power & Light Co"],
-      "customers": 519319,
+      "raw_match": [
+        "Indianapolis Power & Light",
+        "Indianapolis Power & Light Co"
+      ],
+      "customers": 469499,
       "avg_rate_cents_kwh": 15.8,
       "typical_bill_1000kwh": 158,
-      "recent_increase": { "pct": 12, "period": "past year", "source": { "label": "Mirror Indy: AES rate increase", "url": "https://mirrorindy.org/aes-indiana-rate-increase-approved-electric-bill-2026-mike-braun/" } },
+      "recent_increase": {
+        "pct": 12,
+        "period": "past year",
+        "source": {
+          "label": "Mirror Indy: AES rate increase",
+          "url": "https://mirrorindy.org/aes-indiana-rate-increase-approved-electric-bill-2026-mike-braun/"
+        }
+      },
       "cost_shifts": [
-        { "usd": 9000000, "label": "Meta LEAP transmission share", "docket": null }
+        {
+          "usd": 9000000,
+          "label": "Meta LEAP transmission share",
+          "docket": null
+        }
       ],
-      "notes": "AES claims the Google Monrovia deal (Cause 46394) nets $770M in customer savings over 15 years — a contested framing; Google is contracted to pay its own infrastructure.",
-      "sources": [ { "label": "AES rate review", "url": "https://www.aesindiana.com/rate-review" } ]
+      "notes": "AES claims the Google Monrovia deal (Cause 46394) nets $770M in customer savings over 15 years \u2014 a contested framing; Google is contracted to pay its own infrastructure.",
+      "sources": [
+        {
+          "label": "AES rate review",
+          "url": "https://www.aesindiana.com/rate-review"
+        }
+      ],
+      "residential_revenue_share_pct": 44.4,
+      "eia_avg_rate_cents_kwh": 13.75
     },
     {
       "id": "im",
       "display_name": "Indiana Michigan Power (I&M)",
-      "raw_match": ["Indiana Michigan Power", "Indiana Michigan Power Co"],
-      "customers": 607710,
+      "raw_match": [
+        "Indiana Michigan Power",
+        "Indiana Michigan Power Co"
+      ],
+      "customers": 422062,
       "avg_rate_cents_kwh": 16.7,
       "typical_bill_1000kwh": 167,
-      "recent_increase": { "pct": 4, "period": "past year", "source": { "label": "Indiana bill comparison 2026", "url": "https://utilitycheck.co/blog/indiana-electricity-rates-duke-aes" } },
+      "recent_increase": {
+        "pct": 4,
+        "period": "past year",
+        "source": {
+          "label": "Indiana bill comparison 2026",
+          "url": "https://utilitycheck.co/blog/indiana-electricity-rates-duke-aes"
+        }
+      },
       "cost_shifts": [
-        { "usd": 400000000, "label": "Google Fort Wayne + Amazon New Carlisle interconnection", "docket": "46301" }
+        {
+          "usd": 400000000,
+          "label": "I&M generation resource plan (Cause 46301, Amazon Data Services a party)",
+          "docket": "46301",
+          "_verify": "Dollar figure not yet confirmed against the 2026-01-28 order text."
+        }
       ],
-      "notes": "Serving Google Fort Wayne + Amazon New Carlisle. Also recovering uneconomic coal-contract costs through 2040 (Cause 45164 RA-5).",
-      "sources": [ { "label": "Utility Dive", "url": "https://www.utilitydive.com/news/indiana-iurc-large-load-interconnection-data-center-aep-amazon-google/740452/" } ]
+      "notes": "Serving Google Fort Wayne + Amazon New Carlisle. Also recovering uneconomic coal-contract costs through 2040 (Cause 45164 RA-5). Customer count is I&M's INDIANA residential meters (EIA-861 2024); I&M also serves Michigan, and Indiana infrastructure costs are allocated to Indiana jurisdictional customers, so the two-state total would understate per-household impact.",
+      "sources": [
+        {
+          "label": "Utility Dive",
+          "url": "https://www.utilitydive.com/news/indiana-iurc-large-load-interconnection-data-center-aep-amazon-google/740452/"
+        }
+      ],
+      "residential_revenue_share_pct": 39.2,
+      "eia_avg_rate_cents_kwh": 16.31
     },
     {
       "id": "nipsco",
       "display_name": "NIPSCO",
-      "raw_match": ["Northern Indiana Pub Serv Co", "Northern Indiana Public Service"],
+      "raw_match": [
+        "Northern Indiana Pub Serv Co",
+        "Northern Indiana Public Service"
+      ],
       "customers": 430648,
       "residential_revenue_share_pct": 36.4,
-      "fixed_charge_monthly": 14.00,
+      "fixed_charge_monthly": 14.0,
       "energy_rate_cents_kwh": 20.5,
       "avg_rate_cents_kwh": 21.9,
       "typical_bill_1000kwh": 219,
-      "recent_increase": { "pct": 16.75, "period": "2025 rate case, at 672 kWh", "source": { "label": "IURC Cause 46120 final order (June 26, 2025)", "url": "https://www.nipsco.com/docs/librariesprovider11/rates-and-tariffs/electric-rates/46120_june-26-2025-rate-case-order.pdf" } },
+      "recent_increase": {
+        "pct": 16.75,
+        "period": "2025 rate case, at 672 kWh",
+        "source": {
+          "label": "IURC Cause 46120 final order (June 26, 2025)",
+          "url": "https://www.nipsco.com/docs/librariesprovider11/rates-and-tariffs/electric-rates/46120_june-26-2025-rate-case-order.pdf"
+        }
+      },
       "cost_shifts": [],
-      "notes": "Amazon (Cause 46322, approved June 17 2026) and Alphabet/Google (Cause 46393, filed April 16 2026) are served under customer-specific contracts through NIPSCO Generation LLC, not from rate base — so their ~$7B of generation and transmission is not charged to ratepayers. NIPSCO projects the reverse: a residential credit of $7-9/month by 2032 via the Shared System Charge, about half of it guaranteed. Two open exposures kept out of this number because they are not quantified: the OUCC has appealed the ring-fencing order (Cause 46183) to the Indiana Court of Appeals, and NIPSCO's regulated 2024 IRP adds up to 3,835 MW of gas whose only load-growth driver, per OUCC comments, is data centers.",
+      "notes": "Amazon (Cause 46322, approved June 17 2026) and Alphabet/Google (Cause 46393, filed April 16 2026) are served under customer-specific contracts through NIPSCO Generation LLC, not from rate base \u2014 so their ~$7B of generation and transmission is not charged to ratepayers. NIPSCO projects the reverse: a residential credit of $7-9/month by 2032 via the Shared System Charge, about half of it guaranteed. Two open exposures kept out of this number because they are not quantified: the OUCC has appealed the ring-fencing order (Cause 46183) to the Indiana Court of Appeals, and NIPSCO's regulated 2024 IRP adds up to 3,835 MW of gas whose only load-growth driver, per OUCC comments, is data centers.",
       "sources": [
-        { "label": "IURC Cause 46120 final order (June 26, 2025)", "url": "https://www.nipsco.com/docs/librariesprovider11/rates-and-tariffs/electric-rates/46120_june-26-2025-rate-case-order.pdf" },
-        { "label": "NIPSCO Electric Service Tariff, Rate 611 (eff. 03/01/2026)", "url": "https://www.nipsco.com/docs/librariesprovider11/rates-and-tariffs/electric-rates/2025-to-current/Electric-Service-Tariff-Entire-Book.pdf" },
-        { "label": "EIA-861 2024 bundled retail sales — residential", "url": "https://www.eia.gov/electricity/sales_revenue_price/pdf/table_6.pdf" },
-        { "label": "NiSource — regulatory approvals, data center strategy (June 23, 2026)", "url": "https://www.nisource.com/news/article/regulatory-approvals-underscore-strength-of-nisource-s-customer-focused-data-center-strategy-supporting-growth-in-indiana" },
-        { "label": "OUCC comments on NIPSCO 2024 IRP (Apr 17, 2025)", "url": "https://www.in.gov/iurc/files/NIPSCO-2024-IRP-OUCC-Comments-4-17-2025.pdf" },
-        { "label": "OUCC Notice of Appeal, Cause 46183 (Oct 22, 2025)", "url": "https://iurc.portal.in.gov/" }
-      ]
+        {
+          "label": "IURC Cause 46120 final order (June 26, 2025)",
+          "url": "https://www.nipsco.com/docs/librariesprovider11/rates-and-tariffs/electric-rates/46120_june-26-2025-rate-case-order.pdf"
+        },
+        {
+          "label": "NIPSCO Electric Service Tariff, Rate 611 (eff. 03/01/2026)",
+          "url": "https://www.nipsco.com/docs/librariesprovider11/rates-and-tariffs/electric-rates/2025-to-current/Electric-Service-Tariff-Entire-Book.pdf"
+        },
+        {
+          "label": "EIA-861 2024 bundled retail sales \u2014 residential",
+          "url": "https://www.eia.gov/electricity/sales_revenue_price/pdf/table_6.pdf"
+        },
+        {
+          "label": "NiSource \u2014 regulatory approvals, data center strategy (June 23, 2026)",
+          "url": "https://www.nisource.com/news/article/regulatory-approvals-underscore-strength-of-nisource-s-customer-focused-data-center-strategy-supporting-growth-in-indiana"
+        },
+        {
+          "label": "OUCC comments on NIPSCO 2024 IRP (Apr 17, 2025)",
+          "url": "https://www.in.gov/iurc/files/NIPSCO-2024-IRP-OUCC-Comments-4-17-2025.pdf"
+        },
+        {
+          "label": "OUCC Notice of Appeal, Cause 46183 (Oct 22, 2025)",
+          "url": "https://iurc.portal.in.gov/"
+        }
+      ],
+      "eia_avg_rate_cents_kwh": 19.09
     },
     {
       "id": "centerpoint",
       "display_name": "CenterPoint Energy (Vectren)",
-      "raw_match": ["Southern Indiana Gas & Elec Co", "Southern Indiana Gas And Electric", "CenterPoint Energy", "CenterPoint", "Vectren"],
-      "customers": 151007,
+      "raw_match": [
+        "Southern Indiana Gas & Elec Co",
+        "Southern Indiana Gas And Electric",
+        "CenterPoint Energy",
+        "CenterPoint",
+        "Vectren"
+      ],
+      "customers": 133795,
       "avg_rate_cents_kwh": 22.1,
       "typical_bill_1000kwh": 221,
-      "recent_increase": { "pct": 25, "period": "past year", "source": { "label": "Indiana rates 2026", "url": "https://utilitycheck.co/blog/indiana-electricity-rates-duke-aes" } },
+      "recent_increase": {
+        "pct": 25,
+        "period": "past year",
+        "source": {
+          "label": "Indiana rates 2026",
+          "url": "https://utilitycheck.co/blog/indiana-electricity-rates-duke-aes"
+        }
+      },
       "cost_shifts": [],
       "notes": "SW Indiana; second-highest rate after a 25% jump. A ~600 MW data center is proposed in the Gibson/Posey area in CenterPoint territory.",
-      "sources": [ { "label": "CAC: AI Data Centers", "url": "https://www.citact.org/ai-data-centers" } ]
+      "sources": [
+        {
+          "label": "CAC: AI Data Centers",
+          "url": "https://www.citact.org/ai-data-centers"
+        }
+      ],
+      "residential_revenue_share_pct": 40.1,
+      "eia_avg_rate_cents_kwh": 17.52
     }
-  ]
+  ],
+  "_auto": {
+    "eia_861": {
+      "year": "2024",
+      "refreshed": "2026-07-20",
+      "fields": [
+        "customers",
+        "eia_avg_rate_cents_kwh",
+        "residential_revenue_share_pct"
+      ],
+      "note": "Refreshed by pipeline/refresh_eia.py. Only these fields are machine-maintained; cost_shifts, recent_increase, tariff rates and notes are human-verified from filings and are never touched.",
+      "source": "https://www.eia.gov/electricity/data/eia861/ (Form 861, 2024)"
+    },
+    "manual_overrides": [
+      {
+        "utility": "im",
+        "field": "customers",
+        "from": 607710,
+        "to": 422062,
+        "date": "2026-07-20",
+        "reason": "EIA-861 Indiana row; prior value included Michigan or non-residential meters"
+      }
+    ]
+  }
 }

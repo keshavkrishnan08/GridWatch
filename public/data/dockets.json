@@ -12,8 +12,14 @@
       "decision_expected": "2026-09",
       "ratepayer_note": "AES claims the deal saves customers $770M over 15 years; Google pays 100% of its power + new infrastructure. CAC contests the savings framing.",
       "sources": [
-        { "label": "AES Indiana — Data centers", "url": "https://www.aesindiana.com/data-centers" },
-        { "label": "CAC response", "url": "https://www.citact.org/news/iurc-must-prioritize-public-interest-aes-indiana-data-center-proposal" }
+        {
+          "label": "AES Indiana \u2014 Data centers",
+          "url": "https://www.aesindiana.com/data-centers"
+        },
+        {
+          "label": "CAC response",
+          "url": "https://www.citact.org/news/iurc-must-prioritize-public-interest-aes-indiana-data-center-proposal"
+        }
       ]
     },
     {
@@ -23,28 +29,47 @@
       "filed": "2025",
       "status": "approved",
       "decision_expected": null,
-      "ratepayer_note": "$216M in network upgrades tied to Meta shifted to all Indiana customers (per CAC).",
-      "sources": [ { "label": "CAC: AI Data Centers", "url": "https://www.citact.org/ai-data-centers" } ]
+      "ratepayer_note": "$216M in network upgrades tied to Meta shifted to all Indiana customers (per CAC). Note: the IURC portal lists Cause 45647 as Duke's TDSIC plan with only Duke and the OUCC as parties; the Meta-specific attribution of costs within it is not confirmed from the docket itself and is pending verification.",
+      "sources": [
+        {
+          "label": "CAC: AI Data Centers",
+          "url": "https://www.citact.org/ai-data-centers"
+        }
+      ]
     },
     {
       "cause": "46301",
-      "title": "I&M interconnection (Google Fort Wayne + Amazon New Carlisle)",
+      "title": "I&M Expedited Generation Resource Plan",
       "utility": "Indiana Michigan Power",
-      "filed": "2025",
-      "status": "pending",
-      "decision_expected": "2026",
-      "ratepayer_note": "More than $400M in interconnection/upgrade costs tied to two hyperscale loads.",
-      "sources": [ { "label": "Utility Dive", "url": "https://www.utilitydive.com/news/indiana-iurc-large-load-interconnection-data-center-aep-amazon-google/740452/" } ]
+      "filed": "2025-09",
+      "status": "decided",
+      "decision_expected": null,
+      "ratepayer_note": "Decided 2026-01-28. The IURC portal lists this as I&M's expedited generation resource plan, not an interconnection case, and Amazon Data Services is a party while Google is not \u2014 an earlier version of this record described it incorrectly. Dollar figures inside the order are unverified.",
+      "sources": [
+        {
+          "label": "IURC docketed case 46301",
+          "url": "https://iurc.portal.in.gov/docketed-case-details/?id=b19a8c53-ff9a-f011-b4cc-001dd803db57"
+        }
+      ]
     },
     {
       "cause": "46097",
-      "title": "I&M large-load / rate proceeding",
+      "title": "I&M large-load tariff (Industrial Power Tariff modifications)",
       "utility": "Indiana Michigan Power",
-      "filed": "2025",
-      "status": "pending",
+      "filed": "2024-07",
+      "status": "approved",
       "decision_expected": null,
-      "ratepayer_note": "A single 1,000 MW data center implies ~$492.6M annual power purchases and ~$34.5M/yr foregone sales-tax revenue (>$1.7B over 50 years) per CAC analysis.",
-      "sources": [ { "label": "CAC: AI Data Centers", "url": "https://www.citact.org/ai-data-centers" } ]
+      "ratepayer_note": "Approved 2025-02-19. This is Indiana's large-load tariff: it applies to new or expanded facilities at 70 MW or more on a single site (150 MW aggregated), and a customer planning to cut more than 20% of contracted peak capacity must get IURC approval first. Cost-allocation method was deferred to later proceedings, so it does not by itself settle who pays for new infrastructure.",
+      "sources": [
+        {
+          "label": "IURC docketed case 46097",
+          "url": "https://iurc.portal.in.gov/docketed-case-details/?id=b8cd5780-0546-ef11-8409-001dd803817e"
+        },
+        {
+          "label": "Utility Dive \u2014 IURC large-load interconnection order",
+          "url": "https://www.utilitydive.com/news/indiana-iurc-large-load-interconnection-data-center-aep-amazon-google/740452/"
+        }
+      ]
     },
     {
       "cause": "45164-RA5",
@@ -54,7 +79,31 @@
       "status": "approved",
       "decision_expected": null,
       "ratepayer_note": "Shifts uneconomic coal contract costs through 2040 onto Indiana customers.",
-      "sources": [ { "label": "CAC: AI Data Centers", "url": "https://www.citact.org/ai-data-centers" } ]
+      "sources": [
+        {
+          "label": "CAC: AI Data Centers",
+          "url": "https://www.citact.org/ai-data-centers"
+        }
+      ]
+    },
+    {
+      "cause": "46322",
+      "title": "NIPSCO / NIPSCO Generation \u2014 data-center special contract and PPA",
+      "utility": "NIPSCO",
+      "filed": "2025-11",
+      "status": "approved",
+      "decision_expected": null,
+      "ratepayer_note": "Approved 2026-06-17. Serves 'Data Center Customer #1' (Amazon, per NiSource) through NIPSCO Generation LLC rather than from rate base, with roughly $7B of generation and transmission funded outside ratepayer costs and a projected credit to existing customers. The OUCC has appealed the related ring-fencing order in Cause 46183.",
+      "sources": [
+        {
+          "label": "IURC docketed case 46322",
+          "url": "https://iurc.portal.in.gov/docketed-case-details/?id=70a66328-3ebe-f011-bbd3-001dd80846ac"
+        },
+        {
+          "label": "NiSource \u2014 regulatory approvals (June 23, 2026)",
+          "url": "https://www.nisource.com/news/article/regulatory-approvals-underscore-strength-of-nisource-s-customer-focused-data-center-strategy-supporting-growth-in-indiana"
+        }
+      ]
     }
   ]
 }
