@@ -1,0 +1,133 @@
+name: Autonomous data maintenance
+
+# Two tiers, deliberately separated:
+#
+#   Tier 1 — mechanical figures from machine-readable sources (EIA-861).
+#            Refreshed and committed automatically. Safe because the source is
+#            structured, stable, and the script writes only an allowlist of
+#            fields with a change-size guard.
+#
+#   Tier 2 — everything requiring judgment. NOT automated. The job detects that
+#            a cited source moved and opens an issue for a human. It never
+#            edits the dataset, because a scraper guessing at whether a rate
+#            order changed an authorized return is exactly how a project like
+#            this ends up confidently wrong.
+
+on:
+  schedule:
+    - cron: "0 14 3 * *"   # 3rd of each month
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  refresh:
+    name: Tier 1 — refresh mechanical figures
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install requests openpyxl
+
+      - name: Refresh EIA-861 figures
+        id: eia
+        run: |
+          python3 -m pipeline.refresh_eia --write | tee eia.txt
+          if grep -q "^  FLAG" eia.txt; then echo "flagged=true" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Validate nothing broke
+        run: |
+          python3 -m pipeline.validate_input public/data/facilities.json \
+            --subdivisions public/data/counties.geojson
+          python3 -m unittest discover -s pipeline/tests -t .
+
+      - name: Commit if anything changed
+        run: |
+          if [ -n "$(git status --porcelain public/data/)" ]; then
+            git config user.name "gridwatch-bot"
+            git config user.email "noreply@github.com"
+            git add public/data/
+            git commit -m "chore: refresh mechanical utility figures from EIA-861
+
+          Automated by pipeline/refresh_eia.py. Only machine-maintained fields
+          were touched; human-verified figures are untouched by design."
+            git push
+          else
+            echo "no changes"
+          fi
+
+      - name: Flag values that need a human
+        if: steps.eia.outputs.flagged == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = "The EIA refresh found changes too large to apply automatically. "
+              + "A big jump usually means utility name-matching broke, not that the "
+              + "real figure moved — please check before applying.\n\n```\n"
+              + fs.readFileSync('eia.txt', 'utf8') + "```";
+            const open = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: 'open', labels: 'data-review',
+            });
+            if (open.data.length === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title: "EIA refresh flagged values for review", body,
+                labels: ['data-review'],
+              });
+            }
+
+  watch:
+    name: Tier 2 — detect source changes for human review
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install requests
+
+      - name: Check cited sources
+        id: watch
+        continue-on-error: true
+        run: |
+          python3 -m pipeline.watch_sources --check-links --update | tee watch.txt
+          if grep -qE "^  (CHANGED|DEAD)" watch.txt; then echo "found=true" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Commit the new baseline
+        run: |
+          if [ -n "$(git status --porcelain pipeline/watch_state.json)" ]; then
+            git config user.name "gridwatch-bot"
+            git config user.email "noreply@github.com"
+            git add pipeline/watch_state.json
+            git commit -m "chore: update source-watch baseline"
+            git push
+          fi
+
+      - name: Open a review issue
+        if: steps.watch.outputs.found == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = "Sources the dataset cites have changed or gone dead.\n\n"
+              + "A changed source does **not** mean the data is wrong — it means a page "
+              + "the dataset relies on moved. Check whether the underlying fact changed, "
+              + "then update the record and its `last_verified` date.\n\n```\n"
+              + fs.readFileSync('watch.txt', 'utf8') + "```";
+            const open = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: 'open', labels: 'source-changed',
+            });
+            if (open.data.length === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title: "Cited sources changed — review needed", body,
+                labels: ['source-changed'],
+              });
+            }
