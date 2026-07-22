@@ -32,6 +32,10 @@ export interface Facility {
   sources: Source[];
   notes: string;
   last_verified: string | null;
+  /** "colocation" = a network/interconnection site, not a hyperscale campus. */
+  facility_class?: string | null;
+  /** "pending" = auto-discovered, not yet checked against a filing by a human. */
+  verification?: string | null;
 }
 
 export interface FacilitiesFile {

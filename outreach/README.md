@@ -29,7 +29,19 @@ Work top to bottom. The first three are worth more than the rest combined.
 | [07](07-mirror-indy.md) | **Mirror Indy** | Neighborhood-level reporting matches your county profiles. | Use it in a story |
 | [08](08-legislators.md) | **Bill authors (bipartisan)** | Four data-center bills died in committee. They need evidence for 2027. | Use it in testimony |
 | [09](09-county-officials.md) | **County commissioners** | Deciding rezonings with almost no data. Most underserved audience. | Use it before a vote |
-| [10](10-show-hn-reddit.md) | **Show HN + r/Indiana** | Fastest real numbers: stars, traffic, organic reach. | Upvotes and feedback |
+| [10](10-show-hn-reddit.md) | **Show HN + r/Indiana** | Fastest real numbers: stars, traffic, organic reach. | Technical scrutiny — **never ask for upvotes, it is bannable** |
+
+## The window: August 5–10, 2026
+
+Everything clusters here, and all three newsrooms will be covering it:
+
+| Date | Event |
+|---|---|
+| **Aug 5–6** | IURC evidentiary hearings, Cause 46394 (AES / Google Monrovia) |
+| **Aug 7** | IURC technical conferences — return on equity, and trackers |
+| **Aug 10, 7:00 p.m.** | **Full Council vote on Prop 238** (Indianapolis moratorium) |
+
+Written material for the Council must reach the Clerk **before** Aug 10.
 
 ## Before you send anything
 

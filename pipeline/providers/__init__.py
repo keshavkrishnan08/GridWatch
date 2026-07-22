@@ -16,12 +16,14 @@ from .base import Provider, RegionContext
 from .osm_boundary import BoundaryProvider, SubdivisionsProvider
 from .osm_datacenters import DataCenterProvider
 from .osm_power import PowerPlantProvider, SubstationProvider, TransmissionProvider
+from .peeringdb import PeeringDBProvider
 
 # global, works for every region
 DEFAULT_CHAIN: list[Provider] = [
     BoundaryProvider(),
     SubdivisionsProvider(),
     DataCenterProvider(),
+    PeeringDBProvider(),
     PowerPlantProvider(),
     TransmissionProvider(),
     SubstationProvider(),

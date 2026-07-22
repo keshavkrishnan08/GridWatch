@@ -328,6 +328,7 @@ a:hover { text-decoration: underline; }
 .card-row .rv { color: var(--text-hi); text-align: right; }
 .card-chatter { font-family: var(--mono); font-size: 10px; line-height: 1.5; letter-spacing: 0.02em; color: var(--load-med); margin: 0 0 13px; padding: 8px 10px; background: rgba(227,167,43,0.07); border: 1px dashed rgba(227,167,43,0.5); border-radius: var(--r-sm); }
 .card-chatter b { color: var(--text-hi); }
+.card-pending { font-family: var(--mono); font-size: 10px; line-height: 1.5; letter-spacing: 0.02em; color: var(--text-mid); margin: 0 0 13px; padding: 8px 10px; background: rgba(88,166,255,0.06); border: 1px dashed rgba(88,166,255,0.4); border-radius: var(--r-sm); }
 .card-notes { font-size: 12px; color: var(--text-mid); line-height: 1.55; margin: 12px 0; padding: 10px 11px; background: rgba(88,166,255,0.05); border-left: 2px solid var(--transmission); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
 .card-impact { margin-top: 12px; padding: 9px 11px 10px; background: rgba(227,167,43,0.06); border-left: 2px solid var(--load-med); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
 .card-impact > .eyebrow { display: block; margin-bottom: 5px; }

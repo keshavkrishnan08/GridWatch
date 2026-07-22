@@ -1,0 +1,22 @@
+{
+  "region": "Indiana, United States",
+  "slug": "indiana-pdb",
+  "providers": {
+    "osm_boundary": {
+      "ok": true,
+      "osm_id": 161816,
+      "bbox": [
+        -88.0972,
+        37.77178,
+        -84.78518,
+        41.76035
+      ],
+      "file": "boundary.geojson"
+    },
+    "peeringdb": {
+      "ok": true,
+      "count": 17,
+      "file": "facilities.peeringdb.json"
+    }
+  }
+}
