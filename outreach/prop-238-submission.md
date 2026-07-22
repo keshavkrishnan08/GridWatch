@@ -85,7 +85,7 @@ Send by **Aug 6** so it's in the packet, not racing the gavel.
 > **On sourcing**
 >
 > Every record above carries a source URL and a verification date, and the
-> complete dataset is public, version-controlled, and auditable at [URL]. If any
+> complete dataset is public, version-controlled, and auditable at https://keshavkrishnan08.github.io/GridWatch/. If any
 > figure I have submitted is wrong, I will correct it and would be grateful to be
 > told.
 >

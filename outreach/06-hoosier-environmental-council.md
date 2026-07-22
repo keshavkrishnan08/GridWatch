@@ -40,7 +40,7 @@ directory versus an Indiana-native dataset where every record cites its filing.
 > If HEC finds errors in it, I'd genuinely like to hear them — corrections are
 > the most valuable thing anyone sends me.
 >
-> [link]
+> https://keshavkrishnan08.github.io/GridWatch/
 
 ## Timing
 

@@ -90,7 +90,7 @@ after Aug 7, not during.
 > No ask here beyond corrections — if any of my records are wrong, I'd rather
 > know.
 >
-> [link]
+> https://keshavkrishnan08.github.io/GridWatch/
 
 ## Notes
 
