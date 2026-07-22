@@ -1,0 +1,24 @@
+{
+  "name": "GridWatch Virginia",
+  "region_label": "VIRGINIA",
+  "tagline": "DATA CENTER ATLAS",
+  "boundary_file": "boundary.geojson",
+  "subdivisions_file": "subdivisions.geojson",
+  "subdivision_key": "county",
+  "subdivision_singular": "county",
+  "home_center": null,
+  "home_zoom_boost": 0.42,
+  "min_zoom": 3.5,
+  "max_zoom": 16,
+  "_generated": {
+    "query": "Virginia, United States",
+    "osm_relation": 224042,
+    "admin_level": null,
+    "bbox": [
+      -83.67537,
+      36.54265,
+      -75.16644,
+      39.46601
+    ]
+  }
+}

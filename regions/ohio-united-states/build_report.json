@@ -12,6 +12,13 @@
         42.32469
       ],
       "file": "boundary.geojson"
+    },
+    "osm_datacenters": {
+      "ok": true,
+      "count": 51,
+      "file": "facilities.auto.json",
+      "partial": true,
+      "warning": "3 pass(es) failed: ['[\"building\"=\"data_center\"]', '[\"man_made\"=\"data_center\"]', '[\"building\"=\"data_centre\"]']"
     }
   }
 }

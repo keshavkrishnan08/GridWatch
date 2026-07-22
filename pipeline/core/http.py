@@ -92,8 +92,8 @@ def post_json(
     urls: Iterable[str],
     data: dict,
     *,
-    tries: int = 3,
-    timeout: int = 180,
+    tries: int = 4,
+    timeout: int = 300,
     min_gap: float = 2.0,
     cache_key: str | None = None,
 ) -> Any | None:

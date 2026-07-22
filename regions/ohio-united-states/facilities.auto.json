@@ -1164,8 +1164,8 @@
    ]
   },
   {
-   "id": "unnamed-data-center-1319724559",
-   "name": "Unnamed data center",
+   "id": "unnamed-data-center-delaware-1319724559",
+   "name": "Unnamed data center (Delaware)",
    "developer": "Undisclosed",
    "city": "Delaware",
    "county": "",
@@ -1195,10 +1195,7 @@
    "notes": "Discovered in OpenStreetMap. Location is mapped, but capacity, water use, and project stage are not recorded there \u2014 treat as an unverified lead until a filing or news report confirms it.",
    "last_verified": null,
    "_auto": true,
-   "_source": "osm:way/1319724559",
-   "_merged_from": [
-    "osm:way/1319724559"
-   ]
+   "_source": "osm:way/1319724559"
   },
   {
    "id": "cyrusone-cincinnati-hamilton-cin4-1346610234",
@@ -1665,8 +1662,8 @@
    "_source": "osm:node/5788001108"
   },
   {
-   "id": "datacenter-6001142350",
-   "name": "Datacenter",
+   "id": "bowling-green-state-university-bowling-g-6001142350",
+   "name": "Bowling Green State University \u2014 Bowling Green",
    "developer": "Bowling Green State University",
    "city": "Bowling Green",
    "county": "",
