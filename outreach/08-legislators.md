@@ -63,9 +63,9 @@ they're set by chamber rules each session.
 > Two things that might be useful when drafting for 2027:
 >
 > Tracked data-center load is 15,142 MW, roughly 43% of Indiana's peak demand.
-> Eleven counties have adopted ordinances, at least seventeen have moratoriums,
-> and Marshall and Cass have enacted outright bans — the local response is
-> already substantial.
+> My dataset records two counties with outright bans (Marshall and Cass) and six
+> with moratoriums, each with a citation — the local response is already
+> substantial, and other trackers put the count higher still.
 >
 > Second, the structures differ sharply in who bears cost. NIPSCO serves Amazon
 > and Alphabet through a separate generation subsidiary, outside rate base, and
