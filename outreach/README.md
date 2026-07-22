@@ -46,7 +46,9 @@ Written material for the Council must reach the Clerk **before** Aug 10.
 ## Before you send anything
 
 1. **Publish it.** Every one of these needs a working link. Nothing else matters until then.
-2. **Turn on analytics** so you can measure what the outreach produces.
+2. **Turn on analytics FIRST.** Every distribution KPI is measured client-side.
+   Traffic arriving before PostHog is wired is gone permanently — you cannot
+   backfill it. Order: publish → analytics + Search Console → outreach.
 3. Read [`cac-reconciliation.md`](cac-reconciliation.md) — it's the artifact that
    makes #01 land, and the credibility proof for #02 and #03.
 
