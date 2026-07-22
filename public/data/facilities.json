@@ -698,11 +698,11 @@
    "mw_phase1": null,
    "mw_full": null,
    "mw_estimated": false,
-   "acres": 585,
+   "acres": 580,
    "investment_usd": null,
    "water_mgd": null,
    "water_status": "unknown",
-   "utility": "Hoosier Energy / South Central REMC",
+   "utility": "Henry County REMC",
    "iurc_docket": null,
    "docket_url": "https://iurc.portal.in.gov/",
    "announced_year": 2025,
@@ -722,8 +722,8 @@
      "url": "https://www.brookvilleindiana.com/story/2026/03/11/news/developer-discusses-knightstown-data-center-proposal-after-henry-county-approval/1263.html"
     }
    ],
-   "notes": "Surge Development's 500+ acre site near SR-109/I-70 cleared its final Henry County commissioners vote (Jan 2026), but the developer says no operator or user is selected and a full development plan is still pending. No MW or investment has been reported.",
-   "last_verified": "2026-07-17"
+   "notes": "Surge Development's 500+ acre site near SR-109/I-70 cleared its final Henry County commissioners vote (Jan 2026), but the developer says no operator or user is selected and a full development plan is still pending. No MW or investment has been reported. Acreage is 580 per the county ordinance, and the serving utility is Henry County REMC — earlier values (585 acres, Hoosier Energy / South Central REMC) were wrong.",
+   "last_verified": "2026-07-22"
   },
   {
    "id": "karis-merrillville",
@@ -1462,7 +1462,7 @@
      "url": "https://www.wthr.com/article/news/local/shelbyville-plan-commission-says-no-429-acre-data-center-project-local-news-construction/531-17a451a1-64e7-4023-b5bf-fdeee3f26f4f"
     }
    ],
-   "notes": "The Shelbyville Plan Commission voted no on Jan 7 2026, but the Common Council then approved annexation, rezoning and a roughly $2B economic development agreement 4-2-1 on April 6 2026 — so the earlier 'denied' status was wrong. Reported at 576 acres and up to 13 buildings; no megawatt figure is confirmed in any source, so the 900 MW carried by some trackers is not used here.",
+   "notes": "The Shelbyville Plan Commission voted no on Jan 7 2026, but the Common Council then approved annexation, rezoning and a roughly $2B economic development agreement 4-2-1 on April 6 2026 — so the earlier 'denied' status was wrong. Reported at 576 acres and up to 13 buildings; no megawatt figure is confirmed in any source, so the 900 MW carried by some trackers is not used here. The developer stated roughly 500 MW; the 900 MW carried by some trackers is not supported by any source found. The Jan 7 2026 Plan Commission vote was an 11-0 unfavorable recommendation, which the Common Council then overrode 4-2-1.",
    "last_verified": "2026-07-22"
   },
   {
