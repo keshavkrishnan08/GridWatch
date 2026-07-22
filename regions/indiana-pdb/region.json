@@ -1,0 +1,24 @@
+{
+  "name": "GridWatch Indiana",
+  "region_label": "INDIANA",
+  "tagline": "DATA CENTER ATLAS",
+  "boundary_file": "boundary.geojson",
+  "subdivisions_file": "subdivisions.geojson",
+  "subdivision_key": "county",
+  "subdivision_singular": "county",
+  "home_center": null,
+  "home_zoom_boost": 0.42,
+  "min_zoom": 3.5,
+  "max_zoom": 16,
+  "_generated": {
+    "query": "Indiana, United States",
+    "osm_relation": 161816,
+    "admin_level": null,
+    "bbox": [
+      -88.0972,
+      37.77178,
+      -84.78518,
+      41.76035
+    ]
+  }
+}

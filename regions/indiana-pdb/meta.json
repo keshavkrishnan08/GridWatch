@@ -1,0 +1,34 @@
+{
+ "last_updated": "2026-07-22",
+ "region": "Indiana, United States",
+ "state_peak_mw": null,
+ "counts": {
+  "facilities_curated": 0,
+  "facilities_tracked_statewide": 0,
+  "by_status": {},
+  "counties_with_projects": 0,
+  "power_plants": 0,
+  "transmission_lines": 0,
+  "utility_territories": 0,
+  "substations": 0
+ },
+ "load_mw": {
+  "committed": 0,
+  "proposed": 0,
+  "active_total": 0,
+  "withdrawn_avoided": 0,
+  "pct_of_state_peak": null
+ },
+ "mega_facilities": [],
+ "generation_mix": [],
+ "total_generation_mw": 0,
+ "top_counties": [],
+ "utilities": [],
+ "sources": {
+  "facilities": "OpenStreetMap (auto-discovered) + curated records",
+  "power_plants": "OpenStreetMap power=plant",
+  "transmission": "OpenStreetMap power=line",
+  "territories": "not configured for this region",
+  "counties": "OpenStreetMap administrative boundaries"
+ }
+}
