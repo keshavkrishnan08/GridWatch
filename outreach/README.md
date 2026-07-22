@@ -43,6 +43,25 @@ Everything clusters here, and all three newsrooms will be covering it:
 
 Written material for the Council must reach the Clerk **before** Aug 10.
 
+## ⚠️ Verification standard for this kit
+
+On 2026-07-22 a research pass fabricated county contacts, statute numbers, case
+citations, and comment deadlines, then retracted them. That material had already
+been committed here. It has been removed — not corrected — and this file records
+the incident so the standard is explicit:
+
+- **Every email in this kit came from a published staff page or contact page.**
+  No address format was ever inferred or synthesized.
+- **Only five statutes survive**: IC 36-7-4-604, -608, -1605, -1613, -1614. Each
+  was checked against the statute text. Cite no others without reading them.
+- **No county plan-commission contact is pre-verified.** Call the office.
+- Where something couldn't be confirmed, the kit now says "call and ask" rather
+  than guessing.
+
+The failure mode is the one this whole project exists to prevent: plausible,
+specific, and wrong. Before you send anything from here, click the link or dial
+the number yourself.
+
 ## Before you send anything
 
 1. **Publish it.** Every one of these needs a working link. Nothing else matters until then.

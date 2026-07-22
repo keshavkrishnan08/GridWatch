@@ -78,11 +78,9 @@ Send by **Aug 6** so it's in the packet, not racing the gavel.
 >
 > On local action: my dataset records two Indiana counties with outright bans
 > (Marshall and Cass) and six with moratoriums (Fulton, Starke, Dearborn, White,
-> Putnam, and Pulaski). Indiana University's Environmental Resilience Institute,
-> whose count is broader than mine, reported in July 2026 that roughly eleven
-> counties have adopted data-center ordinances and at least seventeen have
-> temporary moratoriums. Either figure indicates that a substantial share of
-> Indiana counties have already acted.
+> Putnam, and Pulaski). Each carries a citation in the public dataset. Other
+> trackers report higher counts; I am citing only what I have independently
+> sourced.
 >
 > **On sourcing**
 >
@@ -110,9 +108,11 @@ your name and URL in a public record that reporters read.
 
 ## Two cautions
 
-**This is a real public filing under your own name.** It's entirely legitimate —
-IC 36-7-4-920 explicitly provides that "other persons may appear and present
-relevant evidence" — but be comfortable with it being permanent and public.
+**This is a real public filing under your own name.** The route is IC 36-7-4-608,
+which governs zoning ordinance amendments and is the basis for the
+written-objections procedure the Council's own Journal recites. Confirm the
+mechanics with the Clerk by phone before sending, and be comfortable with the
+filing being permanent and public.
 
 **Do not add a figure I haven't listed here.** The Google SE Marion 400 MW is
 sourced only to AI Law Tracker, which is weaker than the rest, which is why it

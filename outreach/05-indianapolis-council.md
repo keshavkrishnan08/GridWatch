@@ -55,11 +55,12 @@ outside analysis into the record.
 > electrical grid. Every figure in it links to its source document — IURC
 > filings, utility tariffs, county records.
 >
-> Relevant to Proposal 238: Marion County currently has [N] tracked data-center
-> projects totaling [X] MW. Statewide, tracked data-center load is 15,142 MW,
-> roughly 43% of Indiana's peak demand. Eleven Indiana counties have adopted
-> data-center ordinances, at least seventeen have temporary moratoriums, and two
-> — Marshall and Cass — have enacted outright bans.
+> Relevant to Proposal 238: Marion County currently has 8 tracked data-center
+> facilities, and the three the proposal grandfathers — Sabey, Metrobloks and DC
+> Blox — total 377 MW of disclosed capacity. Statewide, tracked data-center load
+> is 15,142 MW, roughly 43% of Indiana's peak demand. My dataset records two
+> counties with outright bans (Marshall and Cass) and six with moratoriums, each
+> with a citation.
 >
 > I take no position on the proposal. I offer the data so the Council can see
 > what comparable jurisdictions have done and at what scale. The full dataset is
@@ -68,9 +69,10 @@ outside analysis into the record.
 > Respectfully,
 > [name, address]
 
-⚠️ Fill in the Marion County bracket from your own data before sending, and say
-nothing you can't source. A councillor checking one number and finding it wrong
-costs more than the submission gains.
+⚠️ Use [`prop-238-submission.md`](prop-238-submission.md) — it's the full version
+with every figure already verified against the dataset. Say nothing you can't
+source: a councillor checking one number and finding it wrong costs more than the
+submission gains.
 
 ## Not confirmed
 
