@@ -1,6 +1,6 @@
 {
  "schema_version": "1.0",
- "last_updated": "2026-07-20",
+ "last_updated": "2026-07-22",
  "coverage_note": "The AI Law Tracker inventory lists ~46 Indiana data-center projects; other trackers (e.g., Cleanview) count 90+ planned facilities totaling ~14 GW. This file curates those with locatable sites and at least one verifiable attribute, including RUMORED/CHATTER proposals that are reported but unconfirmed (no named operator, or rejected at local rezoning) — each flagged with its stage in the notes. Flagship figures are cross-checked against IURC filings, utility filings, and news reporting cited per record.",
  "primary_sources": [
   {
@@ -921,10 +921,10 @@
    "id": "qts-wheeler-withdrawn",
    "name": "QTS Jeremiah Campus (Withdrawn)",
    "developer": "QTS",
-   "city": "Benton County",
-   "county": "Benton",
-   "lat": 40.6,
-   "lng": -87.3,
+   "city": "Wheeler",
+   "county": "Porter",
+   "lat": 41.5073,
+   "lng": -87.2011,
    "geo_precision": "county",
    "status": "withdrawn",
    "mw_phase1": null,
@@ -946,8 +946,8 @@
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
-   "notes": "Two-parcel QTS proposal — withdrawn.",
-   "last_verified": "2026-07-16"
+   "notes": "Two QTS proposals in Union Township (Wheeler), Porter County, both withdrawn in September 2025. County corrected from Benton to Porter — the prior value was a transcription error.",
+   "last_verified": "2026-07-22"
   },
   {
    "id": "wylie-hobart",
@@ -1431,19 +1431,19 @@
   },
   {
    "id": "prologis-shelbyville",
-   "name": "Prologis Shelbyville (denied)",
+   "name": "Prologis Shelbyville",
    "developer": "Prologis",
    "city": "Shelbyville",
    "county": "Shelby",
    "lat": 39.522,
    "lng": -85.777,
    "geo_precision": "city",
-   "status": "withdrawn",
+   "status": "approved",
    "mw_phase1": null,
    "mw_full": null,
    "mw_estimated": false,
-   "acres": 429,
-   "investment_usd": null,
+   "acres": 576,
+   "investment_usd": 2000000000,
    "water_mgd": null,
    "water_status": "unknown",
    "utility": "Duke Energy Indiana",
@@ -1454,12 +1454,16 @@
    "tax_note": null,
    "sources": [
     {
+     "label": "City of Shelbyville — Council approves data center agreement (Apr 6 2026)",
+     "url": "https://www.shelbyville.in.gov/m/newsflash/Home/Detail/364"
+    },
+    {
      "label": "WTHR — Shelbyville plan commission says no to 429-acre project",
      "url": "https://www.wthr.com/article/news/local/shelbyville-plan-commission-says-no-429-acre-data-center-project-local-news-construction/531-17a451a1-64e7-4023-b5bf-fdeee3f26f4f"
     }
    ],
-   "notes": "Prologis sought to annex and rezone 429 acres east of I-74/SR-44 near Shelbyville for industrial use; the Shelbyville Plan Commission voted no on Jan. 7, 2026. No operator, MW, or investment was ever disclosed.",
-   "last_verified": "2026-07-17"
+   "notes": "The Shelbyville Plan Commission voted no on Jan 7 2026, but the Common Council then approved annexation, rezoning and a roughly $2B economic development agreement 4-2-1 on April 6 2026 — so the earlier 'denied' status was wrong. Reported at 576 acres and up to 13 buildings; no megawatt figure is confirmed in any source, so the 900 MW carried by some trackers is not used here.",
+   "last_verified": "2026-07-22"
   },
   {
    "id": "powerhouse-hobart",
@@ -1608,6 +1612,478 @@
    ],
    "notes": "Logix Realty's bid to rezone ~715 acres near Frankfort — end user rumored only as 'DataOne,' >$10B a proponent projection — was denied 3-0 by Clinton County Commissioners amid reported developer 'red flags.' It can't be refiled on the same land for 12 months.",
    "last_verified": "2026-07-17"
+  },
+  {
+   "geo_precision": "city",
+   "mw_phase1": null,
+   "mw_full": null,
+   "mw_estimated": false,
+   "acres": 1000,
+   "investment_usd": 65000000000,
+   "water_mgd": null,
+   "water_status": "unknown",
+   "utility": "Hoosier Energy / WIN Energy REMC",
+   "iurc_docket": null,
+   "docket_url": "https://iurc.portal.in.gov/",
+   "online_year": null,
+   "tax_note": null,
+   "notes": "1,000-acre park on US 41 east of the former Merom plant; site work underway April 2026. The $65B is a projected tenant investment, not committed capex. Capacity is NOT reliably reported: sourced figures are 430 MW for phase one and up to 2.1 GW at full buildout, so no single MW figure is carried here. Distinct from the withdrawn Hallador/Merom proposal.",
+   "last_verified": "2026-07-22",
+   "id": "heartland-sullivan",
+   "name": "Heartland Industrial Park (Potentia)",
+   "developer": "Potentia Inc.",
+   "city": "Sullivan",
+   "county": "Sullivan",
+   "lat": 39.0597,
+   "lng": -87.4877,
+   "status": "construction",
+   "announced_year": 2026,
+   "sources": [
+    {
+     "label": "Indiana Public Media — $65B industrial park coming to Sullivan County",
+     "url": "https://www.ipm.org/news/2026-04-01/65-billion-industrial-park-coming-to-sullivan-county"
+    },
+    {
+     "label": "WBIW — Potentia unveils Sullivan County project",
+     "url": "https://www.wbiw.com/2026/04/08/potentia-inc-unveils-historic-65-billion-data-center-project-in-sullivan-county/"
+    }
+   ]
+  },
+  {
+   "geo_precision": "city",
+   "mw_phase1": null,
+   "mw_full": 430,
+   "mw_estimated": false,
+   "acres": 140,
+   "investment_usd": 5700000000,
+   "water_mgd": null,
+   "water_status": "unknown",
+   "utility": "Hoosier Energy / WIN Energy REMC",
+   "iurc_docket": null,
+   "docket_url": "https://iurc.portal.in.gov/",
+   "online_year": 2027,
+   "tax_note": null,
+   "notes": "430 MW on 140 acres leased inside Heartland Industrial Park. Financed with $5.7B senior secured notes; 15-year Fluidstack master lease credit-guaranteed by Google. First data hall expected July 2027.",
+   "last_verified": "2026-07-22",
+   "id": "coatue-new-lebanon",
+   "name": "Next Frontier Campus (Coatue / Fluidstack)",
+   "developer": "Coatue / Fluidstack",
+   "city": "New Lebanon",
+   "county": "Sullivan",
+   "lat": 39.0537,
+   "lng": -87.4612,
+   "status": "construction",
+   "announced_year": 2026,
+   "sources": [
+    {
+     "label": "Baxtel — Fluidstack New Lebanon",
+     "url": "https://baxtel.com/data-center/fluidstack-new-lebanon-indiana"
+    },
+    {
+     "label": "The Real Deal — Coatue launches data center land venture",
+     "url": "https://therealdeal.com/national/2026/05/04/ai-investor-coatue-launches-data-center-land-venture/"
+    }
+   ]
+  },
+  {
+   "geo_precision": "county",
+   "mw_phase1": null,
+   "mw_full": 600,
+   "mw_estimated": false,
+   "acres": null,
+   "investment_usd": null,
+   "water_mgd": null,
+   "water_status": "unknown",
+   "utility": "CenterPoint Energy Indiana South",
+   "iurc_docket": null,
+   "docket_url": "https://iurc.portal.in.gov/",
+   "online_year": null,
+   "tax_note": null,
+   "notes": "600 MW load request approved in MISO's October 2025 interconnection cycle (queue #51079, transmission owner SIGE). County is NOT confirmed: MISO names only the transmission owner, and SIGE territory spans Vanderburgh, Warrick, Posey, Gibson and Spencer. It is also unconfirmed that the customer is a data center.",
+   "last_verified": "2026-07-22",
+   "id": "project-raider",
+   "name": "Project Raider (undisclosed)",
+   "developer": "Undisclosed",
+   "city": "Evansville",
+   "county": "Vanderburgh",
+   "lat": 37.9869,
+   "lng": -87.6301,
+   "status": "proposed",
+   "announced_year": 2025,
+   "sources": [
+    {
+     "label": "MISO — Expedited Project Review statistics (Feb 2026)",
+     "url": "https://cdn.misoenergy.org/20260203%20EPR-TSTF%20Item%2003%20MISO%20EPR%20Statistics739041.pdf"
+    }
+   ]
+  },
+  {
+   "geo_precision": "city",
+   "mw_phase1": null,
+   "mw_full": 500,
+   "mw_estimated": true,
+   "acres": 120,
+   "investment_usd": null,
+   "water_mgd": null,
+   "water_status": "unknown",
+   "utility": "Washington Municipal Utilities / IMPA",
+   "iurc_docket": null,
+   "docket_url": "https://iurc.portal.in.gov/",
+   "online_year": null,
+   "tax_note": null,
+   "notes": "Proposed at I-69/US 50 at 250-500 MW (500 is the top of a reported range). Washington City Council voted unanimously in May 2026 to cease all dealings with the developer and explore a moratorium.",
+   "last_verified": "2026-07-22",
+   "id": "outrigger-washington",
+   "name": "Outrigger Industrial (Washington)",
+   "developer": "Outrigger Industrial",
+   "city": "Washington",
+   "county": "Daviess",
+   "lat": 38.648,
+   "lng": -87.1167,
+   "status": "withdrawn",
+   "announced_year": 2026,
+   "sources": [
+    {
+     "label": "Indiana Public Media — New data center proposed near Washington",
+     "url": "https://www.ipm.org/news/2026-03-24/new-data-center-proposed-near-washington-ind"
+    },
+    {
+     "label": "Indiana Public Media — Council cancels data center development",
+     "url": "https://www.ipm.org/news/2026-05-12/washington-city-council-cancels-data-center-development-will-explore-moratorium"
+    }
+   ]
+  },
+  {
+   "geo_precision": "city",
+   "mw_phase1": null,
+   "mw_full": 500,
+   "mw_estimated": false,
+   "acres": 300,
+   "investment_usd": 150000000,
+   "water_mgd": null,
+   "water_status": "unknown",
+   "utility": "Duke Energy Indiana",
+   "iurc_docket": null,
+   "docket_url": "https://iurc.portal.in.gov/",
+   "online_year": null,
+   "tax_note": null,
+   "notes": "500 MW hyperscale proposal on ~300 acres; $100-150M in infrastructure. No site finalized and the end buyer is an undisclosed hyperscaler. Fulton County adopted a moratorium in March 2026.",
+   "last_verified": "2026-07-22",
+   "id": "decennial-akron",
+   "name": "Decennial Group (Akron)",
+   "developer": "Decennial Group",
+   "city": "Akron",
+   "county": "Fulton",
+   "lat": 41.0386,
+   "lng": -86.0266,
+   "status": "proposed",
+   "announced_year": 2026,
+   "sources": [
+    {
+     "label": "ABC57 — Developer unveils Akron data center plan",
+     "url": "https://www.abc57.com/news/developer-unveils-data-center-plan-in-akron-amid-resident-concerns"
+    },
+    {
+     "label": "ABC57 — Latest details on Fulton County development",
+     "url": "https://www.abc57.com/news/latest-details-on-potential-data-center-development-in-fulton-county"
+    }
+   ]
+  },
+  {
+   "geo_precision": "site",
+   "mw_phase1": null,
+   "mw_full": 52,
+   "mw_estimated": false,
+   "acres": 20,
+   "investment_usd": null,
+   "water_mgd": null,
+   "water_status": "unknown",
+   "utility": "AES Indiana",
+   "iurc_docket": null,
+   "docket_url": "https://iurc.portal.in.gov/",
+   "online_year": null,
+   "tax_note": null,
+   "notes": "Approved 6-1 by the Metropolitan Development Commission on July 15 2026 as a use variance, over neighborhood opposition. Scaled back before the vote: ~80 MW to 52 MW, three buildings to two, 56 diesel generators to 31. 320,000 sq ft on the east side near Irvington.",
+   "last_verified": "2026-07-22",
+   "id": "dcblox-indianapolis",
+   "name": "DC Blox Indianapolis",
+   "developer": "DC Blox",
+   "city": "Indianapolis",
+   "county": "Marion",
+   "lat": 39.7672,
+   "lng": -86.0516,
+   "status": "approved",
+   "announced_year": 2026,
+   "sources": [
+    {
+     "label": "WFYI — East side data center wins approval despite opposition",
+     "url": "https://www.wfyi.org/wfyi-news/2026-07-15/east-side-data-center-wins-approval-despite-community-opposition"
+    },
+    {
+     "label": "Mirror Indy — DC Blox campus, Irvington / Warren Township",
+     "url": "https://mirrorindy.org/dc-blox-date-center-campus-east-side-indianapolis-irvington-warren-township/"
+    }
+   ]
+  },
+  {
+   "geo_precision": "city",
+   "mw_phase1": null,
+   "mw_full": 24,
+   "mw_estimated": false,
+   "acres": null,
+   "investment_usd": null,
+   "water_mgd": null,
+   "water_status": "unknown",
+   "utility": "Duke Energy Indiana",
+   "iurc_docket": null,
+   "docket_url": "https://iurc.portal.in.gov/",
+   "online_year": null,
+   "tax_note": null,
+   "notes": "24 MW edge colocation campus (Indy I and Indy II) with a new substation.",
+   "last_verified": "2026-07-22",
+   "id": "radiusdc-plainfield",
+   "name": "RadiusDC Indy Campus (Plainfield)",
+   "developer": "RadiusDC",
+   "city": "Plainfield",
+   "county": "Hendricks",
+   "lat": 39.742,
+   "lng": -86.3548,
+   "status": "proposed",
+   "announced_year": 2026,
+   "sources": [
+    {
+     "label": "RadiusDC — edge colocation campus in Indianapolis",
+     "url": "https://www.radius-dc.com/newsroom-and-events/radiusdc-expands-its-footprint-with-edge-colocation-campus-in-indianapolis-in"
+    }
+   ]
+  },
+  {
+   "geo_precision": "site",
+   "mw_phase1": null,
+   "mw_full": 2.5,
+   "mw_estimated": false,
+   "acres": null,
+   "investment_usd": null,
+   "water_mgd": null,
+   "water_status": "unknown",
+   "utility": "Duke Energy Indiana",
+   "iurc_docket": null,
+   "docket_url": "https://iurc.portal.in.gov/",
+   "online_year": null,
+   "tax_note": null,
+   "notes": "Operating colocation facility: 2.5 MW utility power, 1.5 MW critical IT load, 8,500 sq ft data hall. Small by current standards and included for completeness.",
+   "last_verified": "2026-07-22",
+   "id": "dartpoints-columbus",
+   "name": "DartPoints CLU01 (Columbus)",
+   "developer": "DartPoints",
+   "city": "Columbus",
+   "county": "Bartholomew",
+   "lat": 39.1832,
+   "lng": -85.8968,
+   "status": "operational",
+   "announced_year": 2020,
+   "sources": [
+    {
+     "label": "DartPoints — CLU01 Columbus, IN",
+     "url": "https://dartpoints.com/locations/clu01-columbus-in/"
+    }
+   ]
+  },
+  {
+   "geo_precision": "city",
+   "mw_phase1": null,
+   "mw_full": null,
+   "mw_estimated": false,
+   "acres": 554,
+   "investment_usd": null,
+   "water_mgd": null,
+   "water_status": "unknown",
+   "utility": "Kosciusko REMC",
+   "iurc_docket": null,
+   "docket_url": "https://iurc.portal.in.gov/",
+   "online_year": null,
+   "tax_note": null,
+   "notes": "554-acre proposal denied unanimously by the Kosciusko County Commissioners on April 22 2025, after the Area Plan Commission also denied it unanimously on April 2.",
+   "last_verified": "2026-07-22",
+   "id": "prologis-leesburg-withdrawn",
+   "name": "Prologis Leesburg (denied)",
+   "developer": "Prologis",
+   "city": "Leesburg",
+   "county": "Kosciusko",
+   "lat": 41.336,
+   "lng": -85.9052,
+   "status": "withdrawn",
+   "announced_year": 2025,
+   "sources": [
+    {
+     "label": "WNDU — Commissioners say no to proposed Leesburg data center",
+     "url": "https://www.wndu.com/2025/04/22/kosciusko-county-commissioners-say-no-proposed-data-center-leesburg/"
+    }
+   ]
+  },
+  {
+   "geo_precision": "city",
+   "mw_phase1": null,
+   "mw_full": null,
+   "mw_estimated": false,
+   "acres": 87,
+   "investment_usd": null,
+   "water_mgd": null,
+   "water_status": "unknown",
+   "utility": "NIPSCO",
+   "iurc_docket": null,
+   "docket_url": "https://iurc.portal.in.gov/",
+   "online_year": null,
+   "tax_note": null,
+   "notes": "87-acre proposal, distinct from Wylie Capital's separate ~400-acre Hobart site.",
+   "last_verified": "2026-07-22",
+   "id": "wylie-merrillville",
+   "name": "Wylie Capital (Merrillville)",
+   "developer": "Wylie Capital",
+   "city": "Merrillville",
+   "county": "Lake",
+   "lat": 41.4457,
+   "lng": -87.3302,
+   "status": "proposed",
+   "announced_year": 2025,
+   "sources": [
+    {
+     "label": "Citizens Action Coalition — Indiana data center tracker",
+     "url": "https://www.citact.org/ai-data-centers"
+    }
+   ]
+  },
+  {
+   "geo_precision": "city",
+   "mw_phase1": null,
+   "mw_full": null,
+   "mw_estimated": false,
+   "acres": 110,
+   "investment_usd": null,
+   "water_mgd": null,
+   "water_status": "unknown",
+   "utility": "NIPSCO",
+   "iurc_docket": null,
+   "docket_url": "https://iurc.portal.in.gov/",
+   "online_year": null,
+   "tax_note": null,
+   "notes": "110-acre data center announced at the Thomas Rose Industrial Park in January 2026; La Porte later granted a height variance. Headline and date confirmed via news index; the publishers block automated article retrieval, so figures beyond acreage are unverified.",
+   "last_verified": "2026-07-22",
+   "id": "thomas-rose-laporte",
+   "name": "Thomas Rose Industrial Park (La Porte)",
+   "developer": "Undisclosed",
+   "city": "La Porte",
+   "county": "LaPorte",
+   "lat": 41.6287,
+   "lng": -86.7084,
+   "status": "proposed",
+   "announced_year": 2026,
+   "sources": [
+    {
+     "label": "WSBT — 110-acre data center planned at LaPorte industrial park (Jan 15 2026)",
+     "url": "https://wsbt.com/"
+    },
+    {
+     "label": "Citizens Action Coalition — Indiana data center tracker",
+     "url": "https://www.citact.org/ai-data-centers"
+    }
+   ]
+  },
+  {
+   "geo_precision": "city",
+   "mw_phase1": null,
+   "mw_full": null,
+   "mw_estimated": false,
+   "acres": 746,
+   "investment_usd": null,
+   "water_mgd": null,
+   "water_status": "unknown",
+   "utility": "Duke Energy Indiana",
+   "iurc_docket": null,
+   "docket_url": "https://iurc.portal.in.gov/",
+   "online_year": null,
+   "tax_note": null,
+   "notes": "746 acres annexed and rezoned by the Kokomo Common Council over resident opposition, but council members stated on the record that no specific use has been proposed or formally discussed and called a data center 'completely speculative'. Listed as rumored rather than proposed for that reason.",
+   "last_verified": "2026-07-22",
+   "id": "kokomo-unnamed",
+   "name": "Unnamed annexation site (Kokomo)",
+   "developer": "Undisclosed",
+   "city": "Kokomo",
+   "county": "Howard",
+   "lat": 40.4869,
+   "lng": -86.1282,
+   "status": "rumored",
+   "announced_year": 2026,
+   "sources": [
+    {
+     "label": "WRTV — Kokomo council approves annexation and rezoning amid opposition",
+     "url": "https://www.wrtv.com/news/local-news/kokomo-common-council-approves-annexation-rezoning-plan-amid-opposition-from-residents"
+    }
+   ]
+  },
+  {
+   "geo_precision": "city",
+   "mw_phase1": null,
+   "mw_full": null,
+   "mw_estimated": false,
+   "acres": 300,
+   "investment_usd": null,
+   "water_mgd": null,
+   "water_status": "unknown",
+   "utility": "Indiana Michigan Power (I&M)",
+   "iurc_docket": null,
+   "docket_url": "https://iurc.portal.in.gov/",
+   "online_year": null,
+   "tax_note": null,
+   "notes": "10-shell campus on ~300 acres northeast of the US 31/20 bypass. The land is already zoned industrial, so no rezoning is required — which means there may be no public vote.",
+   "last_verified": "2026-07-22",
+   "id": "western-hospitality-south-bend",
+   "name": "Western Hospitality Partners (South Bend)",
+   "developer": "Western Hospitality Partners",
+   "city": "South Bend",
+   "county": "St. Joseph",
+   "lat": 41.6451,
+   "lng": -86.2976,
+   "status": "rumored",
+   "announced_year": 2025,
+   "sources": [
+    {
+     "label": "WVPE — New Carlisle developer planning South Bend data center",
+     "url": "https://www.wvpe.org/wvpe-news/2025-12-12/new-carlisle-data-center-developer-planning-one-in-south-bend"
+    }
+   ]
+  },
+  {
+   "geo_precision": "city",
+   "mw_phase1": null,
+   "mw_full": null,
+   "mw_estimated": false,
+   "acres": null,
+   "investment_usd": 1000000000,
+   "water_mgd": null,
+   "water_status": "unknown",
+   "utility": "NIPSCO",
+   "iurc_docket": null,
+   "docket_url": "https://iurc.portal.in.gov/",
+   "online_year": null,
+   "tax_note": null,
+   "notes": "Second Microsoft campus in La Porte, distinct from the first. City Council approved annexation and rezoning in May 2026; groundbreaking reported June 17-18 2026 at roughly $1B.",
+   "last_verified": "2026-07-22",
+   "id": "microsoft-laporte-2",
+   "name": "Microsoft La Porte campus #2",
+   "developer": "Microsoft",
+   "city": "La Porte",
+   "county": "LaPorte",
+   "lat": 41.59,
+   "lng": -86.73,
+   "status": "construction",
+   "announced_year": 2026,
+   "sources": [
+    {
+     "label": "Inside INdiana Business — Microsoft breaks ground on La Porte data center",
+     "url": "https://www.insideindianabusiness.com/articles/microsoft-breaks-ground-on-la-porte-data-center"
+    }
+   ]
   }
  ]
 }

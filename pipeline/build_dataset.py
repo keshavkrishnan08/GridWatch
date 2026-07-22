@@ -86,7 +86,10 @@ def main():
         "state_peak_mw": STATE_PEAK_MW,
         "counts": {
             "facilities_curated": len(facilities),
-            "facilities_tracked_statewide": 46,
+            # The AI Law Tracker inventory that seeded this file listed ~46 Indiana
+            # projects. Our own curation has since passed that, so the "tracked"
+            # figure is the larger of the two — it can never be below what we hold.
+            "facilities_tracked_statewide": max(46, len(facilities)),
             "by_status": dict(by_status),
             "counties_with_projects": len([c for c in county if county[c]["count"]]),
             "power_plants": len(plants),

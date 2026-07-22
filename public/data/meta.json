@@ -1,28 +1,29 @@
 {
-  "last_updated": "2026-07-17",
+  "last_updated": "2026-07-22",
   "state_peak_mw": 35000,
   "counts": {
-    "facilities_curated": 47,
-    "facilities_tracked_statewide": 50,
+    "facilities_curated": 61,
+    "facilities_tracked_statewide": 61,
     "by_status": {
-      "construction": 6,
-      "approved": 2,
-      "proposed": 18,
-      "withdrawn": 13,
-      "rumored": 8
+      "construction": 9,
+      "approved": 4,
+      "proposed": 23,
+      "rumored": 10,
+      "withdrawn": 14,
+      "operational": 1
     },
-    "counties_with_projects": 20,
+    "counties_with_projects": 27,
     "power_plants": 205,
     "transmission_lines": 1237,
     "utility_territories": 114,
     "substations": 0
   },
   "load_mw": {
-    "committed": 7385,
-    "proposed": 6549,
-    "active_total": 13934,
-    "withdrawn_avoided": 2880,
-    "pct_of_state_peak": 39.8
+    "committed": 7870,
+    "proposed": 7273,
+    "active_total": 15142,
+    "withdrawn_avoided": 3380,
+    "pct_of_state_peak": 43.3
   },
   "mega_facilities": [
     {
@@ -34,6 +35,11 @@
       "name": "Meta LEAP Campus (Lebanon)",
       "mw": 1540,
       "county": "Boone"
+    },
+    {
+      "name": "Takanock Goshen (stealth campus)",
+      "mw": 1500,
+      "county": "Elkhart"
     },
     {
       "name": "Google Monrovia Data Center",
@@ -56,9 +62,19 @@
       "county": "Gibson"
     },
     {
+      "name": "Project Raider (undisclosed)",
+      "mw": 600,
+      "county": "Vanderburgh"
+    },
+    {
       "name": "Microsoft La Porte Campus",
       "mw": 538,
       "county": "LaPorte"
+    },
+    {
+      "name": "Sentinel Hebron (undisclosed operator)",
+      "mw": 504,
+      "county": "Porter"
     }
   ],
   "generation_mix": [
@@ -107,7 +123,7 @@
   "top_counties": [
     {
       "county": "St. Joseph",
-      "count": 3,
+      "count": 4,
       "mw": 3250,
       "utility": "Indiana Michigan Power (I&M)"
     },
@@ -130,22 +146,16 @@
       "utility": null
     },
     {
+      "county": "Lake",
+      "count": 9,
+      "mw": 1210,
+      "utility": "NIPSCO"
+    },
+    {
       "county": "Morgan",
       "count": 1,
       "mw": 1200,
       "utility": "AES Indiana"
-    },
-    {
-      "county": "Shelby",
-      "count": 1,
-      "mw": 900,
-      "utility": "Duke Energy Indiana"
-    },
-    {
-      "county": "Lake",
-      "count": 7,
-      "mw": 710,
-      "utility": "NIPSCO"
     },
     {
       "county": "Gibson",
@@ -154,8 +164,14 @@
       "utility": "CenterPoint Energy"
     },
     {
+      "county": "Vanderburgh",
+      "count": 1,
+      "mw": 600,
+      "utility": "CenterPoint Energy Indiana South"
+    },
+    {
       "county": "LaPorte",
-      "count": 3,
+      "count": 5,
       "mw": 538,
       "utility": "NIPSCO"
     },
@@ -169,13 +185,18 @@
   "utilities": [
     {
       "utility": "Indiana Michigan Power (I&M)",
-      "count": 5,
+      "count": 6,
       "mw": 4950
     },
     {
       "utility": "NIPSCO",
-      "count": 14,
-      "mw": 1752
+      "count": 18,
+      "mw": 2252
+    },
+    {
+      "utility": "AES Indiana",
+      "count": 4,
+      "mw": 1577
     },
     {
       "utility": "Duke Energy Indiana / WVPA (LEAP district)",
@@ -183,19 +204,24 @@
       "mw": 1540
     },
     {
-      "utility": "AES Indiana",
-      "count": 3,
-      "mw": 1525
-    },
-    {
       "utility": "Duke Energy Indiana",
-      "count": 4,
-      "mw": 1357
+      "count": 8,
+      "mw": 984
     },
     {
       "utility": "CenterPoint Energy",
       "count": 1,
       "mw": 600
+    },
+    {
+      "utility": "CenterPoint Energy Indiana South",
+      "count": 1,
+      "mw": 600
+    },
+    {
+      "utility": "Hoosier Energy / WIN Energy REMC",
+      "count": 2,
+      "mw": 430
     },
     {
       "utility": "WVPA / Parke County REMC",

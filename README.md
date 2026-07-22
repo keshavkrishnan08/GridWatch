@@ -89,15 +89,95 @@ npm run dev
 Units, currency, terminology ("county" vs "Kreis"), and the color scale adapt
 automatically; roads and cities come from the global basemap.
 
-Then bring your region's data. **[`prompts/`](prompts/)** has LLM research
-prompts that produce it in the exact schema — facilities, bill models, civic
-process, plus an adversarial audit pass to run before you publish. Each is
-written so the model can't quietly invent figures: unknowns stay `null` and
+Units, currency, terminology, and the color scale adapt automatically. Roads,
+cities, and water come from the global basemap, so they already work everywhere.
+
+### Then bring your data — paste this into Claude
+
+The map is automatic; the facilities are yours to research. Copy the prompt
+below into Claude (or any LLM with web search), replacing `{{REGION}}`. It's
+written so the model can't quietly invent figures — unknowns stay `null`, and
 every number needs a citation.
+
+<details>
+<summary><b>Click to expand the setup prompt</b></summary>
+
+```text
+I'm building a GridWatch atlas for {{REGION}} and need you to research the data
+centers there. Return a single JSON object, nothing else.
+
+THE RULE THAT GOVERNS EVERYTHING: if you cannot cite it, do not state it.
+- Every facility needs at least one real, working source URL.
+- Any figure you can't find in a document is null. Never 0, never a "typical"
+  value, never an average of conflicting reports.
+- If you're not confident a project exists, leave it out and list it under
+  "uncertain" instead.
+Ten sourced facilities beat fifty guesses.
+
+WHERE TO LOOK, in order of authority: utility regulator filings (rate cases,
+interconnection requests, special contracts); local government records (rezoning
+petitions, planning-commission minutes, tax abatements); utility resource plans;
+company announcements; local and trade press; industry trackers (treat these as
+leads, not facts — set mw_estimated true).
+
+FORMAT:
+{
+  "region": "{{REGION}}",
+  "facilities": [{
+    "id": "operator-town",
+    "name": "Full facility name",
+    "developer": "Company, or Undisclosed",
+    "city": "Town",
+    "county": "Subdivision WITHOUT the word County/Parish/Kreis",
+    "lat": 40.0481, "lng": -86.4691,
+    "geo_precision": "parcel | site | city | county",
+    "status": "proposed | approved | construction | operational | rumored | withdrawn",
+    "mw_phase1": null, "mw_full": 600, "mw_estimated": false,
+    "acres": null, "investment_usd": null,
+    "water_mgd": null, "water_status": "known | redacted | unknown",
+    "utility": "Serving electric utility",
+    "iurc_docket": null, "docket_url": null,
+    "announced_year": 2025, "online_year": null, "tax_note": null,
+    "sources": [{"label": "Publication — headline", "url": "https://..."}],
+    "notes": "Plain-language context. Say explicitly what is unconfirmed.",
+    "last_verified": "YYYY-MM-DD"
+  }],
+  "uncertain": [{"name": "...", "why": "what you found and why it fell short"}],
+  "coverage_note": "What you searched and what you likely missed."
+}
+
+FIELD RULES:
+- status: "rumored" = reported but unconfirmed, or no named operator.
+  "withdrawn" = cancelled, rejected, or denied at rezoning.
+- geo_precision: be honest. "parcel" only for a surveyed parcel.
+- water_status "redacted" specifically means a developer withheld it in a public
+  filing — that's a meaningful fact, distinct from "unknown".
+- mw_estimated: true when capacity comes from reporting rather than a filing.
+
+BEFORE YOU ANSWER, verify: every facility has a real source URL; no number
+appears that you can't point to; every unknown is null; county names have no
+suffix; no duplicate ids; mw_phase1 <= mw_full; every status is one of the six.
+
+After the JSON, tell me in prose: what you searched and likely missed, where
+sources conflicted, and the 2-3 records most worth a human verifying.
+```
+
+</details>
+
+Save the JSON, then:
 
 ```bash
 npm run validate -- my-facilities.json   # enforces the sourcing rule
 ```
+
+The validator checks structure — every facility sourced, no duplicate ids,
+coordinates in range, county matching its own coordinates. **It cannot check
+whether a number is true**, so open a few source links yourself before you
+publish.
+
+[`prompts/`](prompts/) has three more: bill models, civic process, and an
+adversarial audit pass to run before going live. Using Claude Code?
+`.claude/skills/gridwatch-region/` runs the whole flow.
 
 See **[FORKING.md](FORKING.md)** for the full guide.
 
