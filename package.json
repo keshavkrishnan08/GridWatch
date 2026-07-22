@@ -4,7 +4,7 @@
   "description": "Interactive atlas mapping every proposed and existing data center in Indiana against the state power grid, sourced from public IURC filings and county records.",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://github.com/gridwatch/gridwatch-indiana",
+  "homepage": "https://github.com/keshavkrishnan08/GridWatch",
   "keywords": [
     "indiana",
     "data-centers",
@@ -41,5 +41,12 @@
     "typescript": "^5.6.3",
     "vite": "^5.4.10",
     "vitest": "^2.1.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keshavkrishnan08/GridWatch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/keshavkrishnan08/GridWatch/issues"
   }
 }

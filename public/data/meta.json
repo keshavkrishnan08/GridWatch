@@ -2,17 +2,17 @@
   "last_updated": "2026-07-22",
   "state_peak_mw": 35000,
   "counts": {
-    "facilities_curated": 61,
-    "facilities_tracked_statewide": 61,
+    "facilities_curated": 76,
+    "facilities_tracked_statewide": 76,
     "by_status": {
       "construction": 9,
       "approved": 4,
       "proposed": 23,
       "rumored": 10,
       "withdrawn": 14,
-      "operational": 1
+      "operational": 16
     },
-    "counties_with_projects": 27,
+    "counties_with_projects": 32,
     "power_plants": 205,
     "transmission_lines": 1237,
     "utility_territories": 114,
@@ -123,13 +123,13 @@
   "top_counties": [
     {
       "county": "St. Joseph",
-      "count": 4,
+      "count": 6,
       "mw": 3250,
       "utility": "Indiana Michigan Power (I&M)"
     },
     {
       "county": "Allen",
-      "count": 2,
+      "count": 4,
       "mw": 1700,
       "utility": "Indiana Michigan Power (I&M)"
     },
@@ -165,7 +165,7 @@
     },
     {
       "county": "Vanderburgh",
-      "count": 1,
+      "count": 2,
       "mw": 600,
       "utility": "CenterPoint Energy Indiana South"
     },
@@ -234,7 +234,7 @@
       "mw": 310
     },
     {
-      "utility": "Hoosier Energy / South Central REMC",
+      "utility": "Henry County REMC",
       "count": 1,
       "mw": 0
     },

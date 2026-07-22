@@ -53,6 +53,14 @@ export class Card {
     const impactBlock = (impactRows || jobsCompare)
       ? `<div class="card-impact"><span class="eyebrow">Local impact</span>${impactRows}${jobsCompare}</div>` : "";
 
+    const pendingBlock = f.verification === "pending" && f.status !== "rumored"
+      ? `<div class="card-pending">◷ PENDING VERIFICATION — auto-discovered from a public registry
+          and not yet checked against a filing by a person.${
+            f.facility_class === "colocation"
+              ? " This is a colocation or interconnection site, not a hyperscale campus; no power capacity is recorded for it."
+              : ""}</div>`
+      : "";
+
     const chatterBlock = f.status === "rumored"
       ? `<div class="card-chatter">◌ CHATTER — reported but <b>unconfirmed</b>. No filing or named operator yet; any figures come from reporting or grid trackers, not filed records.</div>`
       : "";
@@ -82,6 +90,7 @@ export class Card {
       </div>
       <div class="card-body">
         ${chatterBlock}
+        ${pendingBlock}
         <div class="stat-grid">
           <div class="stat"><div class="k">Power Draw</div>${mwCell}</div>
           <div class="stat"><div class="k">Water Use</div>${waterCell}</div>
