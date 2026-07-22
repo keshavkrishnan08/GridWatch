@@ -1,0 +1,21 @@
+{
+  "region": "Virginia, United States",
+  "slug": "virginia-united-states",
+  "providers": {
+    "osm_boundary": {
+      "ok": true,
+      "osm_id": 224042,
+      "bbox": [
+        -83.67537,
+        36.54265,
+        -75.16644,
+        39.46601
+      ],
+      "file": "boundary.geojson"
+    },
+    "osm_subdivisions": {
+      "ok": false,
+      "error": "Overpass unavailable; nothing written \u2014 re-run to retry"
+    }
+  }
+}

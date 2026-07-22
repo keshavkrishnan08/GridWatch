@@ -142,10 +142,19 @@ def main() -> int:
             curated = json.load(fh).get("facilities", [])
         for c in curated:
             c["_curated"] = True
-    merged = dedupe_sites(curated + sites, radius_mi=1.2)
+    # The wide radius exists to marry a curated record (often city-level coords)
+    # to the precise auto-discovered site describing the same place. With nothing
+    # curated there is no such pairing to make, and the provider already deduped
+    # tightly — re-running wide here would collapse genuinely separate facilities,
+    # which is exactly what happens in a dense market like Northern Virginia.
+    merged = dedupe_sites(curated + sites, radius_mi=1.2 if curated else 0.25)
 
     # fill in the subdivision each site sits in
     sub_path = os.path.join(out_dir, "subdivisions.geojson")
+    if not os.path.exists(sub_path):
+        print("  WARN  subdivisions missing — every facility will have an empty "
+              f"{ctx.subdivision_key!r}, so county profiles and restriction overlays "
+              "will not match. Re-run --providers osm_subdivisions.")
     if os.path.exists(sub_path):
         with open(sub_path) as fh:
             subs = json.load(fh).get("features", [])

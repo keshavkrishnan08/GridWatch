@@ -32,6 +32,8 @@ SELECTORS = [
 ]
 # name-based sweep for sites tagged only as generic industrial/office
 NAME_RE = re.compile(r"\b(data ?cent(er|re)|datacent(er|re)|colocation|colo facility)\b", re.I)
+# A "name" that identifies nothing — worth replacing with operator/place context.
+GENERIC_NAME = re.compile(r"\s*(the\s+)?(data ?cent(er|re)|datacent(er|re)|colocation|colo)\s*", re.I)
 
 
 class DataCenterProvider:
@@ -79,7 +81,23 @@ class DataCenterProvider:
             tags = el.get("tags") or {}
             if not pt:
                 continue
-            name = tags.get("name") or tags.get("operator") or "Unnamed data center"
+            # OSM names are often generic ("Datacenter") or absent. A map label
+            # reading "Unnamed data center" five times is useless, so fall back
+            # through operator, then place, to produce something distinguishable.
+            raw = (tags.get("name") or "").strip()
+            place = (tags.get("addr:city") or tags.get("addr:town")
+                     or tags.get("addr:village") or "").strip()
+            operator = (tags.get("operator") or "").strip()
+            if raw and not GENERIC_NAME.fullmatch(raw):
+                name = raw
+            elif operator and place:
+                name = f"{operator} — {place}"
+            elif operator:
+                name = operator
+            elif place:
+                name = f"Unnamed data center ({place})"
+            else:
+                name = "Unnamed data center"
             osm_ref = f'osm:{el.get("type")}/{el.get("id")}'
             sites.append({
                 "id": _slug(name, el.get("id")),
