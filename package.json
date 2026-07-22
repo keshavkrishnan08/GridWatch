@@ -28,7 +28,8 @@
     "test:all": "npm run typecheck && npm run test && npm run test:py",
     "freshness": "python3 -m pipeline.check_freshness",
     "refresh": "python3 -m pipeline.refresh_eia",
-    "watch": "python3 -m pipeline.watch_sources --check-links"
+    "watch": "python3 -m pipeline.watch_sources --check-links",
+    "reconcile": "python3 -m pipeline.reconcile"
   },
   "dependencies": {
     "d3": "^7.9.0",
