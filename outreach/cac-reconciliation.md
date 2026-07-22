@@ -19,7 +19,37 @@ Your coordinates caught two county errors on my side. Both confirmed independent
 I've since added a standing check that flags any record whose stated county doesn't contain its own coordinates.
 
 
-## 2. In your tracker, not in mine — I'm researching these
+## 2. What happened when I checked megawatt figures against filings
+
+I tried to verify the capacity figures where our datasets disagreed, going to the
+primary document each time. The result was consistent enough to be worth passing on:
+
+**Almost every MW figure that originated in a tracker — yours or mine — turned out
+to be wrong when checked against a filing, and in both directions.**
+
+| Project | Circulating figure | What the source says |
+|---|---|---|
+| Heartland Industrial Park | 1,580 MW | No filing supports it. Sourced range is 430 MW (phase one) to 2.1 GW (full buildout) |
+| Prologis Shelbyville | 900 MW | Developer stated ~500 MW |
+| DartPoints Columbus | 10 MW | Operator's own page: 2.5 MW utility, 1.5 MW IT |
+| DC Blox Indianapolis | ~80 MW | 52 MW after the pre-vote scale-back |
+
+The figures that held up traced to a filing or a company statement — Meta's 1 GW
+from their newsroom, the 390 MW in the AES petition, PowerHouse's 450 MW from
+their own site.
+
+I mention this because our two datasets are shaped differently and I think that's
+useful rather than competitive. Yours has broader coverage and is the reason I
+found projects I was missing. Mine carries a source URL and a `last_verified`
+date on every individual record, which is what let me run these checks. I'd be
+glad to send back whatever I verify.
+
+One structural note, offered helpfully: your published sheet has no column for a
+source or citation, so a figure in it can't be traced back by a reader. If it
+would be useful, I'm happy to contribute the citations I've already gathered for
+the projects we both carry.
+
+## 3. In your tracker, not in mine — now researched and added
 
 | Project | Owner | Location | MW | Status |
 |---|---|---|---|---|
@@ -42,7 +72,7 @@ I've since added a standing check that flags any record whose stated county does
 | Western Hospitality Partners - South Bend | Western Hospitality Partners | South Bend, St. Joseph | — | rumored |
 
 
-## 3. In mine, not in yours — you may want these
+## 4. In mine, not in yours — you may want these
 
 | Project | Location | MW | Status | Source |
 |---|---|---|---|---|
@@ -54,7 +84,7 @@ I've since added a standing check that flags any record whose stated county does
 | Logix Realty / Clinton County (denied) | Frankfort, Clinton | — | withdrawn | https://www.datacenterdynamics.com/en/news/logix-realty-indiana-development-denied-due-to-community-concerns-and-developer-red-flags/ |
 
 
-## 4. Where we disagree
+## 5. Where we disagree
 
 These are the useful ones. I'm working each against IURC filings and will send you what I find.
 
