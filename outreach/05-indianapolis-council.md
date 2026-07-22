@@ -64,7 +64,7 @@ outside analysis into the record.
 >
 > I take no position on the proposal. I offer the data so the Council can see
 > what comparable jurisdictions have done and at what scale. The full dataset is
-> public and auditable at [link].
+> public and auditable at https://keshavkrishnan08.github.io/GridWatch/.
 >
 > Respectfully,
 > [name, address]

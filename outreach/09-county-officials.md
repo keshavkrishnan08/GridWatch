@@ -80,7 +80,7 @@ using it anywhere.
 > - The serving utility is [utility].
 >
 > I take no position on this petition. The complete dataset is public and
-> auditable at [URL], and I will correct any error brought to my attention.
+> auditable at https://keshavkrishnan08.github.io/GridWatch/, and I will correct any error brought to my attention.
 >
 > Respectfully,
 > [name, address]

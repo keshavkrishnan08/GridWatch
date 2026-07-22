@@ -65,7 +65,7 @@ Indiana Capital Chronicle. One story here is not one story.
 > Happy to walk through the methodology with Zak. Everything is open-source, so
 > you can audit any number back to its document.
 >
-> [link]
+> https://keshavkrishnan08.github.io/GridWatch/
 
 ## Notes
 

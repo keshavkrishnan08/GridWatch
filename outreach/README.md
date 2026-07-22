@@ -64,10 +64,14 @@ the number yourself.
 
 ## Before you send anything
 
-1. **Publish it.** Every one of these needs a working link. Nothing else matters until then.
-2. **Turn on analytics FIRST.** Every distribution KPI is measured client-side.
-   Traffic arriving before PostHog is wired is gone permanently — you cannot
-   backfill it. Order: publish → analytics + Search Console → outreach.
+1. ~~**Publish it.**~~ ✅ **Live: https://keshavkrishnan08.github.io/GridWatch/**
+2. ~~**Turn on analytics.**~~ ✅ PostHog is wired into the deploy and confirmed
+   receiving events from the live site. Every link in this kit now resolves.
+3. **Set up Google Search Console** (free, 10 minutes) — it's the one measurement
+   still missing, and it's what gives you "ranked #N for 'Indiana data centers'"
+   plus organic impression counts.
+4. **Optional:** add a `VITE_META_PIXEL_ID` repo variable if you run ads; the
+   deploy already passes it through, no code change needed.
 3. Read [`cac-reconciliation.md`](cac-reconciliation.md) — it's the artifact that
    makes #01 land, and the credibility proof for #02 and #03.
 
