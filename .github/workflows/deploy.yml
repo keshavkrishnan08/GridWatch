@@ -26,7 +26,16 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - run: npm run build
+      - name: Build
+        # Analytics keys come from repo variables, not source. PostHog project
+        # keys are public by design (ingest-only, they cannot read data), but
+        # keeping them out of the repo means a fork reports to its own project
+        # rather than silently into ours.
+        env:
+          VITE_POSTHOG_KEY: ${{ vars.VITE_POSTHOG_KEY }}
+          VITE_POSTHOG_HOST: ${{ vars.VITE_POSTHOG_HOST }}
+          VITE_META_PIXEL_ID: ${{ vars.VITE_META_PIXEL_ID }}
+        run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
