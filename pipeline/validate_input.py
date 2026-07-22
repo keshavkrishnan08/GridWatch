@@ -24,6 +24,34 @@ PRECISION = {"parcel", "site", "city", "county"}
 WATER = {"known", "redacted", "unknown"}
 
 
+def _point_in_ring(pt, ring) -> bool:
+    x, y = pt
+    inside = False
+    j = len(ring) - 1
+    for i in range(len(ring)):
+        xi, yi = ring[i][0], ring[i][1]
+        xj, yj = ring[j][0], ring[j][1]
+        if (yi > y) != (yj > y) and x < (xj - xi) * (y - yi) / ((yj - yi) or 1e-12) + xi:
+            inside = not inside
+        j = i
+    return inside
+
+
+def _locate(pt, features, key: str) -> str:
+    """Which subdivision contains this point? '' if none (e.g. a border site)."""
+    for f in features:
+        g = f.get("geometry") or {}
+        c = g.get("coordinates") or []
+        if g.get("type") == "Polygon":
+            if c and _point_in_ring(pt, c[0]):
+                return f.get("properties", {}).get(key, "")
+        elif g.get("type") == "MultiPolygon":
+            for poly in c:
+                if poly and _point_in_ring(pt, poly[0]):
+                    return f.get("properties", {}).get(key, "")
+    return ""
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Validate a GridWatch facilities file.")
     ap.add_argument("file")
@@ -47,14 +75,16 @@ def main() -> int:
         return 1
 
     known: set[str] = set()
+    sub_features: list = []
     if args.subdivisions:
         try:
             with open(args.subdivisions) as fh:
-                known = {
-                    str((f.get("properties") or {}).get(args.subdivision_key, "")).lower()
-                    for f in json.load(fh).get("features", [])
-                }
-                known.discard("")
+                sub_features = json.load(fh).get("features", [])
+            known = {
+                str((f.get("properties") or {}).get(args.subdivision_key, "")).lower()
+                for f in sub_features
+            }
+            known.discard("")
         except Exception as e:
             print(f"  WARN   could not read subdivisions: {e}")
 
@@ -117,6 +147,14 @@ def main() -> int:
         cty = (f.get("county") or "").lower()
         if known and cty and cty not in known:
             warns.append(f"{who}: county {f.get('county')!r} not found in subdivisions")
+        # A record whose stated subdivision doesn't contain its own coordinates will
+        # render in one place and be grouped under another. Cheap to check, and it
+        # has caught real errors, so it's a standing guard rather than a one-off.
+        elif sub_features and cty and isinstance(lat, (int, float)) and isinstance(lng, (int, float)):
+            actual = _locate((lng, lat), sub_features, args.subdivision_key)
+            if actual and actual.lower() != cty:
+                warns.append(f"{who}: county says {f.get('county')!r} but its coordinates "
+                             f"fall in {actual!r} — one of the two is wrong")
 
     print(f"\n  {args.file}")
     print(f"  {len(facs)} facilities\n" + "-" * 50)
