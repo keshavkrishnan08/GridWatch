@@ -78,6 +78,11 @@ export function openModal(title: string, bodyHTML: string, onMount?: (el: HTMLEl
  *
  * Both are shown to the user with the equation, so the math can be checked.
  */
+/** Money that stays honest at small magnitudes: cents under $1, whole dollars above. */
+function money(v: number): string {
+  return v < 1 ? `${Math.round(v * 100)}¢` : `$${Math.round(v)}`;
+}
+
 function project(u: UtilityModel, kwh: number, a: AppData["bill"]["assumptions"]) {
   /* Bill = fixed monthly charge + volumetric energy charge, when the tariff is
      known. A single blended rate would overstate small households and
@@ -152,9 +157,9 @@ export function openBillCalc(data: AppData, prefillId?: string) {
       const k = Math.max(100, Math.min(5000, +kwh.value || a.typical_household_kwh));
       const p = project(u, k, a);
       const headline = p.dcTotal > 0
-        ? `<div class="bc-headline">+$${p.low.toFixed(0)}–$${p.high.toFixed(0)}<small> / mo</small>
+        ? `<div class="bc-headline">+${money(p.low)}–${money(p.high)}<small> / mo</small>
              <span class="bc-pct">+${p.pctLow.toFixed(1)}–${p.pctHigh.toFixed(1)}%</span></div>
-           <div class="bc-sub">from data-center infrastructure filed to date · ≈ +$${(p.low * 12).toFixed(0)}–$${(p.high * 12).toFixed(0)} / yr</div>`
+           <div class="bc-sub">from data-center infrastructure filed to date · ≈ +${money(p.low * 12)}–${money(p.high * 12)} / yr</div>`
         : `<div class="bc-headline" style="color:var(--text-mid);font-size:22px">No DC docket filed yet</div>
            <div class="bc-sub">No single data-center infrastructure cost is broken out for this utility, but rates are climbing (see below).</div>`;
       el.querySelector("#bc-result")!.innerHTML = `
@@ -264,10 +269,10 @@ export function openImpact(data: AppData) {
 
       const headline = p && p.dcTotal > 0
         ? `<div class="im-headline">
-             <div class="imh-main">+$${p.low.toFixed(0)}–$${p.high.toFixed(0)}<small>/mo</small></div>
+             <div class="imh-main">+${money(p.low)}–${money(p.high)}<small>/mo</small></div>
              <div class="imh-pct">+${p.pctLow.toFixed(1)}–${p.pctHigh.toFixed(1)}%<small> of your bill</small></div>
            </div>
-           <div class="bc-sub">≈ +$${(p.low * 12).toFixed(0)}–$${(p.high * 12).toFixed(0)} per year, from data-center infrastructure filed to date</div>`
+           <div class="bc-sub">≈ +${money(p.low * 12)}–${money(p.high * 12)} per year, from data-center infrastructure filed to date</div>`
         : `<div class="im-headline"><div class="imh-main" style="color:var(--text-mid);font-size:22px">No filed DC cost yet</div></div>
            <div class="bc-sub">No data-center infrastructure cost is broken out for ${esc(utilName)} yet, but rates are still climbing.</div>`;
 
@@ -383,7 +388,7 @@ Thank you,
     <div class="card-action" style="margin-top:12px">
       <span class="eyebrow">Where to send it</span>
       <a class="act-link hot" data-civic="oucc" href="https://www.in.gov/oucc/2504.htm" target="_blank" rel="noopener">◈ File it with the OUCC (utility consumer counselor)</a>
-      <a class="act-link" data-civic="county" href="https://www.in.gov/iurc/" target="_blank" rel="noopener">◱ Find ${esc(county)} County's plan-commission contact</a>
+      <a class="act-link" data-civic="county" href="https://www.google.com/search?q=${encodeURIComponent(county + " County Indiana plan commission")}" target="_blank" rel="noopener">◱ Find ${esc(county)} County's plan commission</a>
     </div>
   `, (el) => {
     const box = el.querySelector<HTMLTextAreaElement>("#lt-body")!;
@@ -561,6 +566,7 @@ export function openAbout(data: AppData) {
       <h3>Use it, cite it, fork it</h3>
       <p>MIT-licensed and static, no account required. Reporters and officials are welcome to cite it; the full dataset lives in version-controlled JSON at <code>/public/data</code>. Corrections and new filings are welcome as pull requests, and the whole atlas can be re-pointed at any other state, country, or region (see <code>FORKING.md</code>).</p>
       <button class="docket-btn" id="ab-csv">⭳ DOWNLOAD THE DATASET · CSV</button>
+      <a class="docket-btn" href="https://github.com/keshavkrishnan08/GridWatch" target="_blank" rel="noopener">⎋ VIEW THE SOURCE &amp; DATA ON GITHUB</a>
       <h3>How current is this?</h3>
       <div class="fresh-line" style="--fc:${FRESH_COLOR[fr.level]}">
         <span class="fresh-dot"></span>
