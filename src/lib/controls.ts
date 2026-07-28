@@ -41,7 +41,7 @@ export class Controls {
     this.root.innerHTML = `
       <div class="ctrl-head">
         <span class="ctrl-title">◧ FILTER</span>
-        <span class="ctrl-count"><b id="ctrl-count">—</b> shown · <b id="ctrl-mw">—</b> MW</span>
+        <span class="ctrl-count"><b id="ctrl-count">-</b> shown · <b id="ctrl-mw">-</b> MW</span>
       </div>
       <div class="ctrl-search">
         <span class="s-ico">⌕</span>

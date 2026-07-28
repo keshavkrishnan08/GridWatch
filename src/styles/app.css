@@ -1,5 +1,5 @@
 /* ============================================================
-   GridWatch Indiana — application styles
+   GridWatch Indiana, application styles
    ============================================================ */
 * { box-sizing: border-box; }
 html, body {
@@ -434,6 +434,35 @@ a:hover { text-decoration: underline; }
 .stats-grid .sg { background: var(--panel-solid); padding: 10px 11px; display: flex; flex-direction: column; gap: 3px; }
 .sg-v { font-family: var(--mono); font-size: 18px; font-weight: 650; color: var(--text-hi); font-variant-numeric: tabular-nums; }
 .sg-k { font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.04em; color: var(--text-dim); text-transform: uppercase; }
+
+/* stats: graph-first blocks */
+.sgraph { margin: 16px 0; }
+.sgraph-h { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-mid); margin-bottom: 9px; }
+.sgraph-sub { font-family: var(--mono); font-size: 10px; color: var(--text-dim); margin-top: 8px; }
+.sgraph-sub b, .sgraph-sub strong { color: var(--load-high); }
+
+.gauge { position: relative; height: 26px; border-radius: var(--r-sm); background: var(--void-2); border: var(--hair); overflow: visible; }
+.gauge-fill { position: absolute; inset: 0 auto 0 0; border-radius: var(--r-sm) 0 0 var(--r-sm); background: linear-gradient(90deg, var(--load-med), var(--load-high)); box-shadow: 0 0 18px -4px var(--warning-glow); }
+.gauge-mark { position: absolute; top: -2px; transform: translateX(-50%); font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--text-hi); text-shadow: 0 1px 3px rgba(0,0,0,0.8); line-height: 30px; }
+
+.sbar { display: flex; height: 26px; border-radius: var(--r-sm); overflow: hidden; border: var(--hair); background: var(--void-2); }
+.sbar > span { display: block; transition: width var(--t-slow) var(--ease); }
+.sbar-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 9px; font-family: var(--mono); font-size: 10px; color: var(--text-mid); }
+.sbar-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sbar-legend i { width: 9px; height: 9px; border-radius: 2px; flex: none; }
+
+.jobs-cmp { display: flex; flex-direction: column; gap: 8px; }
+.jc-row { display: grid; grid-template-columns: 150px 1fr auto; align-items: center; gap: 10px; }
+.jc-lab { font-family: var(--mono); font-size: 10px; color: var(--text-mid); }
+.jc-track { height: 16px; background: var(--void-2); border: var(--hair); border-radius: var(--r-sm); overflow: hidden; }
+.jc-track > span { display: block; height: 100%; }
+.jc-val { font-family: var(--mono); font-size: 12px; font-weight: 650; color: var(--text-hi); font-variant-numeric: tabular-nums; }
+
+.stats-foot { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.04em; color: var(--text-faint); margin-top: 18px; padding-top: 12px; border-top: var(--hair); }
+
+@media (max-width: 560px) {
+  .jc-row { grid-template-columns: 96px 1fr auto; }
+}
 
 /* action layer list */
 .act-item { padding: 13px 14px; border: var(--hair); border-radius: var(--r-md); margin-bottom: 10px; transition: all var(--t-fast); background: var(--void-2); }

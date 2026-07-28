@@ -19,7 +19,7 @@ export class Reticle {
     (this.ret.style as any).borderColor = col;
     this.ret.classList.add("on");
 
-    const util = f.utility ? (utilKey(f.utility) !== "other" ? UTIL_DISPLAY[utilKey(f.utility)] : f.utility) : "—";
+    const util = f.utility ? (utilKey(f.utility) !== "other" ? UTIL_DISPLAY[utilKey(f.utility)] : f.utility) : "-";
     const water = f.water_status === "known" ? `${f.water_mgd} MGD`
       : f.water_status === "redacted" ? "REDACTED" : "N/D";
     this.tel.style.setProperty("--sev", col);

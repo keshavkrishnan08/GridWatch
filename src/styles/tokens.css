@@ -1,5 +1,5 @@
 /* ============================================================
-   GridWatch Indiana — design tokens
+   GridWatch Indiana, design tokens
    "Grid Intelligence Console": deep blue-black spec-ops base,
    night-vision phosphor-green chrome, load-severity data ramp.
    ============================================================ */
@@ -21,7 +21,7 @@
   --text-dim: #566573;
   --text-faint: #3A4553;
 
-  /* night-vision phosphor — primary accent / chrome */
+  /* night-vision phosphor, primary accent / chrome */
   --phosphor:        #3FB950;
   --phosphor-bright: #56E06A;
   --phosphor-dim:    #1F7A32;
@@ -31,7 +31,7 @@
   --load-low:  #3FB950;   /* < 50 MW  */
   --load-med:  #E3A72B;   /* 50–250   */
   --load-high: #F85149;   /* 250–500  */
-  --load-mega: #FF6BFF;   /* > 500 MW — hyperscalers, off-scale */
+  --load-mega: #FF6BFF;   /* > 500 MW, hyperscalers, off-scale */
 
   /* grid infrastructure */
   --transmission: #58A6FF;

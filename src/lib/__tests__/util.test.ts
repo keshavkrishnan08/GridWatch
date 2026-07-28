@@ -27,7 +27,7 @@ describe("computeState", () => {
   });
 
   /* Regression: auto-discovered records carry no announce date. Treating
-     missing as Infinity hid every site on a bootstrapped region — the map
+     missing as Infinity hid every site on a bootstrapped region, the map
      rendered "0 shown" with no error. */
   it("shows a facility with no announce date", () => {
     const s = computeState(fac({ announced_year: null }), 2026);

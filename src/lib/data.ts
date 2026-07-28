@@ -81,7 +81,7 @@ export interface TimelineFile {
 
 export interface UtilityModel {
   id: string; display_name: string; raw_match: string[];
-  /** RESIDENTIAL customers (not total meters) — the denominator for per-household cost. */
+  /** RESIDENTIAL customers (not total meters), the denominator for per-household cost. */
   customers: number;
   avg_rate_cents_kwh: number; typical_bill_1000kwh: number;
   /** Real tariff structure, when known: a fixed monthly charge plus a volumetric
@@ -106,7 +106,7 @@ export interface BillFile {
     uncertainty_band_pct: number;
     typical_household_kwh: number;
     /* Revenue-requirement inputs. When carrying_charge_pct is present the model
-       uses it instead of straight-line amortization — see project() in modals.ts. */
+       uses it instead of straight-line amortization, see project() in modals.ts. */
     carrying_charge_pct?: number | null;
     residential_allocation_pct?: number | null;
   };
@@ -128,7 +128,7 @@ export interface DocketFile { portal: string; note: string; dockets: Docket[]; }
 export interface CountyRestriction { name: string; type: "ban" | "moratorium"; detail: string; }
 export interface RestrictionFile { note: string; sources: Source[]; counties: CountyRestriction[]; }
 
-/* Region config — de-hardcodes Indiana so the atlas can be forked for any
+/* Region config, de-hardcodes Indiana so the atlas can be forked for any
    state / country / region. Everything the map needs to frame + label a
    region lives here; bounds are derived from the boundary polygon. */
 export interface RegionConfig {
@@ -158,7 +158,7 @@ export const DEFAULT_REGION: RegionConfig = {
   max_zoom: 16,
 };
 
-/** Shape of public/data/theme.json — see src/lib/theme.ts for the full type. */
+/** Shape of public/data/theme.json, see src/lib/theme.ts for the full type. */
 export type ThemeConfigFile = import("./theme").Theme;
 
 /** ZIP -> [lng, lat]. Absent outside the US; the UI falls back to a picker. */

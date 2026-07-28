@@ -47,7 +47,7 @@ export function openModal(title: string, bodyHTML: string, onMount?: (el: HTMLEl
       <div class="modal-head"><h2>${esc(title)}</h2><button class="modal-close" aria-label="Close">✕</button></div>
       <div class="modal-body">${bodyHTML}</div>
     </div>`;
-  // backdrop close — assign (not addEventListener) so it never stacks on the persistent node
+  // backdrop close, assign (not addEventListener) so it never stacks on the persistent node
   r.onclick = (e) => { if (e.target === r) closeModal(); };
   r.querySelector(".modal-close")!.addEventListener("click", closeModal);
   // take the background out of the tab order + a11y tree, remembering prior state
@@ -62,13 +62,13 @@ export function openModal(title: string, bodyHTML: string, onMount?: (el: HTMLEl
 
 /* ---------------- Bill impact calculator ----------------
    Headline = data-center-specific impact: filed infrastructure $ split across
-   customers and amortized. Fully data-driven — edit bill_impact_models.json and
+   customers and amortized. Fully data-driven, edit bill_impact_models.json and
    every number here recomputes. */
 /**
  * What a utility's data-center capital spending costs a residential customer.
  *
  * Preferred method (revenue requirement): ratepayers don't repay capital
- * straight-line — they fund an annual revenue requirement covering the
+ * straight-line, they fund an annual revenue requirement covering the
  * utility's authorized return on the investment, depreciation, and taxes.
  * That's `capital × carrying_charge_pct`. Only the residential class's share
  * of that lands on residential bills, hence `residential_allocation_pct`.
@@ -119,7 +119,7 @@ export function openBillCalc(data: AppData, prefillId?: string) {
       <div class="prose">
         <p>No bill-impact model is configured for this region yet.</p>
         <p>Rates, customer counts, and filed cost-shifts have to come from local
-        utility and regulator filings — GridWatch won't estimate them. Add them to
+        utility and regulator filings, GridWatch won't estimate them. Add them to
         <code>public/data/bill_impact_models.json</code> and this calculator turns on.</p>
         <p style="color:var(--text-dim);font-size:11px;font-family:var(--mono)">${esc(data.bill.disclaimer || "")}</p>
       </div>`);
@@ -156,7 +156,7 @@ export function openBillCalc(data: AppData, prefillId?: string) {
              <span class="bc-pct">+${p.pctLow.toFixed(1)}–${p.pctHigh.toFixed(1)}%</span></div>
            <div class="bc-sub">from data-center infrastructure filed to date · ≈ +$${(p.low * 12).toFixed(0)}–$${(p.high * 12).toFixed(0)} / yr</div>`
         : `<div class="bc-headline" style="color:var(--text-mid);font-size:22px">No DC docket filed yet</div>
-           <div class="bc-sub">No single data-center infrastructure cost is broken out for this utility — but rates are climbing (see below).</div>`;
+           <div class="bc-sub">No single data-center infrastructure cost is broken out for this utility, but rates are climbing (see below).</div>`;
       el.querySelector("#bc-result")!.innerHTML = `
         ${headline}
         <div class="bc-break">
@@ -201,7 +201,7 @@ export function openImpact(data: AppData) {
   const sub = subName().toLowerCase();
 
   openModal("Check My Area · Your Exposure", `
-    <div class="prose" style="margin-bottom:12px">See who powers your home, what's being built nearby, and the projected impact on your bill — all from public records.</div>
+    <div class="prose" style="margin-bottom:12px">See who powers your home, what's being built nearby, and the projected impact on your bill, all from public records.</div>
 
     <div class="im-inputs">
       ${zipData ? `
@@ -269,7 +269,7 @@ export function openImpact(data: AppData) {
            </div>
            <div class="bc-sub">≈ +$${(p.low * 12).toFixed(0)}–$${(p.high * 12).toFixed(0)} per year, from data-center infrastructure filed to date</div>`
         : `<div class="im-headline"><div class="imh-main" style="color:var(--text-mid);font-size:22px">No filed DC cost yet</div></div>
-           <div class="bc-sub">No data-center infrastructure cost is broken out for ${esc(utilName)} yet — but rates are still climbing.</div>`;
+           <div class="bc-sub">No data-center infrastructure cost is broken out for ${esc(utilName)} yet, but rates are still climbing.</div>`;
 
       out.innerHTML = `
         ${headline}
@@ -283,7 +283,7 @@ export function openImpact(data: AppData) {
         </div>
         ${inCounty.length
           ? `<div class="card-sources" style="margin-top:10px"><span class="eyebrow">Near you</span>${inCounty.slice(0, 8).map((f) => `<a class="src-link" style="cursor:pointer" data-fac="${esc(f.id)}">${esc(f.name)} · ${fmtMW(f.mw_full ?? f.mw_phase1)} MW</a>`).join("")}</div>`
-          : `<div class="mini-note" style="margin-top:10px">No tracked data centers in ${esc(withSub(county))} — yet.</div>`}
+          : `<div class="mini-note" style="margin-top:10px">No tracked data centers in ${esc(withSub(county))}, yet.</div>`}
         ${p && p.dcTotal > 0 ? `<div class="mini-note" style="margin-top:10px;font-size:9px;color:var(--text-faint)">${esc(data.bill.equation)}</div>` : ""}
         <div class="bc-disclaim">${esc(data.bill.disclaimer)}</div>
         <div class="card-action" style="margin-top:12px">
@@ -305,7 +305,7 @@ export function openImpact(data: AppData) {
       if (z.length < 5) { if (hint) hint.textContent = ""; return; }
       const loc = zipData?.[z];
       if (!loc) {
-        if (hint) { hint.textContent = "Not an Indiana ZIP we recognize — pick your " + sub + " instead."; hint.className = "im-hint warn"; }
+        if (hint) { hint.textContent = "Not an Indiana ZIP we recognize, pick your " + sub + " instead."; hint.className = "im-hint warn"; }
         return;
       }
       pt = loc;
@@ -356,7 +356,7 @@ export function openLetter(data: AppData, opts: { facility?: Facility; county?: 
   const subjectName = f ? f.name : `${county} County data center`;
   const docket = f?.iurc_docket ? ` (IURC Cause ${f.iurc_docket})` : "";
   const mw = f ? (f.mw_full ?? f.mw_phase1) : null;
-  const mwLine = mw ? ` The project is sized at roughly ${fmtMW(mw)} MW —` : "";
+  const mwLine = mw ? ` The project is sized at roughly ${fmtMW(mw)} MW -` : "";
   const proj = f ? f.name : `data-center development in ${county} County`;
   const body = `To the ${county} County Plan Commission and the Indiana Office of Utility Consumer Counselor,
 
@@ -464,43 +464,64 @@ export function openAction(data: AppData) {
 export function openStats(data: AppData) {
   track("stats_open");
   const m = data.meta;
-  const sfr = freshness(m.last_updated);
   const mix = m.generation_mix.filter((g) => g.pct >= 0.3);
   const total = m.load_mw.active_total;
+  const committed = m.load_mw.committed;
+  const proposed = m.load_mw.proposed;
+  const withdrawn = m.load_mw.withdrawn_avoided;
+  const pipe = Math.max(1, committed + proposed);
   const dcJobs = Math.round(total * JOBS_PER_MW_DC);
   const otherJobs = Math.round(total * JOBS_PER_MW_OTHER);
+  const jobsRatio = Math.round(otherJobs / Math.max(1, dcJobs));
   const restricted = data.restrictions.counties.length;
+  const pct = m.load_mw.pct_of_state_peak;
+
   openModal("Indiana at a Glance", `
     <div class="stats-hero">
-      <div class="sh-cell"><div class="sh-num phos">${fmtMW(total)}<small>MW</small></div><div class="sh-lab">Active data-center load</div></div>
-      ${m.load_mw.pct_of_state_peak != null
-        ? `<div class="sh-cell"><div class="sh-num" style="color:var(--load-high)">${m.load_mw.pct_of_state_peak}<small>%</small></div><div class="sh-lab">of peak demand</div></div>`
-        : `<div class="sh-cell"><div class="sh-num" style="color:var(--text-dim);font-size:20px">—</div><div class="sh-lab">peak demand not configured</div></div>`}
-    </div>
-    <div class="stats-grid">
-      <div class="sg"><span class="sg-v" style="color:var(--phosphor-bright)">${fmtMW(m.load_mw.committed)}</span><span class="sg-k">MW online / building</span></div>
-      <div class="sg"><span class="sg-v" style="color:var(--load-med)">${fmtMW(m.load_mw.proposed)}</span><span class="sg-k">MW proposed</span></div>
-      <div class="sg"><span class="sg-v" style="color:var(--load-mega)">${m.mega_facilities.length}</span><span class="sg-k">hyperscale sites (&gt;500MW)</span></div>
-      <div class="sg"><span class="sg-v">${m.counts.facilities_tracked_statewide}</span><span class="sg-k">projects tracked</span></div>
-      <div class="sg"><span class="sg-v" style="color:var(--load-high)">${restricted}</span><span class="sg-k">counties restricting</span></div>
-      <div class="sg"><span class="sg-v">${fmtMW(m.load_mw.withdrawn_avoided)}</span><span class="sg-k">MW withdrawn</span></div>
+      <div class="sh-cell"><div class="sh-num phos">${fmtMW(total)}<small>MW</small></div><div class="sh-lab">active data-center load</div></div>
+      ${pct != null
+        ? `<div class="sh-cell"><div class="sh-num" style="color:var(--load-high)">${pct}<small>%</small></div><div class="sh-lab">of state peak demand</div></div>`
+        : ""}
+      <div class="sh-cell"><div class="sh-num">${m.counts.facilities_tracked_statewide}</div><div class="sh-lab">projects tracked</div></div>
     </div>
 
-    ${mix.length ? `<div class="prose"><h3>Existing generation mix — ${fmtInt(m.total_generation_mw)} MW mapped</h3></div>` : ""}
-    <div class="genmix">${mix.map((g) => `<span style="width:${g.pct}%;background:${fuelColor(g.fuel)}" title="${FUEL_LABEL[g.fuel]} ${g.pct}%"></span>`).join("")}</div>
-    <div class="genmix-legend">${mix.slice(0, 6).map((g) => `<span class="gl-item"><span class="gl-swatch" style="background:${fuelColor(g.fuel)}"></span>${FUEL_LABEL[g.fuel]} ${g.pct}%</span>`).join("")}</div>
+    ${pct != null ? `
+    <div class="sgraph">
+      <div class="sgraph-h">Data-center load vs the whole grid</div>
+      <div class="gauge"><span class="gauge-fill" style="width:${Math.min(100, pct)}%"></span><b class="gauge-mark" style="left:${Math.min(96, pct)}%">${pct}%</b></div>
+      <div class="sgraph-sub">${fmtMW(total)} MW of ${fmtMW(m.state_peak_mw)} MW state peak</div>
+    </div>` : ""}
 
-    <div class="prose">
-      <h3>Jobs</h3>
-      <p>At the data-center average of <strong>~0.26 jobs/MW</strong>, ${fmtMW(total)} MW supports roughly <strong>${fmtInt(dcJobs)} permanent jobs</strong>. The same load in typical Indiana industry (~41 jobs/MW) would support about <strong>${fmtInt(otherJobs)}</strong> — a ${Math.round(otherJobs / Math.max(1, dcJobs))}× difference.</p>
-      <h3>Scale comparisons</h3>
-      <ul>
-        <li>A single large AI data center uses about as much energy as <strong>730,000 Hoosier households</strong>.</li>
-        <li>Amazon's New Carlisle campus alone could draw as much power as <strong>half of Indiana's 2.8 million households</strong>.</li>
-        <li>The grid is <strong>${mix[0]?.pct}% ${mix[0]?.fuel}</strong> today; I&amp;M and NIPSCO plan <strong>5.6 GW of new gas by 2030</strong> to serve the load.</li>
-      </ul>
-      <p style="color:var(--text-dim);font-size:11px;font-family:var(--mono)">DATA UPDATED ${esc(m.last_updated)} · Σ OF ${m.counts.facilities_curated} CURATED FACILITIES · SOURCES IN EACH CARD &amp; ABOUT</p>
+    <div class="sgraph">
+      <div class="sgraph-h">The pipeline</div>
+      <div class="sbar">
+        <span style="width:${(committed / pipe) * 100}%;background:var(--phosphor)" title="Online or building"></span>
+        <span style="width:${(proposed / pipe) * 100}%;background:var(--load-med)" title="Proposed"></span>
+      </div>
+      <div class="sbar-legend">
+        <span><i style="background:var(--phosphor)"></i>${fmtMW(committed)} online / building</span>
+        <span><i style="background:var(--load-med)"></i>${fmtMW(proposed)} proposed</span>
+        <span><i style="background:var(--text-faint)"></i>${fmtMW(withdrawn)} withdrawn</span>
+      </div>
     </div>
+
+    ${mix.length ? `
+    <div class="sgraph">
+      <div class="sgraph-h">How that power is made today · ${fmtInt(m.total_generation_mw)} MW</div>
+      <div class="genmix">${mix.map((g) => `<span style="width:${g.pct}%;background:${fuelColor(g.fuel)}" title="${FUEL_LABEL[g.fuel]} ${g.pct}%"></span>`).join("")}</div>
+      <div class="genmix-legend">${mix.slice(0, 6).map((g) => `<span class="gl-item"><span class="gl-swatch" style="background:${fuelColor(g.fuel)}"></span>${FUEL_LABEL[g.fuel]} ${g.pct}%</span>`).join("")}</div>
+    </div>` : ""}
+
+    <div class="sgraph">
+      <div class="sgraph-h">Jobs from ${fmtMW(total)} MW</div>
+      <div class="jobs-cmp">
+        <div class="jc-row"><span class="jc-lab">as data centers</span><div class="jc-track"><span style="width:${Math.max(1.2, (dcJobs / otherJobs) * 100)}%;background:var(--load-high)"></span></div><span class="jc-val">${fmtInt(dcJobs)}</span></div>
+        <div class="jc-row"><span class="jc-lab">same power, other industry</span><div class="jc-track"><span style="width:100%;background:var(--phosphor)"></span></div><span class="jc-val">${fmtInt(otherJobs)}</span></div>
+      </div>
+      <div class="sgraph-sub">${jobsRatio}&times; fewer jobs per megawatt</div>
+    </div>
+
+    <div class="stats-foot">${m.counts.facilities_curated} curated &middot; ${m.mega_facilities.length} hyperscale &middot; ${restricted} counties restricting &middot; updated ${esc(m.last_updated)}</div>
   `);
 }
 
@@ -515,17 +536,17 @@ export function openAbout(data: AppData) {
     : null;
   openModal("About GridWatch Indiana", `
     <div class="prose">
-      <p><strong>GridWatch Indiana</strong> maps every proposed and existing data center in the state against the power grid — megawatts, water, dockets, and projected bill impact — from public records. It's built to be genuinely useful to residents, reporters, and officials, and it's open-source under MIT so anyone can fork it for their own state.</p>
+      <p><strong>GridWatch Indiana</strong> maps every proposed and existing data center in the state against the power grid, megawatts, water, dockets, and projected bill impact, from public records. It's built to be genuinely useful to residents, reporters, and officials, and it's open-source under MIT so anyone can fork it for their own state.</p>
 
       <h3>What you're looking at</h3>
       <p>${m.counts.facilities_curated} curated facilities of <strong>${m.counts.facilities_tracked_statewide} tracked statewide</strong>, drawn against ${fmtInt(m.counts.power_plants)} power plants, ${fmtInt(m.counts.transmission_lines)} transmission segments, and ${m.counts.utility_territories} utility service territories. Proposed and committed data-center load totals <strong>${fmtMW(m.load_mw.active_total)} MW</strong>${
         m.load_mw.pct_of_state_peak != null
-          ? ` — <strong>${m.load_mw.pct_of_state_peak}% of peak demand</strong>${committedPct ? ` (about ${committedPct}% committed/under construction)` : ""}`
+          ? `, <strong>${m.load_mw.pct_of_state_peak}% of peak demand</strong>${committedPct ? ` (about ${committedPct}% committed/under construction)` : ""}`
           : ""
       }${m.generation_mix[0] ? `, on a grid that is ${m.generation_mix[0].pct}% ${m.generation_mix[0].fuel}` : ""}.</p>
 
       <h3>How the numbers are sourced</h3>
-      <p>Every facility carries its sources and a verification date. Megawatt and cost figures come from IURC filings, utility filings, county records, and reporting — cited per record. Where a developer redacts a figure, the card flags it <span class="redaction-chip">◈ redacted</span> rather than guessing. Nothing here is invented.</p>
+      <p>Every facility carries its sources and a verification date. Megawatt and cost figures come from IURC filings, utility filings, county records, and reporting, cited per record. Where a developer redacts a figure, the card flags it <span class="redaction-chip">◈ redacted</span> rather than guessing. Nothing here is invented.</p>
       <ul>
         <li><strong>Facilities:</strong> ${esc(m.sources.facilities)}</li>
         <li><strong>Power plants:</strong> ${esc(m.sources.power_plants)}</li>
@@ -535,10 +556,10 @@ export function openAbout(data: AppData) {
       </ul>
 
       <h3>What's estimated</h3>
-      <p>The <strong>timeline</strong> uses projected energization years to animate build-out — a projection, labeled as such. The <strong>bill calculator</strong> is an illustrative model (approved rate increases plus an even split of filed infrastructure costs), not a forecast. Coordinates for some sites are city- or county-level approximations, flagged on each card. See <code>METHODOLOGY.md</code> in the repo for the full method.</p>
+      <p>The <strong>timeline</strong> uses projected energization years to animate build-out, a projection, labeled as such. The <strong>bill calculator</strong> is an illustrative model (approved rate increases plus an even split of filed infrastructure costs), not a forecast. Coordinates for some sites are city- or county-level approximations, flagged on each card. See <code>METHODOLOGY.md</code> in the repo for the full method.</p>
 
       <h3>Use it, cite it, fork it</h3>
-      <p>MIT-licensed and static — no account required. Reporters and officials are welcome to cite it; the full dataset lives in version-controlled JSON at <code>/public/data</code>. Corrections and new filings are welcome as pull requests, and the whole atlas can be re-pointed at any other state, country, or region (see <code>FORKING.md</code>).</p>
+      <p>MIT-licensed and static, no account required. Reporters and officials are welcome to cite it; the full dataset lives in version-controlled JSON at <code>/public/data</code>. Corrections and new filings are welcome as pull requests, and the whole atlas can be re-pointed at any other state, country, or region (see <code>FORKING.md</code>).</p>
       <button class="docket-btn" id="ab-csv">⭳ DOWNLOAD THE DATASET · CSV</button>
       <h3>How current is this?</h3>
       <div class="fresh-line" style="--fc:${FRESH_COLOR[fr.level]}">
@@ -548,7 +569,7 @@ export function openAbout(data: AppData) {
       </div>
       ${fr.note ? `<p class="mini-note" style="border-left:2px solid ${FRESH_COLOR[fr.level]};padding-left:10px">${esc(fr.note)}</p>` : ""}
       <p>Every record carries its own <code>last_verified</code> date, and the whole dataset is
-      version-controlled — so you can always see what changed and when.</p>
+      version-controlled, so you can always see what changed and when.</p>
       <p style="color:var(--text-dim);font-size:11px;font-family:var(--mono)">NONPARTISAN · NOT LEGAL OR FINANCIAL ADVICE</p>
     </div>
   `, (el) => {
