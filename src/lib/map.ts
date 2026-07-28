@@ -54,7 +54,10 @@ function buildFacFC(facilities: Facility[], year: number, filters: Filters): Geo
     const mw = f.mw_full ?? f.mw_phase1 ?? 0;
     const ghost = f.status === "withdrawn";
     const match = s.visible && matchFacility(f, filters);
-    const r = nodeRadius(mw);
+    // grow the node as the project ramps from announced (small) to energized
+    // (full). This is what makes the timeline read as a build-out: press play
+    // and sites pop in small and swell as they come online.
+    const r = nodeRadius(mw) * (ghost ? 1 : 0.55 + 0.45 * s.ramp);
     // clearly visible whether built or not; brighter once online
     const coreOp = !match || ghost ? 0 : s.online ? 0.95 : 0.72;
     const glowOp = !match || ghost ? 0 : s.online ? 0.42 : 0.26;
