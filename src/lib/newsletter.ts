@@ -1,10 +1,10 @@
 /* ------------------------------------------------------------------
-   GridWatch Signal — newsletter capture.
+   GridWatch Signal, newsletter capture.
 
    Top "broadcast" popup + an embeddable signup used inside Take Action.
    Static-friendly: set NEWSLETTER_ENDPOINT to your provider's form-POST
    URL (Buttondown / Substack / Mailchimp / Formspree all expose one) and
-   sign-ups go straight there via a hidden iframe — no backend, no CORS.
+   sign-ups go straight there via a hidden iframe, no backend, no CORS.
    Until it's set, addresses are kept in localStorage so a fork can export
    them, and the visitor still gets an honest confirmation.
    ------------------------------------------------------------------ */
@@ -28,7 +28,7 @@ function remember(email: string) {
       prev.push(email);
       localStorage.setItem(KEY_EMAILS, JSON.stringify(prev));
     }
-  } catch { /* storage may be blocked — fail quietly */ }
+  } catch { /* storage may be blocked, fail quietly */ }
 }
 
 function postToProvider(email: string) {
@@ -81,7 +81,7 @@ export function wireNewsletterForm(scope: HTMLElement, onDone?: () => void) {
     e.preventDefault();
     const val = email.value.trim();
     if (!EMAIL_RE.test(val)) {
-      msg.textContent = "That email doesn't look right — mind checking it?";
+      msg.textContent = "That email doesn't look right, mind checking it?";
       msg.className = "nl-msg err";
       email.focus();
       return;
@@ -117,7 +117,7 @@ export class Newsletter {
         <button class="nl-close" aria-label="Dismiss">✕</button>
         <div class="nl-eyebrow">◈ GRIDWATCH SIGNAL</div>
         <div class="nl-head">The grid is changing faster than the filings.</div>
-        <div class="nl-sub">Indiana's data-center load is climbing by the month. Get a short, sourced brief when the numbers move — new dockets, hearings, and proposals.</div>
+        <div class="nl-sub">Indiana's data-center load is climbing by the month. Get a short, sourced brief when the numbers move, new dockets, hearings, and proposals.</div>
         ${newsletterFormHTML(true)}
       </div>`;
     this.root.querySelector(".nl-close")!.addEventListener("click", () => this.close(true));

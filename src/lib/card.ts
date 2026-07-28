@@ -19,10 +19,10 @@ export class Card {
     const col = sevColor(mw);
     const utilName = f.utility
       ? (utilKey(f.utility) !== "other" ? UTIL_DISPLAY[utilKey(f.utility)] : f.utility)
-      : "—";
+      : "-";
 
     const mwCell = (() => {
-      if (!mw) return `<div class="v">—</div>`;
+      if (!mw) return `<div class="v">-</div>`;
       const est = f.mw_estimated ? ` <span class="redaction-chip">EST</span>` : "";
       if (f.mw_phase1 && f.mw_full && f.mw_phase1 !== f.mw_full)
         return `<div class="v">${fmtMW(f.mw_full)}<small> MW full</small>${est}</div><div class="k" style="margin-top:4px">Phase 1: ${fmtMW(f.mw_phase1)} MW</div>`;
@@ -54,7 +54,7 @@ export class Card {
       ? `<div class="card-impact"><span class="eyebrow">Local impact</span>${impactRows}${jobsCompare}</div>` : "";
 
     const pendingBlock = f.verification === "pending" && f.status !== "rumored"
-      ? `<div class="card-pending">◷ PENDING VERIFICATION — auto-discovered from a public registry
+      ? `<div class="card-pending">◷ PENDING VERIFICATION, auto-discovered from a public registry
           and not yet checked against a filing by a person.${
             f.facility_class === "colocation"
               ? " This is a colocation or interconnection site, not a hyperscale campus; no power capacity is recorded for it."
@@ -62,19 +62,19 @@ export class Card {
       : "";
 
     const chatterBlock = f.status === "rumored"
-      ? `<div class="card-chatter">◌ CHATTER — reported but <b>unconfirmed</b>. No filing or named operator yet; any figures come from reporting or grid trackers, not filed records.</div>`
+      ? `<div class="card-chatter">◌ CHATTER, reported but <b>unconfirmed</b>. No filing or named operator yet; any figures come from reporting or grid trackers, not filed records.</div>`
       : "";
 
     const prospective = ["proposed", "approved", "rumored"].includes(f.status);
     const involveBlock = f.status === "withdrawn"
       ? `<div class="card-action">
           <span class="eyebrow">Withdrawn after public opposition</span>
-          <a class="act-link" data-civic="cac-story" href="https://www.citact.org/ai-data-centers" target="_blank" rel="noopener">◈ How residents pushed back — Citizens Action Coalition</a>
+          <a class="act-link" data-civic="cac-story" href="https://www.citact.org/ai-data-centers" target="_blank" rel="noopener">◈ How residents pushed back, Citizens Action Coalition</a>
         </div>`
       : `<div class="card-action">
           <span class="eyebrow">Get involved${prospective ? " · this one is still in play" : ""}</span>
           <a class="act-link hot" data-letter-fac="${esc(f.id)}">✉ Write your official about this project</a>
-          <a class="act-link" data-civic="cac" href="https://www.citact.org/cac-email-sign-up" target="_blank" rel="noopener">◈ Citizens Action Coalition — join &amp; get alerts</a>
+          <a class="act-link" data-civic="cac" href="https://www.citact.org/cac-email-sign-up" target="_blank" rel="noopener">◈ Citizens Action Coalition, join &amp; get alerts</a>
           <a class="act-link" data-civic="oucc" href="${theme().terminology.consumer_advocate_url || "#"}" target="_blank" rel="noopener">✎ File a public comment on ${f.iurc_docket ? "Cause " + esc(f.iurc_docket) : "this case"}${theme().terminology.consumer_advocate ? " (" + esc(theme().terminology.consumer_advocate) + ")" : ""}</a>
         </div>`;
 
@@ -100,7 +100,7 @@ export class Card {
 
         <div class="card-row"><span class="rk">Developer</span><span class="rv">${esc(f.developer)}</span></div>
         <div class="card-row"><span class="rk">Utility</span><span class="rv">${esc(utilName)}</span></div>
-        <div class="card-row"><span class="rk">Projected energization</span><span class="rv">${f.online_year ? "~" + f.online_year + " (est.)" : "—"}</span></div>
+        <div class="card-row"><span class="rk">Projected energization</span><span class="rv">${f.online_year ? "~" + f.online_year + " (est.)" : "-"}</span></div>
         <div class="card-row"><span class="rk">First tracked</span><span class="rv">${fmtYear(f.announced_year)}</span></div>
         ${f.iurc_docket ? `<div class="card-row"><span class="rk">IURC Cause</span><span class="rv mono">${esc(f.iurc_docket)}</span></div>` : ""}
 

@@ -2,8 +2,8 @@
    Lightweight, privacy-conscious event tracking + ad-conversion layer.
 
    Every meaningful action calls track(). Events fan out to whatever is
-   configured — Meta Pixel (so each becomes an ad-reportable conversion),
-   PostHog (real product dashboards), and a GTM/GA dataLayer — and are
+   configured, Meta Pixel (so each becomes an ad-reportable conversion),
+   PostHog (real product dashboards), and a GTM/GA dataLayer, and are
    ALWAYS mirrored to window.__gwEvents so the funnel is inspectable even
    with nothing configured.
 
@@ -19,7 +19,7 @@ const META_PIXEL_ID: string | null = env.VITE_META_PIXEL_ID || null;
 const POSTHOG_KEY: string | null = env.VITE_POSTHOG_KEY || null;
 const POSTHOG_HOST: string = env.VITE_POSTHOG_HOST || "https://us.i.posthog.com";
 
-/* Meta standard events optimize better than custom ones — map our key
+/* Meta standard events optimize better than custom ones, map our key
    conversions onto the closest standard name, and always also send the
    descriptive custom event. */
 const META_STANDARD: Record<string, string> = {

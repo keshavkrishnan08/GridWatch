@@ -1,7 +1,7 @@
 /* ------------------------------------------------------------------
    Data freshness.
 
-   A dataset like this doesn't fail loudly when it goes stale — it just
+   A dataset like this doesn't fail loudly when it goes stale, it just
    quietly becomes wrong while still looking authoritative. That's the most
    embarrassing failure mode available to us, so the age of the data is a
    first-class, visible fact rather than a footnote.
@@ -47,7 +47,7 @@ export function freshness(lastUpdated: string | null | undefined, now = new Date
     return {
       days, level: "stale", label,
       note: `This data is ${label.replace("updated ", "")} and is probably out of date. ` +
-            `Data-center proposals move fast — verify against current filings before relying on it.`,
+            `Data-center proposals move fast, verify against current filings before relying on it.`,
     };
   }
   if (days >= AGING_DAYS) {
