@@ -170,4 +170,27 @@ describe("geometry helpers", () => {
   it("returns null when no territory covers the point", () => {
     expect(servingUtility([9, 9], { type: "FeatureCollection", features: [] })).toBeNull();
   });
+
+  /* Regression (the Indianapolis bug): AES's small service island sits nested
+     inside Duke's much larger polygon, and both cover downtown Indy. Listing
+     Duke first in the file used to win, sending every Indy address to the wrong
+     utility and the wrong bill. The smallest-area territory is the real server. */
+  it("prefers the smallest nested territory when two utilities overlap", () => {
+    const big = (name: string, half: number): GeoJSON.Feature => ({
+      type: "Feature",
+      properties: { utility: name },
+      geometry: {
+        type: "Polygon",
+        coordinates: [[[-half, -half], [half, -half], [half, half], [-half, half], [-half, -half]]],
+      },
+    });
+    const territories: GeoJSON.FeatureCollection = {
+      type: "FeatureCollection",
+      // Duke listed first and far larger; AES is the tiny nested island.
+      features: [big("Duke Energy Indiana", 10), big("AES Indiana", 1)],
+    };
+    const served = servingUtility([0, 0], territories);
+    expect(served?.key).toBe("aes");
+    expect(served?.name).toBe("AES Indiana");
+  });
 });

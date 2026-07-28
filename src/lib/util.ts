@@ -160,18 +160,35 @@ export function servingUtility(
   pt: [number, number],
   territories: GeoJSON.FeatureCollection
 ): { name: string; key: UtilKey } | null {
-  const hits: { name: string; customers: number }[] = [];
+  const hits: { name: string; area: number }[] = [];
   for (const f of territories.features) {
     if (pipGeom(pt, f.geometry)) {
       const p = f.properties as any;
-      hits.push({ name: p.utility || "", customers: p.customers || 0 });
+      hits.push({ name: p.utility || "", area: geomBoxArea(f.geometry) });
     }
   }
   if (!hits.length) return null;
-  // prefer a recognized IOU, else the largest by customers
-  const iou = hits.find((h) => utilKey(h.name) !== "other");
-  const chosen = iou || hits.sort((a, b) => b.customers - a.customers)[0];
+  // Territories overlap: a small service island (AES Indianapolis) sits nested
+  // inside a much larger utility's polygon (Duke Indiana). The MOST SPECIFIC
+  // (smallest-area) territory is the actual server, so prefer the smallest
+  // recognized IOU, then the smallest overall. Choosing "first in file" here
+  // sent every Indianapolis address to Duke instead of AES.
+  const ranked = hits.slice().sort((a, b) => a.area - b.area);
+  const chosen = ranked.find((h) => utilKey(h.name) !== "other") ?? ranked[0];
   return { name: chosen.name, key: utilKey(chosen.name) };
+}
+
+/** Cheap bounding-box area of a geometry, used to rank nested territories. */
+function geomBoxArea(geom: any): number {
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  const scan = (c: any) => {
+    if (typeof c[0] === "number") {
+      minX = Math.min(minX, c[0]); maxX = Math.max(maxX, c[0]);
+      minY = Math.min(minY, c[1]); maxY = Math.max(maxY, c[1]);
+    } else if (Array.isArray(c)) c.forEach(scan);
+  };
+  if (geom?.coordinates) scan(geom.coordinates);
+  return isFinite(minX) ? (maxX - minX) * (maxY - minY) : Infinity;
 }
 
 /** Which subdivision (county/province/…) contains a point? */
