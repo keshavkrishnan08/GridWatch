@@ -14,7 +14,7 @@
     },
     {
       "type": "decision",
-      "title": "Google / AES decision — Cause 46394",
+      "title": "Google / AES decision, Cause 46394",
       "org": "Indiana Utility Regulatory Commission",
       "detail": "The IURC's full order on the 1,200 MW Google Monrovia agreement is expected September 2026. This is the highest-attention case in the state.",
       "action": "Track the docket",
@@ -35,7 +35,7 @@
     },
     {
       "type": "decision",
-      "title": "Indianapolis data-center moratorium — Council vote",
+      "title": "Indianapolis data-center moratorium, Council vote",
       "org": "Indianapolis City-County Council",
       "detail": "A moratorium on new data centers through end-2027 advanced out of committee 10-3 on July 13, 2026; the full Council votes Aug 10, 2026, then it would go to the MDC. Residents can testify.",
       "action": "Track / testify",
@@ -55,7 +55,7 @@
     },
     {
       "type": "campaign",
-      "title": "Southwest Indiana — no data center",
+      "title": "Southwest Indiana, no data center",
       "org": "CAC / local coalition",
       "detail": "Opposition to proposals in CenterPoint (SW Indiana) territory, incl. the Gibson/Posey proposal.",
       "action": "Learn / act",
@@ -67,7 +67,7 @@
       "type": "meeting",
       "title": "County plan-commission meetings",
       "org": "Your county",
-      "detail": "Rezonings and variances for data centers are decided by county/city plan commissions and councils — usually monthly, open to public comment. Check your county's plan-commission calendar.",
+      "detail": "Rezonings and variances for data centers are decided by county/city plan commissions and councils, usually monthly, open to public comment. Check your county's plan-commission calendar.",
       "action": "Find your county meeting",
       "url": "https://www.in.gov/iurc/",
       "deadline": "Varies by county",
