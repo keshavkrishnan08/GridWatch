@@ -1,14 +1,14 @@
 {
  "schema_version": "1.0",
  "last_updated": "2026-07-22",
- "coverage_note": "The AI Law Tracker inventory lists ~46 Indiana data-center projects; other trackers (e.g., Cleanview) count 90+ planned facilities totaling ~14 GW. This file curates those with locatable sites and at least one verifiable attribute, including RUMORED/CHATTER proposals that are reported but unconfirmed (no named operator, or rejected at local rezoning) — each flagged with its stage in the notes. Flagship figures are cross-checked against IURC filings, utility filings, and news reporting cited per record. Also includes colocation and interconnection facilities listed in PeeringDB, marked facility_class 'colocation' and verification 'pending'. Those are real operating sites but a different class from a hyperscale campus, they carry no capacity figure, and PeeringDB is structurally blind to single-tenant hyperscale sites, which do not sell interconnection.",
+ "coverage_note": "The AI Law Tracker inventory lists ~46 Indiana data-center projects; other trackers (e.g., Cleanview) count 90+ planned facilities totaling ~14 GW. This file curates those with locatable sites and at least one verifiable attribute, including RUMORED/CHATTER proposals that are reported but unconfirmed (no named operator, or rejected at local rezoning), each flagged with its stage in the notes. Flagship figures are cross-checked against IURC filings, utility filings, and news reporting cited per record. Also includes colocation and interconnection facilities listed in PeeringDB, marked facility_class 'colocation' and verification 'pending'. Those are real operating sites but a different class from a hyperscale campus, they carry no capacity figure, and PeeringDB is structurally blind to single-tenant hyperscale sites, which do not sell interconnection.",
  "primary_sources": [
   {
-   "label": "AI Law Tracker — Indiana Data Center Map",
+   "label": "AI Law Tracker, Indiana Data Center Map",
    "url": "https://ailawtracker.org/data-centers"
   },
   {
-   "label": "Citizens Action Coalition — AI Data Centers",
+   "label": "Citizens Action Coalition, AI Data Centers",
    "url": "https://www.citact.org/ai-data-centers"
   },
   {
@@ -124,7 +124,7 @@
    "tax_note": "Google pays 100% of its power costs and 100% of new infrastructure per AES filing.",
    "sources": [
     {
-     "label": "AES Indiana — Data centers",
+     "label": "AES Indiana, Data centers",
      "url": "https://www.aesindiana.com/data-centers"
     },
     {
@@ -169,7 +169,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     },
     {
@@ -205,7 +205,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -237,15 +237,15 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "Cleanview — Takanock Goshen Data Center",
+     "label": "Cleanview, Takanock Goshen Data Center",
      "url": "https://cleanview.co/data-centers/indiana/1992/takanock-goshen-data-center"
     },
     {
-     "label": "Baxtel — Takanock: Goshen, IN",
+     "label": "Baxtel, Takanock: Goshen, IN",
      "url": "https://baxtel.com/data-center/takanock-goshen-in"
     },
     {
-     "label": "IURC — Takanock Intervenor's Exhibit 1 (Cause 46183)",
+     "label": "IURC, Takanock Intervenor's Exhibit 1 (Cause 46183)",
      "url": "https://iurc.portal.in.gov/"
     }
    ],
@@ -277,7 +277,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -309,7 +309,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     },
     {
@@ -345,11 +345,11 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "NWI Times — Developer proposes Porter County data center",
+     "label": "NWI Times, Developer proposes Porter County data center",
      "url": "https://www.nwitimes.com/news/local/article_8e927e35-00f0-4325-99fb-baafdf8c15e7.html"
     },
     {
-     "label": "DCD — Four-building campus explored in NW Indiana",
+     "label": "DCD, Four-building campus explored in NW Indiana",
      "url": "https://www.datacenterdynamics.com/en/news/developer-explores-option-to-build-four-building-data-center-campus-in-northwest-indiana/"
     }
    ],
@@ -381,7 +381,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -486,7 +486,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -518,7 +518,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -550,7 +550,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -614,7 +614,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -646,7 +646,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -678,7 +678,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -710,19 +710,19 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "WFYI — Henry County approves rezoning that could bring data center",
+     "label": "WFYI, Henry County approves rezoning that could bring data center",
      "url": "https://www.wfyi.org/news/articles/henry-county-planning-commission-approves-rezoning-that-could-bring-new-data-center"
     },
     {
-     "label": "Indiana Public Radio — Henry County data center approved at final vote",
+     "label": "Indiana Public Radio, Henry County data center approved at final vote",
      "url": "https://indianapublicradio.org/news/2026/01/henry-county-data-center-approved-at-last-commissioners-vote/"
     },
     {
-     "label": "Brookville American — Developer discusses Knightstown proposal",
+     "label": "Brookville American, Developer discusses Knightstown proposal",
      "url": "https://www.brookvilleindiana.com/story/2026/03/11/news/developer-discusses-knightstown-data-center-proposal-after-henry-county-approval/1263.html"
     }
    ],
-   "notes": "Surge Development's 500+ acre site near SR-109/I-70 cleared its final Henry County commissioners vote (Jan 2026), but the developer says no operator or user is selected and a full development plan is still pending. No MW or investment has been reported. Acreage is 580 per the county ordinance, and the serving utility is Henry County REMC — earlier values (585 acres, Hoosier Energy / South Central REMC) were wrong.",
+   "notes": "Surge Development's 500+ acre site near SR-109/I-70 cleared its final Henry County commissioners vote (Jan 2026), but the developer says no operator or user is selected and a full development plan is still pending. No MW or investment has been reported. Acreage is 580 per the county ordinance, and the serving utility is Henry County REMC, earlier values (585 acres, Hoosier Energy / South Central REMC) were wrong.",
    "last_verified": "2026-07-22"
   },
   {
@@ -750,7 +750,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -782,7 +782,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -814,11 +814,11 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
-   "notes": "400 MW on 467 acres — withdrawn after community opposition.",
+   "notes": "400 MW on 467 acres, withdrawn after community opposition.",
    "last_verified": "2026-07-16"
   },
   {
@@ -846,11 +846,11 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
-   "notes": "600 MW on 618 acres — withdrawn.",
+   "notes": "600 MW on 618 acres, withdrawn.",
    "last_verified": "2026-07-16"
   },
   {
@@ -878,11 +878,11 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
-   "notes": "1,580 MW proposed at the retired Merom coal site — withdrawn.",
+   "notes": "1,580 MW proposed at the retired Merom coal site, withdrawn.",
    "last_verified": "2026-07-16"
   },
   {
@@ -910,11 +910,11 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
-   "notes": "300+ MW on 718 acres — withdrawn.",
+   "notes": "300+ MW on 718 acres, withdrawn.",
    "last_verified": "2026-07-16"
   },
   {
@@ -942,11 +942,11 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
-   "notes": "Two QTS proposals in Union Township (Wheeler), Porter County, both withdrawn in September 2025. County corrected from Benton to Porter — the prior value was a transcription error.",
+   "notes": "Two QTS proposals in Union Township (Wheeler), Porter County, both withdrawn in September 2025. County corrected from Benton to Porter, the prior value was a transcription error.",
    "last_verified": "2026-07-22"
   },
   {
@@ -974,7 +974,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -1006,7 +1006,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -1038,7 +1038,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -1070,7 +1070,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -1102,7 +1102,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -1134,7 +1134,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -1166,7 +1166,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -1198,7 +1198,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -1230,7 +1230,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -1262,7 +1262,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
@@ -1294,11 +1294,11 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
-   "notes": "247-acre proposal — withdrawn.",
+   "notes": "247-acre proposal, withdrawn.",
    "last_verified": "2026-07-16"
   },
   {
@@ -1326,11 +1326,11 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
-   "notes": "775-acre megasite — withdrawn.",
+   "notes": "775-acre megasite, withdrawn.",
    "last_verified": "2026-07-16"
   },
   {
@@ -1358,11 +1358,11 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
-   "notes": "102-acre proposal — withdrawn.",
+   "notes": "102-acre proposal, withdrawn.",
    "last_verified": "2026-07-16"
   },
   {
@@ -1390,11 +1390,11 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
-   "notes": "249-acre proposal — withdrawn.",
+   "notes": "249-acre proposal, withdrawn.",
    "last_verified": "2026-07-16"
   },
   {
@@ -1422,11 +1422,11 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "AI Law Tracker — Indiana",
+     "label": "AI Law Tracker, Indiana",
      "url": "https://ailawtracker.org/data-centers"
     }
    ],
-   "notes": "343-acre proposal — withdrawn.",
+   "notes": "343-acre proposal, withdrawn.",
    "last_verified": "2026-07-16"
   },
   {
@@ -1454,15 +1454,15 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "City of Shelbyville — Council approves data center agreement (Apr 6 2026)",
+     "label": "City of Shelbyville, Council approves data center agreement (Apr 6 2026)",
      "url": "https://www.shelbyville.in.gov/m/newsflash/Home/Detail/364"
     },
     {
-     "label": "WTHR — Shelbyville plan commission says no to 429-acre project",
+     "label": "WTHR, Shelbyville plan commission says no to 429-acre project",
      "url": "https://www.wthr.com/article/news/local/shelbyville-plan-commission-says-no-429-acre-data-center-project-local-news-construction/531-17a451a1-64e7-4023-b5bf-fdeee3f26f4f"
     }
    ],
-   "notes": "The Shelbyville Plan Commission voted no on Jan 7 2026, but the Common Council then approved annexation, rezoning and a roughly $2B economic development agreement 4-2-1 on April 6 2026 — so the earlier 'denied' status was wrong. Reported at 576 acres and up to 13 buildings; no megawatt figure is confirmed in any source, so the 900 MW carried by some trackers is not used here. The developer stated roughly 500 MW; the 900 MW carried by some trackers is not supported by any source found. The Jan 7 2026 Plan Commission vote was an 11-0 unfavorable recommendation, which the Common Council then overrode 4-2-1.",
+   "notes": "The Shelbyville Plan Commission voted no on Jan 7 2026, but the Common Council then approved annexation, rezoning and a roughly $2B economic development agreement 4-2-1 on April 6 2026, so the earlier 'denied' status was wrong. Reported at 576 acres and up to 13 buildings; no megawatt figure is confirmed in any source, so the 900 MW carried by some trackers is not used here. The developer stated roughly 500 MW; the 900 MW carried by some trackers is not supported by any source found. The Jan 7 2026 Plan Commission vote was an 11-0 unfavorable recommendation, which the Common Council then overrode 4-2-1.",
    "last_verified": "2026-07-22"
   },
   {
@@ -1490,7 +1490,7 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "Cleanview — Indiana data centers",
+     "label": "Cleanview, Indiana data centers",
      "url": "https://cleanview.co/data-centers/indiana"
     }
    ],
@@ -1522,15 +1522,15 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "NWI Times — Rezoning approved for rural Lake County data center",
+     "label": "NWI Times, Rezoning approved for rural Lake County data center",
      "url": "https://nwitimes.com/news/local/lake/article_bda889b5-f6ef-4e83-9ae4-5000ec293f09.html"
     },
     {
-     "label": "ABC7 Chicago — Lowell town hall on $5B Sentinel data center",
+     "label": "ABC7 Chicago, Lowell town hall on $5B Sentinel data center",
      "url": "https://abc7chicago.com/post/lowell-indiana-hold-town-hall-proposed-5b-data-center-sentinel-centers/18897342/"
     },
     {
-     "label": "Latitude Media — Anatomy of Indiana data center opposition",
+     "label": "Latitude Media, Anatomy of Indiana data center opposition",
      "url": "https://www.latitudemedia.com/news/in-indiana-an-anatomy-of-data-center-opposition/"
     }
    ],
@@ -1562,11 +1562,11 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "WSBT — County Council denies rezoning, 7-2",
+     "label": "WSBT, County Council denies rezoning, 7-2",
      "url": "https://wsbt.com/news/local/st-joseph-county-council-denies-rezoning-of-land-for-data-center-votes-7-2-marathon-meeting-hours-long-public-opinion-13-billion-dollar-project-amazon-new-carlisle-approval-process-plan-commission-st-joseph-county-indiana"
     },
     {
-     "label": "DCD — Potential data center NE of New Carlisle",
+     "label": "DCD, Potential data center NE of New Carlisle",
      "url": "https://www.datacenterdynamics.com/en/news/potential-data-center-to-be-built-northeast-of-new-carlisle-indiana/"
     }
    ],
@@ -1598,19 +1598,19 @@
    "tax_note": null,
    "sources": [
     {
-     "label": "DCD — Logix Realty denied over concerns and 'red flags'",
+     "label": "DCD, Logix Realty denied over concerns and 'red flags'",
      "url": "https://www.datacenterdynamics.com/en/news/logix-realty-indiana-development-denied-due-to-community-concerns-and-developer-red-flags/"
     },
     {
-     "label": "WTHR — Clinton County commissioners reject data center",
+     "label": "WTHR, Clinton County commissioners reject data center",
      "url": "https://www.wthr.com/article/news/local/clinton-county-commissioners-reject-data-center-project-over-growing-concerns-rezoning-plan-proposal/531-30cc9c05-69e5-4fb6-b510-78929ce6751b"
     },
     {
-     "label": "Clinton County Today — APC rezoning hearing set",
+     "label": "Clinton County Today, APC rezoning hearing set",
      "url": "https://www.clintoncountytoday.com/county-apc-rezoning-hearing-for-proposed-data-center-set/"
     }
    ],
-   "notes": "Logix Realty's bid to rezone ~715 acres near Frankfort — end user rumored only as 'DataOne,' >$10B a proponent projection — was denied 3-0 by Clinton County Commissioners amid reported developer 'red flags.' It can't be refiled on the same land for 12 months.",
+   "notes": "Logix Realty's bid to rezone ~715 acres near Frankfort, end user rumored only as 'DataOne,' >$10B a proponent projection, was denied 3-0 by Clinton County Commissioners amid reported developer 'red flags.' It can't be refiled on the same land for 12 months.",
    "last_verified": "2026-07-17"
   },
   {
@@ -1640,11 +1640,11 @@
    "announced_year": 2026,
    "sources": [
     {
-     "label": "Indiana Public Media — $65B industrial park coming to Sullivan County",
+     "label": "Indiana Public Media, $65B industrial park coming to Sullivan County",
      "url": "https://www.ipm.org/news/2026-04-01/65-billion-industrial-park-coming-to-sullivan-county"
     },
     {
-     "label": "WBIW — Potentia unveils Sullivan County project",
+     "label": "WBIW, Potentia unveils Sullivan County project",
      "url": "https://www.wbiw.com/2026/04/08/potentia-inc-unveils-historic-65-billion-data-center-project-in-sullivan-county/"
     }
    ]
@@ -1676,11 +1676,11 @@
    "announced_year": 2026,
    "sources": [
     {
-     "label": "Baxtel — Fluidstack New Lebanon",
+     "label": "Baxtel, Fluidstack New Lebanon",
      "url": "https://baxtel.com/data-center/fluidstack-new-lebanon-indiana"
     },
     {
-     "label": "The Real Deal — Coatue launches data center land venture",
+     "label": "The Real Deal, Coatue launches data center land venture",
      "url": "https://therealdeal.com/national/2026/05/04/ai-investor-coatue-launches-data-center-land-venture/"
     }
    ]
@@ -1712,7 +1712,7 @@
    "announced_year": 2025,
    "sources": [
     {
-     "label": "MISO — Expedited Project Review statistics (Feb 2026)",
+     "label": "MISO, Expedited Project Review statistics (Feb 2026)",
      "url": "https://cdn.misoenergy.org/20260203%20EPR-TSTF%20Item%2003%20MISO%20EPR%20Statistics739041.pdf"
     }
    ]
@@ -1744,11 +1744,11 @@
    "announced_year": 2026,
    "sources": [
     {
-     "label": "Indiana Public Media — New data center proposed near Washington",
+     "label": "Indiana Public Media, New data center proposed near Washington",
      "url": "https://www.ipm.org/news/2026-03-24/new-data-center-proposed-near-washington-ind"
     },
     {
-     "label": "Indiana Public Media — Council cancels data center development",
+     "label": "Indiana Public Media, Council cancels data center development",
      "url": "https://www.ipm.org/news/2026-05-12/washington-city-council-cancels-data-center-development-will-explore-moratorium"
     }
    ]
@@ -1780,11 +1780,11 @@
    "announced_year": 2026,
    "sources": [
     {
-     "label": "ABC57 — Developer unveils Akron data center plan",
+     "label": "ABC57, Developer unveils Akron data center plan",
      "url": "https://www.abc57.com/news/developer-unveils-data-center-plan-in-akron-amid-resident-concerns"
     },
     {
-     "label": "ABC57 — Latest details on Fulton County development",
+     "label": "ABC57, Latest details on Fulton County development",
      "url": "https://www.abc57.com/news/latest-details-on-potential-data-center-development-in-fulton-county"
     }
    ]
@@ -1816,11 +1816,11 @@
    "announced_year": 2026,
    "sources": [
     {
-     "label": "WFYI — East side data center wins approval despite opposition",
+     "label": "WFYI, East side data center wins approval despite opposition",
      "url": "https://www.wfyi.org/wfyi-news/2026-07-15/east-side-data-center-wins-approval-despite-community-opposition"
     },
     {
-     "label": "Mirror Indy — DC Blox campus, Irvington / Warren Township",
+     "label": "Mirror Indy, DC Blox campus, Irvington / Warren Township",
      "url": "https://mirrorindy.org/dc-blox-date-center-campus-east-side-indianapolis-irvington-warren-township/"
     }
    ]
@@ -1852,7 +1852,7 @@
    "announced_year": 2026,
    "sources": [
     {
-     "label": "RadiusDC — edge colocation campus in Indianapolis",
+     "label": "RadiusDC, edge colocation campus in Indianapolis",
      "url": "https://www.radius-dc.com/newsroom-and-events/radiusdc-expands-its-footprint-with-edge-colocation-campus-in-indianapolis-in"
     }
    ]
@@ -1884,7 +1884,7 @@
    "announced_year": 2020,
    "sources": [
     {
-     "label": "DartPoints — CLU01 Columbus, IN",
+     "label": "DartPoints, CLU01 Columbus, IN",
      "url": "https://dartpoints.com/locations/clu01-columbus-in/"
     }
    ],
@@ -1921,7 +1921,7 @@
    "announced_year": 2025,
    "sources": [
     {
-     "label": "WNDU — Commissioners say no to proposed Leesburg data center",
+     "label": "WNDU, Commissioners say no to proposed Leesburg data center",
      "url": "https://www.wndu.com/2025/04/22/kosciusko-county-commissioners-say-no-proposed-data-center-leesburg/"
     }
    ]
@@ -1953,7 +1953,7 @@
    "announced_year": 2025,
    "sources": [
     {
-     "label": "Citizens Action Coalition — Indiana data center tracker",
+     "label": "Citizens Action Coalition, Indiana data center tracker",
      "url": "https://www.citact.org/ai-data-centers"
     }
    ]
@@ -1985,11 +1985,11 @@
    "announced_year": 2026,
    "sources": [
     {
-     "label": "WSBT — 110-acre data center planned at LaPorte industrial park (Jan 15 2026)",
+     "label": "WSBT, 110-acre data center planned at LaPorte industrial park (Jan 15 2026)",
      "url": "https://wsbt.com/"
     },
     {
-     "label": "Citizens Action Coalition — Indiana data center tracker",
+     "label": "Citizens Action Coalition, Indiana data center tracker",
      "url": "https://www.citact.org/ai-data-centers"
     }
    ]
@@ -2021,7 +2021,7 @@
    "announced_year": 2026,
    "sources": [
     {
-     "label": "WRTV — Kokomo council approves annexation and rezoning amid opposition",
+     "label": "WRTV, Kokomo council approves annexation and rezoning amid opposition",
      "url": "https://www.wrtv.com/news/local-news/kokomo-common-council-approves-annexation-rezoning-plan-amid-opposition-from-residents"
     }
    ]
@@ -2040,7 +2040,7 @@
    "docket_url": "https://iurc.portal.in.gov/",
    "online_year": null,
    "tax_note": null,
-   "notes": "10-shell campus on ~300 acres northeast of the US 31/20 bypass. The land is already zoned industrial, so no rezoning is required — which means there may be no public vote.",
+   "notes": "10-shell campus on ~300 acres northeast of the US 31/20 bypass. The land is already zoned industrial, so no rezoning is required, which means there may be no public vote.",
    "last_verified": "2026-07-22",
    "id": "western-hospitality-south-bend",
    "name": "Western Hospitality Partners (South Bend)",
@@ -2053,7 +2053,7 @@
    "announced_year": 2025,
    "sources": [
     {
-     "label": "WVPE — New Carlisle developer planning South Bend data center",
+     "label": "WVPE, New Carlisle developer planning South Bend data center",
      "url": "https://www.wvpe.org/wvpe-news/2025-12-12/new-carlisle-data-center-developer-planning-one-in-south-bend"
     }
    ]
@@ -2085,7 +2085,7 @@
    "announced_year": 2026,
    "sources": [
     {
-     "label": "Inside INdiana Business — Microsoft breaks ground on La Porte data center",
+     "label": "Inside INdiana Business, Microsoft breaks ground on La Porte data center",
      "url": "https://www.insideindianabusiness.com/articles/microsoft-breaks-ground-on-la-porte-data-center"
     }
    ]

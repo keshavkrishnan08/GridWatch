@@ -1,5 +1,5 @@
 {
-  "_doc": "Visual + semantic toolkit for this region. Colors, load-severity bands, utilities, units, and terminology. Change these and the whole atlas re-tunes — legend, node colors, filter chips, cards, stats. See FORKING.md.",
+  "_doc": "Visual + semantic toolkit for this region. Colors, load-severity bands, utilities, units, and terminology. Change these and the whole atlas re-tunes, legend, node colors, filter chips, cards, stats. See FORKING.md.",
 
   "_scale_mode_doc": "'fixed' uses the bands below as written. 'auto' keeps the labels/colors but re-derives the MW bounds from your data, so colors stay meaningful whether you map one county or a whole country.",
   "scale_mode": "fixed",
@@ -50,7 +50,7 @@
     "consumer_advocate_url": "https://www.in.gov/oucc/2504.htm"
   },
 
-  "_jobs_doc": "Permanent jobs per MW. The comparison figure is what the same load would support in other industry — set comparison to null to hide it.",
+  "_jobs_doc": "Permanent jobs per MW. The comparison figure is what the same load would support in other industry, set comparison to null to hide it.",
   "jobs": {
     "datacenter": 0.26,
     "comparison": 41,
