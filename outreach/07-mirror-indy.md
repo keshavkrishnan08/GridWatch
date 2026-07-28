@@ -53,7 +53,7 @@ He is hand-computing what your calculator generates. Show him it generalizes.
 > Free, open-source, and every figure links to its document. Happy to have Emily
 > pick apart the methodology.
 >
-> https://keshavkrishnan08.github.io/GridWatch/
+> https://gridwatch-indiana.vercel.app/
 
 ## Notes
 

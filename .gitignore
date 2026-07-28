@@ -89,3 +89,8 @@ sim.mjs
 stats.mjs
 playtest.mjs
 playviz.mjs
+.env.production.local
+.env.local
+.vercel
+vercel-test.mjs
+vtel.mjs
