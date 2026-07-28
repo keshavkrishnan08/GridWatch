@@ -64,7 +64,7 @@ the number yourself.
 
 ## Before you send anything
 
-1. ~~**Publish it.**~~ ✅ **Live: https://keshavkrishnan08.github.io/GridWatch/**
+1. ~~**Publish it.**~~ ✅ **Live: https://gridwatch-indiana.vercel.app/**
 2. ~~**Turn on analytics.**~~ ✅ PostHog is wired into the deploy and confirmed
    receiving events from the live site. Every link in this kit now resolves.
 3. **Set up Google Search Console** (free, 10 minutes) — it's the one measurement

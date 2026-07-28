@@ -30,7 +30,7 @@ place. Nothing to do here.
 
 **Ready-to-paste entry for #3 (Awesome-Electrical-Grid-Mapping):**
 ```
-* (USA - Indiana) [GridWatch Indiana](https://keshavkrishnan08.github.io/GridWatch/) (2026) (MIT) (map)
+* (USA - Indiana) [GridWatch Indiana](https://gridwatch-indiana.vercel.app/) (2026) (MIT) (map)
 ```
 
 ## Tier A — strong, a bit more effort

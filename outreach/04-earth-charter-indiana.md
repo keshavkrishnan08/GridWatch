@@ -51,4 +51,4 @@ Quote these back to them. You are the missing step.
 > glad to have this listed there, and I'm happy to add anything your organizers
 > tell me is missing.
 >
-> https://keshavkrishnan08.github.io/GridWatch/
+> https://gridwatch-indiana.vercel.app/
