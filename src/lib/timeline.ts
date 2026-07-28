@@ -127,18 +127,29 @@ export class Timeline {
 
   toggle() { this.playing ? this.pause() : this.play(); }
 
+  /** Seconds for a full 2020 to 2035 sweep. Slow enough to watch it fill in. */
+  private static readonly SWEEP_SECONDS = 8;
+  private pausedMid = false;
+
   play() {
     if (this.playing) return;
-    if (this.year >= this.end - 0.01) this.setYear(this.start);
+    // Press play and watch the whole build-out from the start, unless you're
+    // resuming a sweep you paused partway through.
+    if (!this.pausedMid || this.year >= this.end - 0.05) this.setYear(this.start);
+    this.pausedMid = false;
     this.playing = true;
     this.root.querySelector("#tl-play")!.textContent = "❚❚";
     this.lastT = performance.now();
+    const rate = (this.end - this.start) / Timeline.SWEEP_SECONDS;
     const loop = (t: number) => {
       if (!this.playing) return;
-      const dt = (t - this.lastT) / 1000;
+      // Clamp the frame delta. A backgrounded tab or a GC pause can hand us a
+      // huge dt that would rocket the playhead straight to the end; cap it so a
+      // hiccup costs a stutter, never the whole animation.
+      const dt = Math.min(0.1, (t - this.lastT) / 1000);
       this.lastT = t;
-      const next = this.year + dt * 4.6; // ~3.3s for full sweep
-      if (next >= this.end) { this.setYear(this.end); this.pause(); return; }
+      const next = this.year + dt * rate;
+      if (next >= this.end) { this.setYear(this.end); this.finish(); return; }
       this.setYear(next);
       this.raf = requestAnimationFrame(loop);
     };
@@ -146,9 +157,17 @@ export class Timeline {
   }
 
   pause() {
+    if (this.playing && this.year < this.end - 0.05) this.pausedMid = true;
     this.playing = false;
     cancelAnimationFrame(this.raf);
     const btn = this.root.querySelector("#tl-play");
-    if (btn) btn.textContent = this.year >= this.end - 0.01 ? "↻" : "▶";
+    if (btn) btn.textContent = this.year >= this.end - 0.05 ? "↻" : "▶";
+  }
+
+  private finish() {
+    this.playing = false;
+    this.pausedMid = false;
+    const btn = this.root.querySelector("#tl-play");
+    if (btn) btn.textContent = "↻";
   }
 }
