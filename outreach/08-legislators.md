@@ -75,4 +75,4 @@ they're set by chamber rules each session.
 >
 > Happy to provide the underlying data in any format useful to LSA.
 >
-> https://keshavkrishnan08.github.io/GridWatch/
+> https://gridwatch-indiana.vercel.app/
