@@ -19,13 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-DATA LICENSING NOTE
-
-The underlying civic data compiled in /public/data (facility records, docket
-references, and derived figures) is released under the Creative Commons
-Attribution 4.0 International license (CC BY 4.0). Source documents (IURC
-filings, county records, utility filings, news reporting) remain the property
-of their respective publishers and are cited per-record. See METHODOLOGY.md.
