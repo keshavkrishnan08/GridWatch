@@ -6,7 +6,7 @@
    that serve the region, units, and terminology.
 
    A fork edits public/data/theme.json (or lets the bootstrap generate it)
-   and the whole atlas re-tunes — legend, node colors, filter chips, cards,
+   and the whole atlas re-tunes, legend, node colors, filter chips, cards,
    stats. Nothing else needs touching.
 
    Defaults below reproduce Indiana exactly, so an unconfigured build is
@@ -41,7 +41,7 @@ export interface Terminology {
   /** what one clickable subdivision is called: county, département, council… */
   subdivision: string;
   subdivision_plural: string;
-  /** who regulates utilities, e.g. "IURC" — used in civic copy */
+  /** who regulates utilities, e.g. "IURC", used in civic copy */
   regulator: string | null;
   regulator_url: string | null;
   /** ratepayer advocate / comment venue, e.g. "OUCC" */
@@ -172,9 +172,9 @@ export function autoScale(capacities: number[]) {
 /* ---------- terminology helpers ---------- */
 const titleCase = (s: string) => s.replace(/\b\w/g, (c) => c.toUpperCase());
 
-/** "County" / "Département" — the singular subdivision noun, title-cased. */
+/** "County" / "Département", the singular subdivision noun, title-cased. */
 export const subName = () => titleCase(active.terminology.subdivision);
-/** "counties" / "départements" — plural, lowercase. */
+/** "counties" / "départements", plural, lowercase. */
 export const subPlural = () => active.terminology.subdivision_plural;
 /**
  * Suffix form used after a name: "Boone County".

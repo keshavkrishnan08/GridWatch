@@ -3,7 +3,7 @@ import { theme } from "./theme";
 
 export const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
-/* Jobs per megawatt. Region-configurable in theme.json — Indiana ships I&M's
+/* Jobs per megawatt. Region-configurable in theme.json, Indiana ships I&M's
  * 2024 disclosure: data centers ~0.26 jobs/MW vs ~41 for other industry. */
 export const JOBS_PER_MW_DC = 0.26;      // legacy re-export; prefer jobsModel()
 export const JOBS_PER_MW_OTHER = 41;
@@ -17,7 +17,7 @@ export function sevOf(mw: number | null | undefined): Sev {
   for (const b of bands) if (b.max == null || v < b.max) return b.key;
   return bands[bands.length - 1].key;
 }
-/** Live view of band colors — read after configureTheme() at boot. */
+/** Live view of band colors, read after configureTheme() at boot. */
 export const SEV_COLOR = new Proxy({} as Record<Sev, string>, {
   get: (_t, k: string) => theme().bands.find((b) => b.key === k)?.color ?? theme().unknown_color,
   ownKeys: () => theme().bands.map((b) => b.key),
@@ -28,7 +28,7 @@ export const sevColor = (mw: number | null | undefined) => SEV_COLOR[sevOf(mw)];
 export const sevClass = (mw: number | null | undefined) => `sev-${sevOf(mw)}`;
 export const unknownColor = () => theme().unknown_color;
 
-/* jobs model — per-MW employment, from theme.json */
+/* jobs model, per-MW employment, from theme.json */
 export const jobsModel = () => theme().jobs;
 
 /* ---------- fuel colors ---------- */
@@ -84,7 +84,7 @@ export function computeState(f: Facility, year: number): FacState {
   if (f.status === "withdrawn") {
     return { visible: announced == null || year >= announced, planned, ramp: 0, online: false, phase: "ghost" };
   }
-  /* No announce date — typical of auto-discovered sites, which are mapped
+  /* No announce date, typical of auto-discovered sites, which are mapped
      because they already exist. Show them across the whole timeline instead of
      hiding them behind a date we don't have. */
   if (announced == null) {

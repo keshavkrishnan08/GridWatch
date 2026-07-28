@@ -10,7 +10,7 @@ const ESC: Record<string, string> = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"
 export const esc = (s: string | null | undefined): string =>
   s == null ? "" : String(s).replace(/[&<>"']/g, (c) => ESC[c]);
 
-/** Only allow http(s)/mailto in hrefs — blocks javascript: and data: URLs. */
+/** Only allow http(s)/mailto in hrefs, blocks javascript: and data: URLs. */
 export const safeUrl = (u: string | null | undefined): string => {
   const t = (u || "").trim();
   return /^(https?:|mailto:)/i.test(t) ? esc(t) : "#";
@@ -19,14 +19,14 @@ export const safeUrl = (u: string | null | undefined): string => {
 const loc = () => theme().units.locale || "en-US";
 
 export const fmtInt = (n: number | null | undefined): string =>
-  n == null ? "——" : Math.round(n).toLocaleString(loc());
+  n == null ? "--" : Math.round(n).toLocaleString(loc());
 
 export const fmtMW = (n: number | null | undefined): string =>
-  n == null ? "——" : `${Math.round(n).toLocaleString(loc())}`;
+  n == null ? "--" : `${Math.round(n).toLocaleString(loc())}`;
 
 /** Compact money in the region's currency (name kept for call-site stability). */
 export function fmtUSD(n: number | null | undefined): string {
-  if (n == null) return "——";
+  if (n == null) return "--";
   const c = theme().units.currency.symbol || "$";
   const sign = n < 0 ? "-" : "";
   const a = Math.abs(n);
@@ -38,11 +38,11 @@ export function fmtUSD(n: number | null | undefined): string {
 }
 
 export const fmtPct = (n: number | null | undefined, d = 1): string =>
-  n == null ? "——" : `${n.toFixed(d)}%`;
+  n == null ? "--" : `${n.toFixed(d)}%`;
 
 /** Water use. Source data is million gallons/day; converts if the region is metric. */
 export const fmtGpd = (n: number | null | undefined): string => {
-  if (n == null) return "——";
+  if (n == null) return "--";
   if (theme().units.water === "m3d") {
     return `${Math.round(n * 3785.41).toLocaleString(loc())} m³/d`;
   }
@@ -57,16 +57,16 @@ export function fmtCoord(lat: number, lng: number): string {
 
 /** Site area. Source data is acres; converts to hectares for metric regions. */
 export const fmtAcres = (n: number | null | undefined): string => {
-  if (n == null) return "——";
+  if (n == null) return "--";
   if (theme().units.system === "metric") {
     return `${Math.round(n * 0.404686).toLocaleString(loc())} ha`;
   }
   return `${n.toLocaleString(loc())} ac`;
 };
 
-/** 2026.54 -> "JUL 2026" ; integer years -> "2026" ; unknown -> "—" */
+/** 2026.54 -> "JUL 2026" ; integer years -> "2026" ; unknown -> "-" */
 export function fmtYear(y: number | null | undefined): string {
-  if (y == null) return "—";
+  if (y == null) return "-";
   const yr = Math.floor(y);
   const frac = y - yr;
   if (Math.abs(frac) < 0.02) return `${yr}`;

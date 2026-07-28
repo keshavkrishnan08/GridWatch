@@ -79,7 +79,7 @@ function enrich(fc: GeoJSON.FeatureCollection, fn: (p: any) => void): GeoJSON.Fe
   return fc;
 }
 
-/** A world polygon with Indiana punched out — masks everything beyond the
+/** A world polygon with Indiana punched out, masks everything beyond the
  *  state so roads/buildings/labels never leave the border (spotlight effect). */
 function buildMask(indiana: GeoJSON.FeatureCollection): GeoJSON.Feature {
   const world = [[-180, -85], [180, -85], [180, 85], [-180, 85], [-180, -85]];
@@ -144,7 +144,7 @@ export class GridMap {
       dragRotate: false,
       pitchWithRotate: false,
       touchPitch: false,
-      maxPitch: 0, // strictly 2D — never tilt
+      maxPitch: 0, // strictly 2D, never tilt
       attributionControl: false,
     });
     this.map.addControl(
@@ -315,7 +315,7 @@ export class GridMap {
     this.readyCbs.splice(0).forEach((cb) => cb());
     this.startLoop();
     // a shared ?f/?c link already flew to its target in the whenReady callbacks
-    // above — don't fight it with the intro camera.
+    // above, don't fight it with the intro camera.
     if (!/[?&][fc]=/.test(location.search)) {
       const cam = this.homeCamera();
       if (!this.reduceMotion) {
@@ -406,7 +406,7 @@ export class GridMap {
   /* ---------- animation ----------
      Labels track the map via its own render events (so they cost nothing when
      the map is idle). Ambient pulse/flow runs on a ~30fps-gated RAF only when
-     motion is allowed — under prefers-reduced-motion there is no loop at all. */
+     motion is allowed, under prefers-reduced-motion there is no loop at all. */
   private startLoop() {
     this.map.on("render", () => this.positionLabels());
     this.positionLabels();
@@ -555,7 +555,7 @@ export class GridMap {
     else this.applyTimer = window.setTimeout(apply, 46);
   }
 
-  /** Apply interactive filters — the crux of the map. */
+  /** Apply interactive filters, the crux of the map. */
   setFilters(filters: Filters) {
     this.filters = filters;
     this.applyFac();

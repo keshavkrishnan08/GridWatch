@@ -17,9 +17,9 @@ describe("money", () => {
   });
 
   it("shows placeholders instead of inventing zeros", () => {
-    expect(fmtUSD(null)).toBe("——");
-    expect(fmtMW(null)).toBe("——");
-    expect(fmtInt(null)).toBe("——");
+    expect(fmtUSD(null)).toBe("--");
+    expect(fmtMW(null)).toBe("--");
+    expect(fmtInt(null)).toBe("--");
   });
 });
 
@@ -46,7 +46,7 @@ describe("dates", () => {
 
   /* Auto-discovered records have no dates; these must not render "NaN". */
   it("handles unknown dates", () => {
-    expect(fmtYear(null)).toBe("—");
+    expect(fmtYear(null)).toBe("-");
     expect(verifiedLabel(null)).toBe("NOT YET SOURCE-VERIFIED");
     expect(verifiedLabel("2026-07-17")).toContain("2026-07-17");
   });
