@@ -78,7 +78,7 @@
    "investment_usd": 10000000000,
    "water_mgd": 8.0,
    "water_status": "known",
-   "water_source": "City of Indianapolis sources",
+   "water_source": "City of Indianapolis",
    "jobs": 300,
    "utility": "Duke Energy Indiana / WVPA (LEAP district)",
    "iurc_docket": null,
@@ -96,7 +96,7 @@
      "url": "https://www.datacenterdynamics.com/en/news/meta-announces-1gw-data-center-campus-in-indiana/"
     }
    ],
-   "notes": "Projected 8 million gallons/day water use by 2031 (City of Indianapolis sources). ~$896M in associated LEAP transmission upgrades allocated across AES ($9M), Duke ($210M), WVPA ($627M).",
+   "notes": "Projected 8 million gallons/day water use by 2031 (City of Indianapolis sources). LEAP transmission upgrades allocated across AES ($9M), Duke ($210M) and WVPA ($627M), about $846M in total.",
    "last_verified": "2026-07-16"
   },
   {

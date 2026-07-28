@@ -45,11 +45,11 @@
     },
     {
       "type": "campaign",
-      "title": "County moratoriums &amp; bans",
+      "title": "County moratoriums & bans",
       "org": "Indiana University Environmental Resilience Institute",
-      "detail": "Nearly a third of Indiana counties now restrict data centers: 11+ have ordinances, 17+ have temporary moratoriums, and Marshall and Cass counties have banned them outright. Check your county's status.",
-      "action": "See the map",
-      "url": "https://www.datacenterbans.com/state/indiana",
+      "detail": "Indiana University's Environmental Resilience Institute counts 11 Indiana counties with data-center ordinances, at least 17 with temporary moratoriums, and two, Marshall and Cass, that banned new data centers outright, nearly a third of the state. See where your county stands.",
+      "action": "Read the county breakdown",
+      "url": "https://www.wfyi.org/statewide/2026-07-06/indiana-counties-data-center-moratoriums-bans-2026",
       "deadline": "Ongoing",
       "priority": 2
     },
@@ -69,7 +69,7 @@
       "org": "Your county",
       "detail": "Rezonings and variances for data centers are decided by county/city plan commissions and councils, usually monthly, open to public comment. Check your county's plan-commission calendar.",
       "action": "Find your county meeting",
-      "url": "https://www.in.gov/iurc/",
+      "url": "https://www.google.com/search?q=Indiana+county+plan+commission+data+center",
       "deadline": "Varies by county",
       "priority": 3
     },

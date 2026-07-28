@@ -194,7 +194,7 @@ class App {
           <span class="eyebrow">Get involved</span>
           <a class="act-link hot" data-letter-cty="${esc(county)}">✉ Write your official about ${esc(withSub(county))}</a>
           <a class="act-link" data-civic="cac" href="https://www.citact.org/cac-email-sign-up" target="_blank" rel="noopener">◈ Citizens Action Coalition, join &amp; get alerts</a>
-          <a class="act-link" data-civic="county" href="${theme().terminology.regulator_url || "#"}" target="_blank" rel="noopener">◱ ${esc(withSub(county))} meetings &amp; the public process</a>
+          <a class="act-link" data-civic="county" href="https://www.google.com/search?q=${encodeURIComponent(county + " County Indiana plan commission")}" target="_blank" rel="noopener">◱ ${esc(withSub(county))} plan commission &amp; meetings</a>
         </div>
         <div class="verified">TAP ANY ${esc(subName().toUpperCase())} FOR ITS PROFILE</div>
       </div>`);
