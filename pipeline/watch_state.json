@@ -1,21 +1,21 @@
 {
- "updated": "2026-08-03",
+ "updated": "2026-09-03",
  "sources": {
   "https://abc7chicago.com/post/lowell-indiana-hold-town-hall-proposed-5b-data-center-sentinel-centers/18897342/": {
-   "hash": "df2b54ca0cf6b911",
+   "hash": "6ec049a35b250d6c",
    "status": 200,
    "backs": [
     "facility:sentinel-lowell"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://about.fb.com/news/2026/02/metas-new-data-center-lebanon-indiana-marks-milestone-ai-investment/": {
-   "hash": "a4774c2b1ec24987",
+   "hash": "0833b5d533618a95",
    "status": 200,
    "backs": [
     "facility:meta-leap-lebanon"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://ailawtracker.org/data-centers": {
    "hash": "f013f2fd5091df44",
@@ -55,23 +55,23 @@
     "facility:wolcott-unnamed",
     "facility:wylie-hobart"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://baxtel.com/data-center/fluidstack-new-lebanon-indiana": {
-   "hash": "ab072b09e55d5e58",
+   "hash": "99d0fc8df25d5be1",
    "status": 200,
    "backs": [
     "facility:coatue-new-lebanon"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://baxtel.com/data-center/takanock-goshen-in": {
-   "hash": "d75b3d24667a3e77",
+   "hash": "05efe8ee27a88225",
    "status": 200,
    "backs": [
     "facility:takanock-goshen"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://cdn.misoenergy.org/20260203%20EPR-TSTF%20Item%2003%20MISO%20EPR%20Statistics739041.pdf": {
    "hash": "ba2133aa619c27ea",
@@ -79,39 +79,39 @@
    "backs": [
     "facility:project-raider"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://cleanview.co/data-centers/indiana": {
-   "hash": "998d76e7dd6070e4",
+   "hash": "349586fa02d4452b",
    "status": 200,
    "backs": [
     "facility:powerhouse-hobart"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://cleanview.co/data-centers/indiana/1992/takanock-goshen-data-center": {
-   "hash": "625a3f1cb69a19b1",
+   "hash": "70ba059b3f2a3602",
    "status": 200,
    "backs": [
     "facility:takanock-goshen"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://dartpoints.com/locations/clu01-columbus-in/": {
-   "hash": "e59ceafdffe9ff61",
+   "hash": "04c84e5b2c1c090b",
    "status": 200,
    "backs": [
     "facility:dartpoints-columbus"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://datacenters.atmeta.com/wp-content/uploads/2025/02/Meta_s-Jeffersonville-Data-Center.pdf": {
-   "hash": "46acbc4920701d07",
-   "status": 200,
+   "hash": null,
+   "status": 404,
    "backs": [
     "facility:meta-jeffersonville"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://fox59.com/news/indianapolis-metropolitan-development-commission-approves-decatur-township-data-center-proposal/": {
    "hash": null,
@@ -119,18 +119,18 @@
    "backs": [
     "facility:sabey-decatur"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://indianapublicradio.org/news/2026/01/henry-county-data-center-approved-at-last-commissioners-vote/": {
-   "hash": "58eb22a1a9b33e1b",
+   "hash": "66a7498845562640",
    "status": 200,
    "backs": [
     "facility:surge-knightstown"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://iurc.portal.in.gov/": {
-   "hash": "6e94dd1dc28e1d95",
+   "hash": "20d5c56bdc93cd8f",
    "status": 200,
    "backs": [
     "action_items.json:Google / AES decision, Cause 46394",
@@ -199,31 +199,31 @@
     "facility:takanock-goshen",
     "utility:nipsco"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://iurc.portal.in.gov/docketed-case-details/?id=70a66328-3ebe-f011-bbd3-001dd80846ac": {
-   "hash": "c962ffcabe9ef371",
+   "hash": "ce5dd87eec3b12f4",
    "status": 200,
    "backs": [
     "dockets.json:46322"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://iurc.portal.in.gov/docketed-case-details/?id=b19a8c53-ff9a-f011-b4cc-001dd803db57": {
-   "hash": "f5e533e4dadb6225",
+   "hash": "f5a30013b8717e9c",
    "status": 200,
    "backs": [
     "dockets.json:46301"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://iurc.portal.in.gov/docketed-case-details/?id=b8cd5780-0546-ef11-8409-001dd803817e": {
-   "hash": "5c3176d54eaebf6f",
+   "hash": "7319f7ca75fcd9e2",
    "status": 200,
    "backs": [
     "dockets.json:46097"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://measuredai.substack.com/p/aws-new-carlisle-data-center-campus": {
    "hash": null,
@@ -231,47 +231,47 @@
    "backs": [
     "facility:amazon-new-carlisle"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://mirrorindy.org/aes-indiana-rate-increase-approved-electric-bill-2026-mike-braun/": {
-   "hash": "e774582626134137",
+   "hash": "1aa7ce633c3daa73",
    "status": 200,
    "backs": [
     "rate-order:aes"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://mirrorindy.org/dc-blox-date-center-campus-east-side-indianapolis-irvington-warren-township/": {
-   "hash": "8442f9160161e6fb",
+   "hash": "c55d775f205da225",
    "status": 200,
    "backs": [
     "facility:dcblox-indianapolis"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://mirrorindy.org/how-indianapolis-residents-use-data-centers-martindale-brightwood-decatur-township/": {
-   "hash": "88b84d6b3ae9cbb0",
+   "hash": "9e9764dc5582b31c",
    "status": 200,
    "backs": [
     "facility:metrobloks-martindale"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://mirrorindy.org/indianapolis-data-centers-regulations-moratorium/": {
-   "hash": "d9d14030219fa0e5",
+   "hash": "8ab5108bbae4e7bb",
    "status": 200,
    "backs": [
     "action_items.json:Indianapolis data-center moratorium, Council vote"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://nwitimes.com/news/local/lake/article_bda889b5-f6ef-4e83-9ae4-5000ec293f09.html": {
-   "hash": "5815f39c8957d73b",
-   "status": 200,
+   "hash": null,
+   "status": 429,
    "backs": [
     "facility:sentinel-lowell"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://therealdeal.com/national/2026/05/04/ai-investor-coatue-launches-data-center-land-venture/": {
    "hash": null,
@@ -279,85 +279,85 @@
    "backs": [
     "facility:coatue-new-lebanon"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://utilitycheck.co/blog/indiana-electricity-rates-duke-aes": {
-   "hash": "3466f393eebd0ce8",
+   "hash": "8c10fac7e514ca0a",
    "status": 200,
    "backs": [
     "rate-order:centerpoint",
     "rate-order:duke",
     "rate-order:im"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://wsbt.com/": {
-   "hash": "e13d633a72b6bd1c",
+   "hash": "264d2742b281bca0",
    "status": 200,
    "backs": [
     "facility:thomas-rose-laporte"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://wsbt.com/news/local/st-joseph-county-council-denies-rezoning-of-land-for-data-center-votes-7-2-marathon-meeting-hours-long-public-opinion-13-billion-dollar-project-amazon-new-carlisle-approval-process-plan-commission-st-joseph-county-indiana": {
-   "hash": "307f8b4203ad0d7b",
+   "hash": "acf26e4e6d7be127",
    "status": 200,
    "backs": [
     "facility:newcarlisle-ne"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.abc57.com/news/developer-unveils-data-center-plan-in-akron-amid-resident-concerns": {
-   "hash": "55ff3b4de6b5dcdf",
+   "hash": "b6381b6a2ac6b06c",
    "status": 200,
    "backs": [
     "facility:decennial-akron"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.abc57.com/news/latest-details-on-potential-data-center-development-in-fulton-county": {
-   "hash": "2fb8ee3ca0f39927",
+   "hash": "55e10ecc0af0a32c",
    "status": 200,
    "backs": [
     "facility:decennial-akron"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.aboutamazon.com/news/company-news/amazon-15-billion-indiana-data-centers": {
-   "hash": "eeed0dd6fadb0fd2",
+   "hash": "e04347723073e2b6",
    "status": 200,
    "backs": [
     "facility:amazon-new-carlisle"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.aesindiana.com/data-centers": {
-   "hash": "499363a840a1f5c7",
+   "hash": "bd60c6c02cea882b",
    "status": 200,
    "backs": [
     "dockets.json:46394",
     "facility:google-monrovia"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.aesindiana.com/rate-review": {
-   "hash": "96dbeb3bfa271048",
+   "hash": "48bb0a0eee77eb09",
    "status": 200,
    "backs": [
     "utility:aes"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.brookvilleindiana.com/story/2026/03/11/news/developer-discusses-knightstown-data-center-proposal-after-henry-county-approval/1263.html": {
-   "hash": "43c57c17c8b16230",
+   "hash": "7c4a562d409306d3",
    "status": 200,
    "backs": [
     "facility:surge-knightstown"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.citact.org/ai-data-centers": {
-   "hash": "d5f489e0ca95c08c",
+   "hash": "ea0962617e118029",
    "status": 200,
    "backs": [
     "action_items.json:Southwest Indiana, no data center",
@@ -369,72 +369,72 @@
     "utility:centerpoint",
     "utility:duke"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.citact.org/cac-email-sign-up": {
-   "hash": "081f8f4bc9503b58",
+   "hash": "41e9871b645267f4",
    "status": 200,
    "backs": [
     "action_items.json:Citizens Action Coalition"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.citact.org/news/iurc-must-prioritize-public-interest-aes-indiana-data-center-proposal": {
-   "hash": "52498f44741b3a3d",
+   "hash": "4699861cb4846bfc",
    "status": 200,
    "backs": [
     "dockets.json:46394",
     "facility:google-monrovia"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.clintoncountytoday.com/county-apc-rezoning-hearing-for-proposed-data-center-set/": {
-   "hash": "0d6848e2b95f8519",
+   "hash": "78984136cae00c2f",
    "status": 200,
    "backs": [
     "facility:logix-clinton"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.datacenterdynamics.com/en/news/developer-explores-option-to-build-four-building-data-center-campus-in-northwest-indiana/": {
-   "hash": "d08dc37fca8c49e2",
+   "hash": "766ff18736bebeca",
    "status": 200,
    "backs": [
     "facility:sentinel-hebron"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.datacenterdynamics.com/en/news/logix-realty-indiana-development-denied-due-to-community-concerns-and-developer-red-flags/": {
-   "hash": "2712c08f0e620ec2",
+   "hash": "efe939f523092a16",
    "status": 200,
    "backs": [
     "facility:logix-clinton"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.datacenterdynamics.com/en/news/meta-announces-1gw-data-center-campus-in-indiana/": {
-   "hash": "c3bfbfc197114338",
+   "hash": "67976333fe501323",
    "status": 200,
    "backs": [
     "facility:meta-leap-lebanon"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.datacenterdynamics.com/en/news/potential-data-center-to-be-built-northeast-of-new-carlisle-indiana/": {
-   "hash": "677bdcf0fd4a4a01",
+   "hash": "55c8288d6c21ef3d",
    "status": 200,
    "backs": [
     "facility:newcarlisle-ne"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.datacenterknowledge.com/data-center-construction/new-data-center-developments-july-2026": {
-   "hash": "01ae58460ed1cd40",
+   "hash": "c08c3dfa02f7e940",
    "status": 200,
    "backs": [
     "facility:microsoft-laporte"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.eia.gov/electricity/sales_revenue_price/pdf/table_6.pdf": {
    "hash": "80ef010355a1f5e3",
@@ -442,31 +442,31 @@
    "backs": [
     "utility:nipsco"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.google.com/search?q=Indiana+county+plan+commission+data+center": {
-   "hash": "0abbbc85df3cfb49",
+   "hash": "32606a4c01af8423",
    "status": 200,
    "backs": [
     "action_items.json:County plan-commission meetings"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.govtech.com/artificial-intelligence/indiana-data-center-could-bring-significant-power-use": {
-   "hash": "a47279116074eaf4",
+   "hash": "00eeceef8dda6c79",
    "status": 200,
    "backs": [
     "facility:amazon-new-carlisle"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.ibj.com/articles/aes-indiana-details-plan-to-power-proposed-google-data-center-southwest-of-indianapolis": {
-   "hash": "cf33929a0500b887",
+   "hash": "3846ccab8e53293a",
    "status": 200,
    "backs": [
     "facility:google-monrovia"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.in.gov/iurc/files/NIPSCO-2024-IRP-OUCC-Comments-4-17-2025.pdf": {
    "hash": "4d6475e9e8fdfecf",
@@ -474,63 +474,63 @@
    "backs": [
     "utility:nipsco"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.in.gov/oucc/2504.htm": {
-   "hash": "361cbcd5976b53a3",
-   "status": 200,
+   "hash": null,
+   "status": 404,
    "backs": [
     "action_items.json:Submit a comment on an IURC case"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.insideindianabusiness.com/articles/indiana-regulators-ok-energy-project-tied-to-googles-morgan-county-data-center": {
-   "hash": "ecfc2598a786f87a",
+   "hash": "81bd2ad76b74d57a",
    "status": 200,
    "backs": [
     "facility:google-monrovia"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.insideindianabusiness.com/articles/microsoft-breaks-ground-on-la-porte-data-center": {
-   "hash": "fa49708bd9bfa4f7",
+   "hash": "61bd979867b71718",
    "status": 200,
    "backs": [
     "facility:microsoft-laporte-2"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.ipm.org/news/2026-03-24/new-data-center-proposed-near-washington-ind": {
-   "hash": "e6ca1a8b178d6bb8",
+   "hash": "ca37b1354a97f374",
    "status": 200,
    "backs": [
     "facility:outrigger-washington"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.ipm.org/news/2026-04-01/65-billion-industrial-park-coming-to-sullivan-county": {
-   "hash": "83b050ff66927bcc",
+   "hash": "1e4e848ded616a40",
    "status": 200,
    "backs": [
     "facility:heartland-sullivan"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.ipm.org/news/2026-05-12/washington-city-council-cancels-data-center-development-will-explore-moratorium": {
-   "hash": "d1d59fbc28d92bc1",
+   "hash": "3b8f1de072a8e921",
    "status": 200,
    "backs": [
     "facility:outrigger-washington"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.latitudemedia.com/news/in-indiana-an-anatomy-of-data-center-opposition/": {
-   "hash": "68e65c8ac01ede38",
+   "hash": "e3c8cc00d75ad1b8",
    "status": 200,
    "backs": [
     "facility:sentinel-lowell"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.nipsco.com/docs/librariesprovider11/rates-and-tariffs/electric-rates/2025-to-current/Electric-Service-Tariff-Entire-Book.pdf": {
    "hash": "73cc52f5e1850357",
@@ -538,7 +538,7 @@
    "backs": [
     "utility:nipsco"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.nipsco.com/docs/librariesprovider11/rates-and-tariffs/electric-rates/46120_june-26-2025-rate-case-order.pdf": {
    "hash": "af616fb0b9cc635d",
@@ -547,16 +547,16 @@
     "rate-order:nipsco",
     "utility:nipsco"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.nisource.com/news/article/regulatory-approvals-underscore-strength-of-nisource-s-customer-focused-data-center-strategy-supporting-growth-in-indiana": {
-   "hash": "8351075af8d1bccc",
+   "hash": "5ee3be8183240a14",
    "status": 200,
    "backs": [
     "dockets.json:46322",
     "utility:nipsco"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.nwitimes.com/news/local/article_8e927e35-00f0-4325-99fb-baafdf8c15e7.html": {
    "hash": null,
@@ -564,209 +564,209 @@
    "backs": [
     "facility:sentinel-hebron"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.peeringdb.com/fac/1136": {
-   "hash": "89880480e234bf95",
+   "hash": "09b180cf0363451e",
    "status": 200,
    "backs": [
     "facility:pdb-iupui-informatics-communications-technol-1136"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.peeringdb.com/fac/1142": {
-   "hash": "941aeb331a563d38",
+   "hash": "6eb4e67bf472981c",
    "status": 200,
    "backs": [
     "facility:pdb-indigital-1142"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.peeringdb.com/fac/16906": {
-   "hash": "b5699354116da946",
-   "status": 200,
+   "hash": null,
+   "status": 404,
    "backs": [
     "facility:pdb-ligonier-co-16906"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.peeringdb.com/fac/16907": {
-   "hash": "a2d1e1ecf23837fb",
-   "status": 200,
+   "hash": null,
+   "status": 404,
    "backs": [
     "facility:pdb-lagrange-co-16907"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.peeringdb.com/fac/17004": {
-   "hash": "ca3e5f6c35b8452b",
+   "hash": "5f2fc5e90c31adc4",
    "status": 200,
    "backs": [
     "facility:pdb-lifeline-ft-wayne-17004"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.peeringdb.com/fac/1701": {
-   "hash": "2fad7eb5d71eba2c",
+   "hash": "22066ba96dfc006b",
    "status": 200,
    "backs": [
     "facility:pdb-sitco-evansville-1701"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.peeringdb.com/fac/186": {
-   "hash": "79b635636345aed1",
+   "hash": "2e7e4abd5ef08329",
    "status": 200,
    "backs": [
     "facility:pdb-netrality-indy-telcom-center-733-w-henry-186"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.peeringdb.com/fac/1941": {
-   "hash": "8e86395b547d1864",
+   "hash": "4a8a6e4f5a84de4f",
    "status": 200,
    "backs": [
     "facility:pdb-lifeline-eastgate-1941"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.peeringdb.com/fac/2033": {
-   "hash": "fdea3dc7ca6ad0c6",
+   "hash": "323c0bb536b33e9f",
    "status": 200,
    "backs": [
     "facility:pdb-wintek-corporation-2033"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.peeringdb.com/fac/273": {
-   "hash": "ce03e2f58e7bf1a8",
+   "hash": "226b3b368b85139a",
    "status": 200,
    "backs": [
     "facility:pdb-citynet-indianapolis-273"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.peeringdb.com/fac/474": {
-   "hash": "d8b75febd645fe89",
+   "hash": "9c8c9c52cfa96122",
    "status": 200,
    "backs": [
     "facility:pdb-gap-union-station-474"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.peeringdb.com/fac/5609": {
-   "hash": "01ddf0ec716f2183",
+   "hash": "c12f1715f61b3c12",
    "status": 200,
    "backs": [
     "facility:pdb-indiana-university-data-center-5609"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.peeringdb.com/fac/8458": {
-   "hash": "098704a1204a0584",
+   "hash": "5e64a2fac18c2be8",
    "status": 200,
    "backs": [
     "facility:pdb-expedient-indianapolis-8458"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.peeringdb.com/fac/8459": {
-   "hash": "d6d9c5c026374271",
+   "hash": "5ffd3bc691318086",
    "status": 200,
    "backs": [
     "facility:pdb-ori-net-noblesville-8459"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.peeringdb.com/fac/9309": {
-   "hash": "0c4820f9e1d4b7ea",
+   "hash": "706515e0eb81f4cc",
    "status": 200,
    "backs": [
     "facility:pdb-aunalytics-south-bend-datacenter-ausb-9309"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.radius-dc.com/newsroom-and-events/radiusdc-expands-its-footprint-with-edge-colocation-campus-in-indianapolis-in": {
-   "hash": "674937cbed41fa0e",
+   "hash": "1471632fe742df8f",
    "status": 200,
    "backs": [
     "facility:radiusdc-plainfield"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.shelbyville.in.gov/m/newsflash/Home/Detail/364": {
    "hash": "46ecab1bc5f9733a",
-   "status": 200,
+   "status": null,
    "backs": [
     "facility:prologis-shelbyville"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.utilitydive.com/news/indiana-iurc-large-load-interconnection-data-center-aep-amazon-google/740452/": {
-   "hash": "71822a48ff4d983c",
+   "hash": "b24b9a3c9cf2a4c2",
    "status": 200,
    "backs": [
     "dockets.json:46097",
     "facility:google-fort-wayne",
     "utility:im"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.wbiw.com/2026/04/08/potentia-inc-unveils-historic-65-billion-data-center-project-in-sullivan-county/": {
-   "hash": "96150953941329fc",
+   "hash": "61cdf988fd695006",
    "status": 200,
    "backs": [
     "facility:heartland-sullivan"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.wfyi.org/news/articles/decatur-township-sabey-data-center-mdc-hearing-examiner": {
-   "hash": "ce200c57eb5604f2",
+   "hash": "703397c5019e65b2",
    "status": 200,
    "backs": [
     "facility:sabey-decatur"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.wfyi.org/news/articles/henry-county-planning-commission-approves-rezoning-that-could-bring-new-data-center": {
-   "hash": "2a3d58b30bcb5a08",
+   "hash": "98d55eac8a3edc4e",
    "status": 200,
    "backs": [
     "facility:surge-knightstown"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.wfyi.org/statewide/2026-07-06/indiana-counties-data-center-moratoriums-bans-2026": {
-   "hash": "4af6c6e0df0e560b",
+   "hash": "6d0c51507398a869",
    "status": 200,
    "backs": [
     "action_items.json:County moratoriums & bans"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.wfyi.org/wfyi-news/2026-07-15/east-side-data-center-wins-approval-despite-community-opposition": {
-   "hash": "9d4a8c766af0a517",
+   "hash": "2af32a8b1f49363c",
    "status": 200,
    "backs": [
     "facility:dcblox-indianapolis"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.wndu.com/2025/04/22/kosciusko-county-commissioners-say-no-proposed-data-center-leesburg/": {
-   "hash": "6b7194fe13186185",
+   "hash": "b0f456d85d335e5d",
    "status": 200,
    "backs": [
     "facility:prologis-leesburg-withdrawn"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.wrtv.com/news/local-news/kokomo-common-council-approves-annexation-rezoning-plan-amid-opposition-from-residents": {
-   "hash": "2f4f3e1bebdcb1fa",
+   "hash": "b8b9bd51c72dba09",
    "status": 200,
    "backs": [
     "facility:kokomo-unnamed"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.wthr.com/article/news/local/clinton-county-commissioners-reject-data-center-project-over-growing-concerns-rezoning-plan-proposal/531-30cc9c05-69e5-4fb6-b510-78929ce6751b": {
    "hash": null,
@@ -774,7 +774,7 @@
    "backs": [
     "facility:logix-clinton"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.wthr.com/article/news/local/shelbyville-plan-commission-says-no-429-acre-data-center-project-local-news-construction/531-17a451a1-64e7-4023-b5bf-fdeee3f26f4f": {
    "hash": null,
@@ -782,15 +782,15 @@
    "backs": [
     "facility:prologis-shelbyville"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   },
   "https://www.wvpe.org/wvpe-news/2025-12-12/new-carlisle-data-center-developer-planning-one-in-south-bend": {
-   "hash": "3b00cfad1829f573",
+   "hash": "f31163826011f5b0",
    "status": 200,
    "backs": [
     "facility:western-hospitality-south-bend"
    ],
-   "checked": "2026-08-03"
+   "checked": "2026-09-03"
   }
  }
 }
