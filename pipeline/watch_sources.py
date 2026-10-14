@@ -44,7 +44,7 @@ NOISE = re.compile(
 
 # Content-change monitoring only works on pages that are stable by nature.
 # A news article carries rotating headlines, ads and view counts, so its hash
-# changes constantly and means nothing — watching those for "change" produces an
+# changes constantly and means nothing: watching those for "change" produces an
 # alert nobody reads, which is worse than no alert. For news we watch only
 # whether the link still resolves; for primary sources we watch the content.
 STABLE_HINTS = (

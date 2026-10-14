@@ -32,7 +32,7 @@ SELECTORS = [
 ]
 # name-based sweep for sites tagged only as generic industrial/office
 NAME_RE = re.compile(r"\b(data ?cent(er|re)|datacent(er|re)|colocation|colo facility)\b", re.I)
-# A "name" that identifies nothing — worth replacing with operator/place context.
+# A "name" that identifies nothing: worth replacing with operator/place context.
 GENERIC_NAME = re.compile(r"\s*(the\s+)?(data ?cent(er|re)|datacent(er|re)|colocation|colo)\s*", re.I)
 
 

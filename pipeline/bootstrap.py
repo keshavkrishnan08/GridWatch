@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-GridWatch — one-command region bootstrap.
+GridWatch: one-command region bootstrap.
 
     python3 -m pipeline.bootstrap --region "Ohio, United States"
     python3 -m pipeline.bootstrap --region "Ireland" --label IRELAND
@@ -145,7 +145,7 @@ def main() -> int:
     # The wide radius exists to marry a curated record (often city-level coords)
     # to the precise auto-discovered site describing the same place. With nothing
     # curated there is no such pairing to make, and the provider already deduped
-    # tightly — re-running wide here would collapse genuinely separate facilities,
+    # tightly: re-running wide here would collapse genuinely separate facilities,
     # which is exactly what happens in a dense market like Northern Virginia.
     merged = dedupe_sites(curated + sites, radius_mi=1.2 if curated else 0.25)
 
@@ -214,7 +214,7 @@ def main() -> int:
 
     if args.activate:
         os.makedirs(PUBLIC_DATA, exist_ok=True)
-        # Activating replaces public/data — which may hold hand-curated records
+        # Activating replaces public/data: which may hold hand-curated records
         # for a different region. Never clobber that silently.
         live = os.path.join(PUBLIC_DATA, "region.json")
         if os.path.exists(live):

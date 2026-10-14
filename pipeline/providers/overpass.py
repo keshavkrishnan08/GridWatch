@@ -67,7 +67,7 @@ def geocode(query: str, *, polygon: bool = True) -> dict | None:
 def query(overpass_ql: str, *, cache_key: str | None = None) -> dict | None:
     """Run an Overpass QL query against the mirror pool.
 
-    The cache key always includes a hash of the query text — a label alone
+    The cache key always includes a hash of the query text, a label alone
     would serve a stale result after the query changes.
     """
     digest = hashlib.sha1(overpass_ql.encode()).hexdigest()[:12]

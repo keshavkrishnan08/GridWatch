@@ -5,7 +5,7 @@ Report how stale the dataset has gone.
     python3 -m pipeline.check_freshness
     python3 -m pipeline.check_freshness --max-age 120 --strict
 
-A dataset like this doesn't break when it goes out of date — it keeps looking
+A dataset like this doesn't break when it goes out of date, it keeps looking
 authoritative while quietly being wrong. Run this in CI (on a schedule) so
 staleness shows up as a failing check instead of a surprise.
 

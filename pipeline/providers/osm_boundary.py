@@ -60,7 +60,7 @@ class SubdivisionsProvider:
 
         chosen, els = None, []
         for lvl in levels:
-            # `out geom` (not `out geom tags`) — adding `tags` suppresses the
+            # `out geom` (not `out geom tags`): adding `tags` suppresses the
             # member bodies, leaving only a bbox and no polygon to build.
             q = (
                 f'[out:json][timeout:280];area({ctx.osm_area})->.a;'

@@ -5,7 +5,7 @@ Provider registry.
 matters: the boundary resolves the OSM area that every later provider queries.
 
 To add a source, write a class implementing the Provider protocol (see
-base.py) and append it here — or pass `--providers` on the command line to run
+base.py) and append it here: or pass `--providers` on the command line to run
 a subset. Regional sources (a national regulator, a state ArcGIS server) can be
 registered alongside the global OSM ones without touching the pipeline core.
 """

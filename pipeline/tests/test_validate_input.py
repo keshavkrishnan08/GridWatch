@@ -101,7 +101,7 @@ class TestValidator(unittest.TestCase):
         self.assertEqual(code, 1)
 
     def test_warns_but_passes_when_capacity_unknown(self):
-        # An undisclosed capacity is normal and honest — a warning, not an error.
+        # An undisclosed capacity is normal and honest, a warning, not an error.
         code, out = run_validator({"facilities": [good(mw_full=None, acres=None)]})
         self.assertEqual(code, 0, out)
         self.assertIn("warning", out.lower())

@@ -6,7 +6,7 @@ Build the ZIP -> location lookup that powers "check my area".
     python3 -m pipeline.fetch_zips --prefixes 39 --state "Mississippi"
 
 Source: US Census ZCTA Gazetteer (public domain, no key). We keep only the
-centroid, and only for ZCTAs whose centroid falls inside the region boundary —
+centroid, and only for ZCTAs whose centroid falls inside the region boundary, 
 so a fork gets its own ZIPs by changing the prefixes, and border ZIPs that
 belong to a neighboring state don't sneak in.
 

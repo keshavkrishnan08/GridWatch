@@ -1,5 +1,5 @@
 """
-Grid infrastructure: generation, transmission, substations — anywhere.
+Grid infrastructure: generation, transmission, substations, anywhere.
 
 OSM's `power=*` schema is global and well maintained, which is what lets the
 atlas draw a real grid for a region nobody has hand-curated.

@@ -88,7 +88,7 @@ def main():
             "facilities_curated": len(facilities),
             # The AI Law Tracker inventory that seeded this file listed ~46 Indiana
             # projects. Our own curation has since passed that, so the "tracked"
-            # figure is the larger of the two — it can never be below what we hold.
+            # figure is the larger of the two: it can never be below what we hold.
             "facilities_tracked_statewide": max(46, len(facilities)),
             "by_status": dict(by_status),
             "counties_with_projects": len([c for c in county if county[c]["count"]]),

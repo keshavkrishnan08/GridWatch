@@ -7,7 +7,7 @@ Autonomously refresh the mechanical utility figures from EIA-861.
 
 EIA Form 861 is published annually as a keyless ZIP at a stable URL, with one
 row per utility per state. That makes customer counts and class revenue shares
-genuinely automatable — and they're exactly the figures that go quietly stale
+genuinely automatable: and they're exactly the figures that go quietly stale
 and produce wrong per-household math.
 
 WHAT THIS TOUCHES, AND WHAT IT WILL NOT
@@ -18,7 +18,7 @@ It writes only these fields, and only for utilities it matched confidently:
     residential_revenue_share_pct   residential share of retail revenue
     eia_avg_rate_cents_kwh          cross-check against the tariff rate
 
-Everything else is human judgment read out of filings — cost_shifts,
+Everything else is human judgment read out of filings, cost_shifts,
 recent_increase, tariff rates, and the notes. An automated job must never
 overwrite those, so it doesn't: the allowlist is enforced, not just intended.
 

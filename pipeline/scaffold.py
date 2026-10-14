@@ -51,7 +51,7 @@ def write_meta(out_dir: str, region_query: str, facilities: list[dict]) -> dict:
     meta = {
         "last_updated": date.today().isoformat(),
         "region": region_query,
-        # Peak demand is a published figure per grid operator — it can't be
+        # Peak demand is a published figure per grid operator, it can't be
         # derived from OSM, so it stays null until a forker supplies it.
         "state_peak_mw": None,
         "counts": {
@@ -204,7 +204,7 @@ def write_theme(out_dir: str, label: str, subdivision: str, country_code: str | 
     A theme tuned to the region, not to Indiana.
 
     Scale is 'auto' so the color bands re-derive from whatever capacities the
-    region actually has — a single county and a whole country both read
+    region actually has: a single county and a whole country both read
     correctly. Utilities start empty because they're region-specific; until
     they're filled in everything falls back to a neutral label.
     """

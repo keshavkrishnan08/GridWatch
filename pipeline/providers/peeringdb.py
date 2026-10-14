@@ -1,11 +1,11 @@
 """
-PeeringDB — the network operators' facility registry.
+PeeringDB: the network operators' facility registry.
 
 Free, keyless, global, geocoded, and CC-BY. It's the best machine-readable
 inventory of *colocation and network* facilities that exists.
 
 Read the caveat before you use it. PeeringDB catalogues carrier hotels and
-colocation sites — the places networks interconnect. It is excellent at those
+colocation sites: the places networks interconnect. It is excellent at those
 and largely blind to the thing this atlas exists for: hyperscale campuses, which
 are single-tenant, don't sell interconnection, and therefore have no reason to
 appear. So it broadens coverage at the small end without touching the big end.
