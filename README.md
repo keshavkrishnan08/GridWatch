@@ -1,218 +1,229 @@
 # GridWatch Indiana
 
-**Live: https://gridwatch-indiana.vercel.app/**
+**An interactive atlas of every tracked data-center project in Indiana, drawn against the state's
+power grid, with every figure linked to the public document it came from. The engine re-points to
+any region.**
 
-**An interactive atlas that maps every proposed and existing data center in Indiana against the state's power grid - megawatts, water use, IURC dockets, and projected bill impact - all from public records.**
+![The GridWatch Indiana console with the Amazon (AWS) New Carlisle campus selected: a 2,250 MW filed capacity, a developer-redacted water figure, IURC Cause 46301, local impact figures, the status, size, and utility filters on the left, and the 2020 to 2035 build-out timeline along the bottom](docs/screenshot.png)
 
-![GridWatch Indiana - the grid intelligence console](docs/screenshot.png)
+Indiana is deciding, docket by docket, how much new load its grid will take on for data centers.
+The facts exist. They are scattered across IURC filings, utility resource plans, county rezoning
+minutes, and local reporting, so a resident cannot easily answer three plain questions: what is
+being built near me, how much power will it draw, and will it raise my bill? GridWatch treats that
+as a sourcing problem. Every record carries a link, an unknown figure stays empty instead of being
+guessed, and a redacted figure is shown as redacted.
 
-Indiana is in the middle of a live fight over data-center energy. As of mid-2026 there are **46 tracked data-center projects** across the state, and the active ones already add up to roughly **12,600 MW - about 36% of Indiana's peak demand** - on a grid that's still **61% coal**. Meanwhile residential electric bills jumped ~17% this year.
+Live: **https://gridwatch-indiana.vercel.app**
 
-All of that information exists. It's just scattered across hundreds of IURC docket filings, utility integrated resource plans, county planning documents, and news stories. Nobody had assembled it into one navigable picture. So a Hamilton County resident couldn't easily answer a simple question: *what's being built near me, how much power will it draw, and will it raise my bill?*
+```
+hand-curated facilities (IURC, utility filings, county records, reporting; cited per record)
+  + WRI power plants, HIFLD transmission and territories, Census counties and ZIPs
+    ->  pipeline/: fetch, simplify, validate (no facility ships without a source)
+    ->  build_dataset.py: statewide roll-ups into meta.json (sums and counts only)
+    ->  static JSON and GeoJSON in public/data
+    ->  MapLibre console: map, filters, timeline, dossiers, bill and area tools
+    ->  monthly jobs: EIA-861 refresh, cited-source watch, freshness check
+```
 
-GridWatch answers exactly that.
+If you can't cite it, don't add it.
 
----
+## The core idea
 
-## What it does
+1. **Sourcing is the product.** Each facility needs at least one working source link, and the
+   validator fails the build without one. A missing figure is `null`, never zero or a typical
+   value. `water_status` separates `known`, `unknown`, and `redacted`, because a developer
+   withholding water use in a public filing is itself a fact.
+2. **Precision is labeled, not implied.** `geo_precision` says whether a pin is a site, a city
+   centroid, or a county centroid. `mw_estimated` marks capacity taken from reporting rather than
+   a filing. Withdrawn projects stay on the map as faint rings, because hiding them would flatter
+   the picture.
+3. **Projections say they are projections.** The timeline ramps each project toward an estimated
+   energization year. The bill tool is an illustrative even split with a stated band, not a
+   forecast of anyone's bill.
+4. **Machines do the mechanical part, people do the judgment.** A scheduled job refreshes the
+   few utility figures that come from a structured federal source. Anything that needs reading a
+   filing is flagged for a human and never edited by a script.
+5. **Indiana is one region, not the product.** One command maps any region on Earth from
+   OpenStreetMap and re-tunes units, currency, terminology, and the color scale. The civic files a
+   script cannot know (rates, dockets, hearings) start empty, so a fork never shows Indiana's
+   numbers under another region's name.
 
-- **Maps the whole fleet.** Every data center renders as a glowing node sized by megawatts and colored by load severity - green under 50 MW up to magenta for the hyperscalers that are off the scale Indiana's grid was built for. Existing power plants, ≥138 kV transmission lines, and utility service territories layer underneath.
-- **Filters to what matters.** Filter the map live by status (proposed, approved, built, withdrawn), by size tier (small up to off-the-scale hyperscale), and by serving utility. The count updates as you go. Search any county or facility to fly straight to it.
-- **Scrubs through time.** A 2020 → 2035 timeline animates the build-out. Drag it and watch the grid fill as nodes appear and grow toward their projected energization.
-- **Shows the receipts.** Click any node for a full dossier: capacity, water use, acreage, investment, developer, serving utility, IURC cause number, and **every figure linked to its public source**. When a developer redacts a number, the card flags it `◈ DEVELOPER-REDACTED` instead of guessing.
-- **Projects your bill.** A transparent calculator combines each utility's IURC-approved rate change with an illustrative split of filed data-center infrastructure costs. Clearly labeled as a projection, with the math shown.
-- **Points to the process.** A nonpartisan action layer lists how to file an IURC comment, the active dockets, and where the public hearings are. It shows the process, not a position.
+## What it shows (Indiana dataset, last updated 2026-07-22)
 
-No accounts. No tracking. No API keys. It loads straight into the console from a single link.
+| Measure | Value |
+|---|---|
+| Tracked data-center projects | **76** across 32 counties |
+| By status | 23 proposed, 10 rumored, 4 approved, 9 under construction, 16 operational, 14 withdrawn |
+| Load at full build-out, everything not withdrawn | **15,142 MW**, **43.3%** of an approximate 35,000 MW state peak |
+| Committed load (approved, under construction, operational) | 7,870 MW |
+| Withdrawn proposals | 3,380 MW |
+| Largest single project | Amazon (AWS) New Carlisle, 2,250 MW |
+| Existing generating capacity in the plant database | 45,679 MW: 60.6% coal, 30.8% gas |
+| Grid layers | 205 power plants, 1,237 transmission segments at 138 kV and above, 114 utility territories |
+| Sourcing | 103 source links across the 76 records |
+| Statewide bill context | average residential bills up 17% this year (cited to the Indiana Capital Chronicle) |
 
-## Live data, honestly sourced
+Every number above is a sum or count over `public/data/` computed by
+`pipeline/build_dataset.py`, and a CI job fails if `meta.json` drifts from the committed data.
 
-Every number traces to a public document. The data lives as version-controlled JSON/GeoJSON in [`/public/data`](public/data) so anyone can audit or reuse it.
+What a visitor can do:
 
-| Layer | Source |
-|-------|--------|
-| Data-center facilities | IURC filings, utility filings, county records, [AI Law Tracker](https://ailawtracker.org/data-centers), and news reporting - **cited per record** |
-| Power plants | [WRI Global Power Plant Database](https://datasets.wri.org/dataset/globalpowerplantdatabase) v1.3.0 |
-| Transmission (≥138 kV) | [HIFLD](https://hifld-geoplatform.hub.arcgis.com/) Electric Power Transmission Lines |
-| Utility territories | HIFLD Electric Retail Service Territories |
-| County boundaries | US Census cartographic boundaries |
-| Ratepayer / docket context | [IURC docket portal](https://iurc.portal.in.gov/), [Citizens Action Coalition](https://www.citact.org/ai-data-centers) |
+* **Map the fleet.** Each project is a node sized by megawatts and colored by load band, over
+  power plants, high-voltage transmission, utility territories, and county ban and moratorium
+  layers, masked to the state border.
+* **Filter and search.** By status, size tier, and serving utility, with a live count. Search a
+  county or facility to fly to it.
+* **Scrub 2020 to 2035.** The timeline animates the build-out, counting each project as pipeline
+  until its projected energization year and as online after.
+* **Open a dossier.** Capacity by phase, water use, acreage, investment, developer, utility, IURC
+  cause number, local impact (jobs, backup diesel generators, wetland acres where filed), and the
+  source for each figure.
+* **Check my area.** Enter a ZIP code or pick a county to see the serving utility, the projects
+  in that county, any local restriction, and a bill projection for your monthly usage.
+* **Write your official.** A prefilled public comment to the county plan commission and the
+  Indiana Office of Utility Consumer Counselor, ready to copy or open in an email app.
+* **Follow the process.** How to file an IURC comment, the active dockets, and where hearings
+  are. It shows the process, not a position.
+* **Take the data.** Export every facility record as CSV.
 
-The full sourcing method - including what's verified versus estimated versus redacted - is in **[METHODOLOGY.md](METHODOLOGY.md)**.
+## How it works
 
-## Tech
+**Data.** `public/data/facilities.json` is curated by hand from IURC filings, utility filings,
+county records, the AI Law Tracker inventory, Citizens Action Coalition analysis, and reporting.
+Each record has capacity (phase 1 and full), water, acreage, investment, utility, IURC cause,
+announced and estimated online year, notes, sources, and a `last_verified` date. Power plants come
+from the WRI Global Power Plant Database v1.3.0, transmission and utility territories from HIFLD,
+counties from Census boundaries, and ZIP centroids from the Census ZCTA gazetteer.
 
-Deliberately boring and forkable:
+**Pipeline.** `fetch_geo.py` pages and simplifies the ArcGIS layers into small static files using
+only the Python standard library, and a dead source becomes an empty layer, not a crash.
+`build_dataset.py` derives `meta.json`. `validate.py` checks schema and, with `--links`, that
+every source URL resolves. `validate_input.py` checks a facilities file before publishing:
+required fields, a source on every record, unique ids, coordinates in range, a known status, and
+optionally that each county name matches the subdivision its coordinates fall in.
 
-- **[MapLibre GL JS](https://maplibre.org/) v5** with a keyless dark vector basemap ([CARTO](https://carto.com/basemaps) dark-matter) - streets, water, and labels, masked to the Indiana border so nothing renders outside the state. No Mapbox/Google key. The facility, grid, and territory overlays are self-hosted GeoJSON.
-- **[Vite](https://vitejs.dev/)** + **TypeScript**, hand-written CSS design tokens, **[D3](https://d3js.org/)** for scales.
-- **[Python](pipeline/)** pipeline fetches and simplifies the geodata into static files.
-- Ships as static files. Host it free on Vercel, Netlify, or GitHub Pages, forever.
+**Bill model.** For a chosen utility and monthly kWh, the current bill is usage times rate, and
+the data-center share is the sum of filed data-center infrastructure costs, divided by the
+utility's customers, amortized over 5 years, with a plus or minus 45% band. It sits next to the
+utility's cited recent rate change for context. The utility serving a county is found with a
+point-in-polygon test of the county centroid against HIFLD territories.
 
-## Quickstart
+**Front end.** Vite and TypeScript, MapLibre GL JS v5 on a keyless CARTO dark-matter basemap, D3
+for scales, hand-written CSS tokens. The build is static with a relative base, so it runs on
+Vercel, Netlify, or GitHub Pages from any path.
+
+**Maintenance.** Four GitHub Actions workflows keep the data honest:
+
+* `maintain.yml` runs on the 3rd of each month. Tier 1 downloads EIA Form 861 and updates only
+  three allowlisted utility fields (residential customers, residential revenue share, EIA average
+  rate). Any change over 25% is held back and opened as a review issue instead. The job then
+  re-runs validation and the pipeline tests before committing. Tier 2 checks every cited source
+  for changes or dead links and opens a review issue; it never edits the dataset.
+* `freshness.yml` runs on the 1st of each month and opens a "Dataset refresh due" issue once the
+  data is older than 180 days. The app shows visitors a staleness banner on the same schedule.
+* `test.yml` typechecks, runs the TypeScript and pipeline tests, builds, and validates the shipped
+  dataset on pushes to `main` and on pull requests. `validate.yml` rebuilds the roll-ups and
+  fails if `meta.json` is out of date.
+
+**Requests and sign-ups.** A "Bring GridWatch to your state" form asks for a name, email, and
+state or region, plus an optional role and note, and posts them to the maintainer through the
+FormSubmit relay. A newsletter box posts an email address the same way. Optional analytics
+(PostHog, Meta Pixel, a GTM data layer) load only when the matching `VITE_` variables are set at
+build time. The GitHub Pages build reads them from repository variables, so a fork reports to its
+own project or to none.
+
+**Any region.** `npm run region -- --region "<name>"` resolves the outline and subdivisions from
+OpenStreetMap, pulls generation, transmission, substations, and tagged data centers through
+Overpass, adds PeeringDB colocation sites, de-duplicates, and writes a self-contained
+folder under `regions/`. Every auto-discovered site is marked `rumored` with no megawatt figure
+until someone sources it. `prompts/` holds four research prompts (facilities, utilities and
+bills, civic process, an adversarial audit) that require a citation for every figure and leave
+unknowns null. `pipeline/reconcile.py` compares the dataset with another tracker and reports
+matches, conflicts, and records only one side has, without merging anything.
+
+## Run it
 
 ```bash
 npm install
-npm run dev        # local dev server at http://localhost:5173
-npm run build      # production build → dist/
-npm run preview    # serve the production build
-npm run test:all   # typecheck + TS tests + pipeline tests
+npm run dev          # http://localhost:5173
+npm run build        # production build into dist/
+npm run preview      # serve the build on port 4173
+npm run test:all     # typecheck, TypeScript tests, pipeline tests
 ```
 
-Refresh the underlying data any time:
+Rebuild and check the data:
 
 ```bash
-python3 pipeline/fetch_geo.py       # pull counties, plants, transmission, territories
-python3 pipeline/build_dataset.py   # recompute statewide roll-ups → meta.json
-python3 pipeline/validate.py --links # schema + source-link checks
+python3 pipeline/fetch_geo.py          # counties, plants, transmission, territories
+python3 pipeline/build_dataset.py      # recompute meta.json
+python3 pipeline/validate.py --links   # schema and source-link checks
+npm run freshness                      # dataset age
+npm run refresh                        # EIA-861 dry run (add -- --write to apply)
+npm run watch                          # report changed or dead cited sources
 ```
 
-## Deploy
-
-It's a static site, so deployment is one step:
-
-- **Vercel** - import the repo; `vercel.json` sets build + output. Or `npx vercel --prod`.
-- **Netlify** - `netlify.toml` is included; drag-and-drop `dist/` also works.
-- **GitHub Pages** - push to `main`; the included [workflow](.github/workflows/deploy.yml) builds and publishes automatically.
-
-Because `vite.config.ts` uses a relative base, the same build runs from any host or sub-path.
-
-## Fork it for anywhere in the world
-
-Indiana is the reference implementation; the engine underneath is
-region-agnostic. One command maps any region on Earth - outline, subdivisions,
-power plants, transmission, substations - and re-tunes the whole atlas to it:
+Map another region:
 
 ```bash
 npm run region -- --region "Ohio, United States" --activate
+npm run validate -- my-facilities.json   # enforce the sourcing rule on your records
 npm run dev
 ```
 
-Units, currency, terminology ("county" vs "Kreis"), and the color scale adapt
-automatically; roads and cities come from the global basemap.
+`vercel.json` and `netlify.toml` are included, and `.github/workflows/deploy.yml` publishes to
+GitHub Pages on every push to `main`. See `FORKING.md` for the full guide.
 
-Units, currency, terminology, and the color scale adapt automatically. Roads,
-cities, and water come from the global basemap, so they already work everywhere.
-
-### Then bring your data - paste this into Claude
-
-The map is automatic; the facilities are yours to research. Copy the prompt
-below into Claude (or any LLM with web search), replacing `{{REGION}}`. It's
-written so the model can't quietly invent figures - unknowns stay `null`, and
-every number needs a citation.
-
-<details>
-<summary><b>Click to expand the setup prompt</b></summary>
-
-```text
-I'm building a GridWatch atlas for {{REGION}} and need you to research the data
-centers there. Return a single JSON object, nothing else.
-
-THE RULE THAT GOVERNS EVERYTHING: if you cannot cite it, do not state it.
-- Every facility needs at least one real, working source URL.
-- Any figure you can't find in a document is null. Never 0, never a "typical"
-  value, never an average of conflicting reports.
-- If you're not confident a project exists, leave it out and list it under
-  "uncertain" instead.
-Ten sourced facilities beat fifty guesses.
-
-WHERE TO LOOK, in order of authority: utility regulator filings (rate cases,
-interconnection requests, special contracts); local government records (rezoning
-petitions, planning-commission minutes, tax abatements); utility resource plans;
-company announcements; local and trade press; industry trackers (treat these as
-leads, not facts - set mw_estimated true).
-
-FORMAT:
-{
-  "region": "{{REGION}}",
-  "facilities": [{
-    "id": "operator-town",
-    "name": "Full facility name",
-    "developer": "Company, or Undisclosed",
-    "city": "Town",
-    "county": "Subdivision WITHOUT the word County/Parish/Kreis",
-    "lat": 40.0481, "lng": -86.4691,
-    "geo_precision": "parcel | site | city | county",
-    "status": "proposed | approved | construction | operational | rumored | withdrawn",
-    "mw_phase1": null, "mw_full": 600, "mw_estimated": false,
-    "acres": null, "investment_usd": null,
-    "water_mgd": null, "water_status": "known | redacted | unknown",
-    "utility": "Serving electric utility",
-    "iurc_docket": null, "docket_url": null,
-    "announced_year": 2025, "online_year": null, "tax_note": null,
-    "sources": [{"label": "Publication - headline", "url": "https://..."}],
-    "notes": "Plain-language context. Say explicitly what is unconfirmed.",
-    "last_verified": "YYYY-MM-DD"
-  }],
-  "uncertain": [{"name": "...", "why": "what you found and why it fell short"}],
-  "coverage_note": "What you searched and what you likely missed."
-}
-
-FIELD RULES:
-- status: "rumored" = reported but unconfirmed, or no named operator.
-  "withdrawn" = cancelled, rejected, or denied at rezoning.
-- geo_precision: be honest. "parcel" only for a surveyed parcel.
-- water_status "redacted" specifically means a developer withheld it in a public
-  filing - that's a meaningful fact, distinct from "unknown".
-- mw_estimated: true when capacity comes from reporting rather than a filing.
-
-BEFORE YOU ANSWER, verify: every facility has a real source URL; no number
-appears that you can't point to; every unknown is null; county names have no
-suffix; no duplicate ids; mw_phase1 <= mw_full; every status is one of the six.
-
-After the JSON, tell me in prose: what you searched and likely missed, where
-sources conflicted, and the 2-3 records most worth a human verifying.
-```
-
-</details>
-
-Save the JSON, then:
-
-```bash
-npm run validate -- my-facilities.json   # enforces the sourcing rule
-```
-
-The validator checks structure - every facility sourced, no duplicate ids,
-coordinates in range, county matching its own coordinates. **It cannot check
-whether a number is true**, so open a few source links yourself before you
-publish.
-
-[`prompts/`](prompts/) has three more: bill models, civic process, and an
-adversarial audit pass to run before going live. Using Claude Code?
-`.claude/skills/gridwatch-region/` runs the whole flow.
-
-See **[FORKING.md](FORKING.md)** for the full guide.
-
-## Contributing
-
-Corrections and new filings are welcome - they're the most valuable contribution
-here. A data center moved, a docket got decided, a redacted figure became
-public? Open a PR against `public/data/facilities.json` with a source link, or
-file an issue.
-
-One rule governs everything: **if you can't cite it, don't add it.** Read
-**[CONTRIBUTING.md](CONTRIBUTING.md)** before your first PR.
-
-Data decays, so staleness is tracked rather than ignored: `npm run freshness`
-reports the dataset's age, and the app shows visitors a banner automatically
-once it's six months old.
-
-## Project structure
+## Layout
 
 ```
-public/data/     static JSON + GeoJSON - the whole dataset, auditable
-pipeline/        reproducible Python fetch + build + validate scripts
-src/lib/         map engine, console, timeline, calculator, modals
-src/styles/      design tokens + component CSS
-docs/            screenshots + notes
+public/data/          facilities, dockets, bill models, county restrictions, timeline, meta, GeoJSON layers
+pipeline/
+  fetch_geo.py        base geodata (stdlib only)
+  build_dataset.py    statewide roll-ups into meta.json
+  validate.py         schema and link checks
+  validate_input.py   pre-publish checks for a facilities file
+  bootstrap.py        one-command region build
+  scaffold.py         empty civic files for a new region
+  providers/          OSM boundary, power, and data centers; Overpass; PeeringDB
+  refresh_eia.py      EIA-861 refresh with allowlist and change guard
+  watch_sources.py    detect changed or dead cited sources
+  check_freshness.py  dataset age
+  reconcile.py        compare with an external tracker
+  fetch_zips.py       Census ZCTA centroids for the ZIP lookup
+  tests/              geo and input-validation tests
+src/
+  main.ts             boot and app wiring
+  lib/                map, controls, timeline, card, modals, theme, freshness, analytics, sign-up
+  lib/__tests__/      format, theme, freshness, utility lookup
+regions/              bootstrapped examples: ohio-united-states, virginia-united-states, indiana-pdb
+prompts/              research prompts for building a region's dataset
+templates/            facilities template
+.github/workflows/    deploy, test, validate, maintain, freshness
+docs/                 screenshots
+METHODOLOGY.md        how each figure is sourced and derived
+FORKING.md            guide to building a GridWatch for another region
 ```
 
-## A note on scope
+## Honesty
 
-GridWatch is civic infrastructure, not an awareness campaign. It's meant to be *used and cited* - by residents checking their county, reporters chasing a filing, and officials in a hearing. It's nonpartisan and it is **not legal or financial advice**.
+* Facility curation is manual. The AI Law Tracker lists about 46 Indiana projects and other
+  trackers count 90 or more; this file holds the 76 with a locatable site and at least one
+  verifiable attribute, including 10 rumored proposals that are reported but unconfirmed.
+* 15,142 MW is the full build-out of every project not withdrawn, rumored ones included. It is
+  not current draw, and the 35,000 MW peak it is compared against is approximate.
+* No pin is parcel-precise: 24 records are placed at a known site, 49 at a city centroid, and 3
+  at a county centroid.
+* Water use is known for 1 of 76 records, redacted for 2, and unknown for the rest. Only 4
+  records carry an IURC cause number, and 9 use reported rather than filed capacity.
+* Data vintages differ. Plant capacity is about 2021, transmission and territories about 2024.
+  The Indiana substations layer is empty because HIFLD's hosted service was unavailable at build
+  time.
+* The bill figure spreads filed costs evenly over every customer. Real allocation is decided in
+  contested rate cases. It is not a forecast and not financial advice.
+* The validator checks structure. It cannot check whether a number is true.
+* The Ohio and Virginia folders are auto-discovered examples: every facility is `rumored` with no
+  megawatt figure, and the Virginia subdivision pull failed and is recorded as such.
+* Form submissions go to a third-party relay, and analytics run when the deploy enables them.
 
-## License
-
-Code: [MIT](LICENSE). Compiled data: CC BY 4.0 (source documents remain their publishers'). Attribution appreciated.
-
-*Built with public data and a lot of docket-reading. Dataset last updated 2026-07-16.*
+Code is MIT licensed (`LICENSE`). The compiled data in `public/data` is CC BY 4.0
+(`DATA-LICENSE.md`); source documents remain their publishers'.
