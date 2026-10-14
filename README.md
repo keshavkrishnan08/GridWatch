@@ -2,11 +2,11 @@
 
 **Live: https://gridwatch-indiana.vercel.app/**
 
-**An interactive atlas that maps every proposed and existing data center in Indiana against the state's power grid — megawatts, water use, IURC dockets, and projected bill impact — all from public records.**
+**An interactive atlas that maps every proposed and existing data center in Indiana against the state's power grid - megawatts, water use, IURC dockets, and projected bill impact - all from public records.**
 
-![GridWatch Indiana — the grid intelligence console](docs/screenshot.png)
+![GridWatch Indiana - the grid intelligence console](docs/screenshot.png)
 
-Indiana is in the middle of a live fight over data-center energy. As of mid-2026 there are **46 tracked data-center projects** across the state, and the active ones already add up to roughly **12,600 MW — about 36% of Indiana's peak demand** — on a grid that's still **61% coal**. Meanwhile residential electric bills jumped ~17% this year.
+Indiana is in the middle of a live fight over data-center energy. As of mid-2026 there are **46 tracked data-center projects** across the state, and the active ones already add up to roughly **12,600 MW - about 36% of Indiana's peak demand** - on a grid that's still **61% coal**. Meanwhile residential electric bills jumped ~17% this year.
 
 All of that information exists. It's just scattered across hundreds of IURC docket filings, utility integrated resource plans, county planning documents, and news stories. Nobody had assembled it into one navigable picture. So a Hamilton County resident couldn't easily answer a simple question: *what's being built near me, how much power will it draw, and will it raise my bill?*
 
@@ -16,7 +16,7 @@ GridWatch answers exactly that.
 
 ## What it does
 
-- **Maps the whole fleet.** Every data center renders as a glowing node sized by megawatts and colored by load severity — green under 50 MW up to magenta for the hyperscalers that are off the scale Indiana's grid was built for. Existing power plants, ≥138 kV transmission lines, and utility service territories layer underneath.
+- **Maps the whole fleet.** Every data center renders as a glowing node sized by megawatts and colored by load severity - green under 50 MW up to magenta for the hyperscalers that are off the scale Indiana's grid was built for. Existing power plants, ≥138 kV transmission lines, and utility service territories layer underneath.
 - **Filters to what matters.** Filter the map live by status (proposed, approved, built, withdrawn), by size tier (small up to off-the-scale hyperscale), and by serving utility. The count updates as you go. Search any county or facility to fly straight to it.
 - **Scrubs through time.** A 2020 → 2035 timeline animates the build-out. Drag it and watch the grid fill as nodes appear and grow toward their projected energization.
 - **Shows the receipts.** Click any node for a full dossier: capacity, water use, acreage, investment, developer, serving utility, IURC cause number, and **every figure linked to its public source**. When a developer redacts a number, the card flags it `◈ DEVELOPER-REDACTED` instead of guessing.
@@ -31,20 +31,20 @@ Every number traces to a public document. The data lives as version-controlled J
 
 | Layer | Source |
 |-------|--------|
-| Data-center facilities | IURC filings, utility filings, county records, [AI Law Tracker](https://ailawtracker.org/data-centers), and news reporting — **cited per record** |
+| Data-center facilities | IURC filings, utility filings, county records, [AI Law Tracker](https://ailawtracker.org/data-centers), and news reporting - **cited per record** |
 | Power plants | [WRI Global Power Plant Database](https://datasets.wri.org/dataset/globalpowerplantdatabase) v1.3.0 |
 | Transmission (≥138 kV) | [HIFLD](https://hifld-geoplatform.hub.arcgis.com/) Electric Power Transmission Lines |
 | Utility territories | HIFLD Electric Retail Service Territories |
 | County boundaries | US Census cartographic boundaries |
 | Ratepayer / docket context | [IURC docket portal](https://iurc.portal.in.gov/), [Citizens Action Coalition](https://www.citact.org/ai-data-centers) |
 
-The full sourcing method — including what's verified versus estimated versus redacted — is in **[METHODOLOGY.md](METHODOLOGY.md)**.
+The full sourcing method - including what's verified versus estimated versus redacted - is in **[METHODOLOGY.md](METHODOLOGY.md)**.
 
 ## Tech
 
 Deliberately boring and forkable:
 
-- **[MapLibre GL JS](https://maplibre.org/) v5** with a keyless dark vector basemap ([CARTO](https://carto.com/basemaps) dark-matter) — streets, water, and labels, masked to the Indiana border so nothing renders outside the state. No Mapbox/Google key. The facility, grid, and territory overlays are self-hosted GeoJSON.
+- **[MapLibre GL JS](https://maplibre.org/) v5** with a keyless dark vector basemap ([CARTO](https://carto.com/basemaps) dark-matter) - streets, water, and labels, masked to the Indiana border so nothing renders outside the state. No Mapbox/Google key. The facility, grid, and territory overlays are self-hosted GeoJSON.
 - **[Vite](https://vitejs.dev/)** + **TypeScript**, hand-written CSS design tokens, **[D3](https://d3js.org/)** for scales.
 - **[Python](pipeline/)** pipeline fetches and simplifies the geodata into static files.
 - Ships as static files. Host it free on Vercel, Netlify, or GitHub Pages, forever.
@@ -71,17 +71,17 @@ python3 pipeline/validate.py --links # schema + source-link checks
 
 It's a static site, so deployment is one step:
 
-- **Vercel** — import the repo; `vercel.json` sets build + output. Or `npx vercel --prod`.
-- **Netlify** — `netlify.toml` is included; drag-and-drop `dist/` also works.
-- **GitHub Pages** — push to `main`; the included [workflow](.github/workflows/deploy.yml) builds and publishes automatically.
+- **Vercel** - import the repo; `vercel.json` sets build + output. Or `npx vercel --prod`.
+- **Netlify** - `netlify.toml` is included; drag-and-drop `dist/` also works.
+- **GitHub Pages** - push to `main`; the included [workflow](.github/workflows/deploy.yml) builds and publishes automatically.
 
 Because `vite.config.ts` uses a relative base, the same build runs from any host or sub-path.
 
 ## Fork it for anywhere in the world
 
 Indiana is the reference implementation; the engine underneath is
-region-agnostic. One command maps any region on Earth — outline, subdivisions,
-power plants, transmission, substations — and re-tunes the whole atlas to it:
+region-agnostic. One command maps any region on Earth - outline, subdivisions,
+power plants, transmission, substations - and re-tunes the whole atlas to it:
 
 ```bash
 npm run region -- --region "Ohio, United States" --activate
@@ -94,11 +94,11 @@ automatically; roads and cities come from the global basemap.
 Units, currency, terminology, and the color scale adapt automatically. Roads,
 cities, and water come from the global basemap, so they already work everywhere.
 
-### Then bring your data — paste this into Claude
+### Then bring your data - paste this into Claude
 
 The map is automatic; the facilities are yours to research. Copy the prompt
 below into Claude (or any LLM with web search), replacing `{{REGION}}`. It's
-written so the model can't quietly invent figures — unknowns stay `null`, and
+written so the model can't quietly invent figures - unknowns stay `null`, and
 every number needs a citation.
 
 <details>
@@ -120,7 +120,7 @@ WHERE TO LOOK, in order of authority: utility regulator filings (rate cases,
 interconnection requests, special contracts); local government records (rezoning
 petitions, planning-commission minutes, tax abatements); utility resource plans;
 company announcements; local and trade press; industry trackers (treat these as
-leads, not facts — set mw_estimated true).
+leads, not facts - set mw_estimated true).
 
 FORMAT:
 {
@@ -140,7 +140,7 @@ FORMAT:
     "utility": "Serving electric utility",
     "iurc_docket": null, "docket_url": null,
     "announced_year": 2025, "online_year": null, "tax_note": null,
-    "sources": [{"label": "Publication — headline", "url": "https://..."}],
+    "sources": [{"label": "Publication - headline", "url": "https://..."}],
     "notes": "Plain-language context. Say explicitly what is unconfirmed.",
     "last_verified": "YYYY-MM-DD"
   }],
@@ -153,7 +153,7 @@ FIELD RULES:
   "withdrawn" = cancelled, rejected, or denied at rezoning.
 - geo_precision: be honest. "parcel" only for a surveyed parcel.
 - water_status "redacted" specifically means a developer withheld it in a public
-  filing — that's a meaningful fact, distinct from "unknown".
+  filing - that's a meaningful fact, distinct from "unknown".
 - mw_estimated: true when capacity comes from reporting rather than a filing.
 
 BEFORE YOU ANSWER, verify: every facility has a real source URL; no number
@@ -172,7 +172,7 @@ Save the JSON, then:
 npm run validate -- my-facilities.json   # enforces the sourcing rule
 ```
 
-The validator checks structure — every facility sourced, no duplicate ids,
+The validator checks structure - every facility sourced, no duplicate ids,
 coordinates in range, county matching its own coordinates. **It cannot check
 whether a number is true**, so open a few source links yourself before you
 publish.
@@ -185,7 +185,7 @@ See **[FORKING.md](FORKING.md)** for the full guide.
 
 ## Contributing
 
-Corrections and new filings are welcome — they're the most valuable contribution
+Corrections and new filings are welcome - they're the most valuable contribution
 here. A data center moved, a docket got decided, a redacted figure became
 public? Open a PR against `public/data/facilities.json` with a source link, or
 file an issue.
@@ -200,7 +200,7 @@ once it's six months old.
 ## Project structure
 
 ```
-public/data/     static JSON + GeoJSON — the whole dataset, auditable
+public/data/     static JSON + GeoJSON - the whole dataset, auditable
 pipeline/        reproducible Python fetch + build + validate scripts
 src/lib/         map engine, console, timeline, calculator, modals
 src/styles/      design tokens + component CSS
@@ -209,7 +209,7 @@ docs/            screenshots + notes
 
 ## A note on scope
 
-GridWatch is civic infrastructure, not an awareness campaign. It's meant to be *used and cited* — by residents checking their county, reporters chasing a filing, and officials in a hearing. It's nonpartisan and it is **not legal or financial advice**.
+GridWatch is civic infrastructure, not an awareness campaign. It's meant to be *used and cited* - by residents checking their county, reporters chasing a filing, and officials in a hearing. It's nonpartisan and it is **not legal or financial advice**.
 
 ## License
 
