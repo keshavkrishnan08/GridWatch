@@ -22,7 +22,7 @@ hand-curated facilities (IURC, utility filings, county records, reporting; cited
     ->  build_dataset.py: statewide roll-ups into meta.json (sums and counts only)
     ->  static JSON and GeoJSON in public/data
     ->  MapLibre console: map, filters, timeline, dossiers, bill and area tools
-    ->  monthly jobs: EIA-861 refresh, cited-source watch, freshness check
+    ->  maintenance: EIA-861 refresh, cited-source watch, monthly freshness check
 ```
 
 If you can't cite it, don't add it.
@@ -112,9 +112,10 @@ point-in-polygon test of the county centroid against HIFLD territories.
 for scales, hand-written CSS tokens. The build is static with a relative base, so it runs on
 Vercel, Netlify, or GitHub Pages from any path.
 
-**Maintenance.** Four GitHub Actions workflows keep the data honest:
+**Maintenance.** Four GitHub Actions workflows and a few npm scripts keep the data honest:
 
-* `maintain.yml` runs on the 3rd of each month. Tier 1 downloads EIA Form 861 and updates only
+* `maintain.yml` is switched off for now, and refreshes run by hand with `npm run refresh` and
+  `npm run watch`, the same steps the workflow runs. Tier 1 downloads EIA Form 861 and updates only
   three allowlisted utility fields (residential customers, residential revenue share, EIA average
   rate). Any change over 25% is held back and opened as a review issue instead. The job then
   re-runs validation and the pipeline tests before committing. Tier 2 checks every cited source
