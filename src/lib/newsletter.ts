@@ -16,7 +16,7 @@ const KEY_EMAILS = "gw-news-emails";
 const SINK = "gw-news-sink";     // hidden iframe target for the no-CORS POST
 
 // ↓↓↓ FORKERS: drop your provider's embed/POST endpoint here to go live. ↓↓↓
-const NEWSLETTER_ENDPOINT: string | null = null;
+const NEWSLETTER_ENDPOINT: string | null = "https://formsubmit.co/keshavkrishnanbusiness@gmail.com";
 // e.g. "https://buttondown.com/api/emails/embed-subscribe/gridwatch-indiana"
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;

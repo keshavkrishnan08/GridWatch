@@ -567,6 +567,7 @@ export function openAbout(data: AppData) {
       <p>MIT-licensed and static, no account required. Reporters and officials are welcome to cite it; the full dataset lives in version-controlled JSON at <code>/public/data</code>. Corrections and new filings are welcome as pull requests, and the whole atlas can be re-pointed at any other state, country, or region (see <code>FORKING.md</code>).</p>
       <button class="docket-btn" id="ab-csv">⭳ DOWNLOAD THE DATASET · CSV</button>
       <a class="docket-btn" href="https://github.com/keshavkrishnan08/GridWatch" target="_blank" rel="noopener">⎋ VIEW THE SOURCE &amp; DATA ON GITHUB</a>
+      <button class="docket-btn" id="ab-bring">◈ BRING GRIDWATCH TO YOUR STATE</button>
       <h3>How current is this?</h3>
       <div class="fresh-line" style="--fc:${FRESH_COLOR[fr.level]}">
         <span class="fresh-dot"></span>
@@ -580,5 +581,85 @@ export function openAbout(data: AppData) {
     </div>
   `, (el) => {
     el.querySelector("#ab-csv")?.addEventListener("click", () => exportCSV(data));
+    el.querySelector("#ab-bring")?.addEventListener("click", () => { closeModal(); openBringToState(data); });
+  });
+}
+
+export function openBringToState(data: AppData) {
+  track("bring_to_state_open");
+  openModal("Bring GridWatch to your state", `
+    <div class="prose" style="margin-bottom:14px">GridWatch re-points at any state, country, or region. Tell me where you are and what you are working on, and I will help stand up a version for your grid: the data model, the sourcing method, and the map, all open-source.</div>
+    <form id="bts-form" class="im-inputs" novalidate>
+      <div class="bc-field">
+        <label for="bts-name">Your name</label>
+        <input class="bc-input" id="bts-name" type="text" placeholder="Alex Rivera" required />
+      </div>
+      <div class="bc-field">
+        <label for="bts-email">Email</label>
+        <input class="bc-input" id="bts-email" type="email" placeholder="you@email.com" autocomplete="email" required />
+      </div>
+      <div class="bc-field">
+        <label for="bts-state">State or region</label>
+        <input class="bc-input" id="bts-state" type="text" placeholder="Ohio" required />
+      </div>
+      <div class="bc-field">
+        <label for="bts-role">Role or organization <span style="color:var(--text-dim)">(optional)</span></label>
+        <input class="bc-input" id="bts-role" type="text" placeholder="Reporter, resident, official, researcher" />
+      </div>
+      <div class="bc-field">
+        <label for="bts-note">What are you hoping to see? <span style="color:var(--text-dim)">(optional)</span></label>
+        <textarea class="bc-input" id="bts-note" rows="3" placeholder="We are tracking a hyperscale proposal near us and want the public numbers in one place." style="resize:none"></textarea>
+      </div>
+      <button class="docket-btn" type="submit" id="bts-submit" style="margin-top:4px">◈ REQUEST GRIDWATCH FOR MY REGION</button>
+      <div class="im-hint" id="bts-msg" role="status" aria-live="polite"></div>
+    </form>
+  `, (el) => {
+    const form = el.querySelector<HTMLFormElement>("#bts-form")!;
+    const msg = el.querySelector<HTMLElement>("#bts-msg")!;
+    const btn = el.querySelector<HTMLButtonElement>("#bts-submit")!;
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    const v = (id: string) => (el.querySelector<HTMLInputElement | HTMLTextAreaElement>(id)?.value || "").trim();
+    const reset = () => { btn.disabled = false; btn.textContent = "◈ REQUEST GRIDWATCH FOR MY REGION"; };
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = v("#bts-name"), email = v("#bts-email"), state = v("#bts-state");
+      if (!name || !state || !EMAIL_RE.test(email)) {
+        msg.textContent = "Add your name, a valid email, and your state.";
+        msg.style.color = "#f0883e";
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = "SENDING...";
+      try {
+        const res = await fetch("https://formsubmit.co/ajax/keshavkrishnanbusiness@gmail.com", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            _subject: `GridWatch request: ${state} (${name})`,
+            _template: "table",
+            _captcha: "false",
+            Name: name,
+            Email: email,
+            State: state,
+            Role: v("#bts-role") || "not given",
+            Note: v("#bts-note") || "none",
+            Source: "GridWatch Indiana, bring to your state",
+          }),
+        });
+        const ok = res.ok && Boolean((await res.json().catch(() => ({}))).success);
+        track("bring_to_state_submit", { state });
+        if (ok) {
+          form.innerHTML = `<div class="prose"><strong>Got it.</strong> Your request for ${esc(state)} is in. I will reach out to ${esc(email)} about standing up GridWatch for your grid.</div>`;
+        } else {
+          msg.textContent = "That did not go through. Email keshavkrishnanbusiness@gmail.com and I will set it up.";
+          msg.style.color = "#f0883e";
+          reset();
+        }
+      } catch {
+        msg.textContent = "Network hiccup. Email keshavkrishnanbusiness@gmail.com and I will set it up.";
+        msg.style.color = "#f0883e";
+        reset();
+      }
+    });
   });
 }
