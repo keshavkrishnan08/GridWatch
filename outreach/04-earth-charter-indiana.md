@@ -5,11 +5,11 @@ your genre.
 
 ## Contact
 
-**Web form only** — earthcharterindiana.org/contact-eci. No staff emails are
+**Web form only**: earthcharterindiana.org/contact-eci. No staff emails are
 published anywhere on their site. Address it to **Edith Conchas** and **Kevin
 Nichols** by name; they authored the toolkit.
 
-*A data-broker page surfaced an email for Jim Poyser. Unverified — don't use it.*
+*A data-broker page surfaced an email for Jim Poyser. Unverified, don't use it.*
 
 ## Why this works: the precedent
 
@@ -23,11 +23,11 @@ already exists and already contains things like you.
 
 ## The two passages that fit exactly
 
-- **Step Two** tells organizers to find the data centers near them — and offers
+- **Step Two** tells organizers to find the data centers near them, and offers
   no dataset. It says to "reach out to local environmental advocacy groups... who
   may already be in the know."
 - **Step Eight** says "use compelling data and statistics to strengthen your
-  argument" — and provides zero data.
+  argument", and provides zero data.
 
 Quote these back to them. You are the missing step.
 
@@ -39,7 +39,7 @@ Quote these back to them. You are the missing step.
 >
 > I'm a high-school student in Indiana and I've been using your Data Center
 > Toolkit. Step Two asks organizers to find the data centers near them, and Step
-> Eight asks them to bring data — but both leave people to go hunting.
+> Eight asks them to bring data, but both leave people to go hunting.
 >
 > I built the thing that fills those steps. GridWatch Indiana is a free,
 > open-source, nonpartisan atlas: 76 tracked facilities, each with a source URL,

@@ -11,37 +11,37 @@
 | Jennifer Washburn, Regulatory Director | `jwashburn@citact.org` |
 | General | `staff@citact.org` · (317) 205-3535 |
 
-Staff emails are published openly at citact.org/about/staff. No pitch policy —
+Staff emails are published openly at citact.org/about/staff. No pitch policy, 
 direct email is the route. **Inskeep is the one.**
 
 ## Why this works: the precedent
 
 Their data-center page is built substantially *out of other people's research*,
-cited by name — IU's Environmental Resilience Institute, Purdue's State Utility
+cited by name, IU's Environmental Resilience Institute, Purdue's State Utility
 Forecasting Group, Union of Concerned Scientists, Good Jobs First, PJM's
 Independent Market Monitor, an ASU waste-heat study.
 
 Better: **Inskeep's sworn direct testimony in IURC Cause 46301** (filed
-11/7/2025) footnotes third-party material extensively — CNBC, E&E News, Indiana
+11/7/2025) footnotes third-party material extensively, CNBC, E&E News, Indiana
 Capital Chronicle, NERC, EPA, PJM IMM. He routinely puts outside analysis into
 the evidentiary record under his own name.
 
 You are not asking him to do something unusual. You are offering the exact input
 he already uses.
 
-## The asymmetry to lead with — carefully
+## The asymmetry to lead with: carefully
 
 Their published sheet has **11 columns and no source, URL, or citation field**.
 Every row is unsourced. For a witness who gets cross-examined, that's a real
 exposure, and it's the gap you fill.
 
 **Do not say it that way.** Frame it as an offer, never a critique: *"I've
-gathered citations for the projects we both carry — happy to send them over."*
+gathered citations for the projects we both carry, happy to send them over."*
 He'll draw the conclusion himself.
 
 ## What you give
 
-1. [`cac-reconciliation.md`](cac-reconciliation.md) — 21 agree, 20 disagree, 17
+1. [`cac-reconciliation.md`](cac-reconciliation.md): 21 agree, 20 disagree, 17
    only theirs, 6 only yours.
 2. **Two county corrections you made because of their coordinates** (Dale →
    Spencer, McCordsville → Hancock). Lead with this. It proves you used their
@@ -57,13 +57,13 @@ One thing: **corrections, and a link if it's useful.** Nothing else.
 
 ## Timing
 
-**IURC Cause 46394 (AES / Google Monrovia) evidentiary hearings — Aug 5–6, 2026,
+**IURC Cause 46394 (AES / Google Monrovia) evidentiary hearings, Aug 5-6, 2026,
 10:30am, Room 222, PNC Center.** He'll be deep in prep. Send before Aug 1 or
 after Aug 7, not during.
 
 ## Draft
 
-> **Subject:** Cross-checked our data-center datasets — found errors in mine
+> **Subject:** Cross-checked our data-center datasets, found errors in mine
 >
 > Ben,
 >
@@ -72,7 +72,7 @@ after Aug 7, not during.
 > CAC's tracker as one of my sources.
 >
 > I ran a reconciliation between the two datasets and it caught two county errors
-> on my side — Dale was filed under Dubois when it's Spencer, McCordsville under
+> on my side, Dale was filed under Dubois when it's Spencer, McCordsville under
 > Hamilton when it's Hancock. Your coordinates are what surfaced both. Fixed, and
 > I added a check so it can't happen again.
 >
@@ -82,12 +82,12 @@ after Aug 7, not during.
 >
 > One thing that might be useful: when I checked the disputed megawatt figures
 > against filings, almost every number that originated in a tracker turned out to
-> be wrong — in both directions. Heartland's 1,580 MW isn't in any filing I can
+> be wrong, in both directions. Heartland's 1,580 MW isn't in any filing I can
 > find (the sourced range is 430 MW to 2.1 GW). Prologis Shelbyville is ~500 MW
 > per the developer, not 900. I've been keeping a source URL on every individual
 > record, so I'm glad to send the citations for the projects we both carry.
 >
-> No ask here beyond corrections — if any of my records are wrong, I'd rather
+> No ask here beyond corrections, if any of my records are wrong, I'd rather
 > know.
 >
 > https://gridwatch-indiana.vercel.app/

@@ -1,4 +1,4 @@
-# Written submission — Proposal No. 238, 2026
+# Written submission: Proposal No. 238, 2026
 
 **Ready to send once the site is live.** Every figure below comes from your own
 dataset and is checkable. Nothing is estimated.
@@ -24,7 +24,7 @@ Send by **Aug 6** so it's in the packet, not racing the gavel.
 ## Verify these three things first
 
 1. **Call the Clerk** (317.327.4242) and ask how she wants written material
-   submitted for Prop 238 — email, hard copy, or both — and confirm the deadline.
+   submitted for Prop 238, email, hard copy, or both, and confirm the deadline.
    The statute gives you the right; the office sets the mechanics.
 2. **Confirm the date and time.** The official calendar says 7:00 p.m.; WISH-TV
    said 7:30. Check the calendar again the week of.
@@ -45,7 +45,7 @@ Send by **Aug 6** so it's in the packet, not racing the gavel.
 > My name is [name]. I am a high-school student in Indiana and the author of
 > GridWatch Indiana, a free, open-source, nonpartisan atlas that maps every
 > tracked data-center project in the state against the electrical grid. Every
-> figure in it links to its source document — IURC filings, utility tariffs, and
+> figure in it links to its source document, IURC filings, utility tariffs, and
 > county records. I take no position on Proposal 238. I am submitting the data so
 > the Council can see the scale of what it is deciding.
 >
@@ -61,8 +61,8 @@ Send by **Aug 6** so it's in the packet, not racing the gavel.
 > | Four colocation facilities | Operating | not disclosed |
 > | Google SE Marion County | Withdrawn | 400 MW (as proposed) |
 >
-> **The three projects Proposal 238 grandfathers — Sabey, Metrobloks, and DC
-> Blox — total 377 MW of disclosed capacity.** For scale, that is roughly
+> **The three projects Proposal 238 grandfathers, Sabey, Metrobloks, and DC
+> Blox, total 377 MW of disclosed capacity.** For scale, that is roughly
 > equivalent to the peak demand of a small city, and it is capacity the proposed
 > pause would not affect.
 >
@@ -73,7 +73,7 @@ Send by **Aug 6** so it's in the packet, not racing the gavel.
 > **Statewide context**
 >
 > GridWatch currently tracks 76 data-center projects across Indiana. Active
-> proposed and committed load totals 15,142 MW — approximately 43% of Indiana's
+> proposed and committed load totals 15,142 MW, approximately 43% of Indiana's
 > peak demand.
 >
 > On local action: my dataset records two Indiana counties with outright bans
@@ -99,7 +99,7 @@ Send by **Aug 6** so it's in the packet, not racing the gavel.
 
 ## Why this lands
 
-You're not testifying for or against — you're handing them **a number about
+You're not testifying for or against, you're handing them **a number about
 their own proposal that they probably don't have**: what the grandfather clause
 actually exempts, in megawatts, itemized.
 

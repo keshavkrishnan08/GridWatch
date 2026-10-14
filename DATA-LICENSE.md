@@ -2,8 +2,8 @@
 
 The **code** in this repository is MIT-licensed (see [LICENSE](LICENSE)).
 
-The **civic data** compiled in [`/public/data`](public/data) — facility records,
-docket references, and derived figures — is released under the
+The **civic data** compiled in [`/public/data`](public/data), facility records,
+docket references, and derived figures, is released under the
 [Creative Commons Attribution 4.0 International license (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
 Use it, cite it, build on it; just credit GridWatch Indiana.
 

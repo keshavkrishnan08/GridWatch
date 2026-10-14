@@ -1,6 +1,6 @@
 # Prompt: build your region's bill-impact model
 
-This produces `bill_impact_models.json` — what powers the "will this raise my
+This produces `bill_impact_models.json`: what powers the "will this raise my
 bill?" calculator, which is the question most residents actually care about.
 
 Replace `{{REGION}}` and paste into an LLM with web search.
@@ -14,7 +14,7 @@ rate data for **{{REGION}}** as JSON.
 ## The one rule
 
 **If you cannot cite it, do not state it.** This calculator makes a claim about
-someone's money. Every figure needs a source — a rate order, a tariff sheet, a
+someone's money. Every figure needs a source, a rate order, a tariff sheet, a
 regulator filing, or an official utility page. Anything you can't source is
 `null`, and the app will simply show less.
 
@@ -25,16 +25,16 @@ neighboring region.
 
 For each major electric utility serving **{{REGION}}**:
 
-1. **Customer count** — residential customers served (regulator annual reports,
+1. **Customer count**: residential customers served (regulator annual reports,
    utility fact sheets, EIA-861 in the US).
-2. **Average residential rate** — cents per kWh, and the date it took effect.
+2. **Average residential rate**: cents per kWh, and the date it took effect.
 3. **Typical monthly bill** at 1,000 kWh.
-4. **Recent rate change** — the most recent approved increase: percentage,
+4. **Recent rate change**: the most recent approved increase: percentage,
    period it covers, and the order approving it.
-5. **Filed data-center infrastructure costs** — this is the important one.
+5. **Filed data-center infrastructure costs**: this is the important one.
    Money the utility has filed to spend on generation/transmission specifically
    to serve large data-center load: the amount, what it's for, and the docket
-   number. If none has been filed, use an empty array — that's a real finding.
+   number. If none has been filed, use an empty array, that's a real finding.
 
 ## Output format
 
@@ -65,7 +65,7 @@ Return one JSON object, nothing else:
       "typical_bill_1000kwh": 156,
       "recent_increase": {
         "pct": 5.2,
-        "period": "2025–2026",
+        "period": "2025-2026",
         "source": { "label": "Rate order, Cause 12345", "url": "https://..." }
       },
       "cost_shifts": [
@@ -84,15 +84,15 @@ Return one JSON object, nothing else:
 
 ### Field rules
 
-- **id** — short slug (`duke`, `nipsco`). Must match the utility `id` you use in
+- **id**: short slug (`duke`, `nipsco`). Must match the utility `id` you use in
   `theme.json`, so the map's utility filter lines up with the calculator.
-- **raw_match** — lowercase substrings that identify this utility in messy
+- **raw_match**: lowercase substrings that identify this utility in messy
   source data (`["duke", "duke energy indiana"]`).
-- **customers** — residential customers, a plain integer.
-- **cost_shifts** — only money **actually filed** and attributable to
+- **customers**: residential customers, a plain integer.
+- **cost_shifts**: only money **actually filed** and attributable to
   data-center load. Do not include general capital spending. An empty array is
   a legitimate and useful answer.
-- **assumptions.amortize_years** — how long the infrastructure cost is spread
+- **assumptions.amortize_years**: how long the infrastructure cost is spread
   over. 20 is a reasonable default; change it if your regulator uses another
   figure and say so.
 
@@ -125,4 +125,4 @@ job is to get the inputs right and sourced; the model stays transparent.
 
 Save as `public/data/bill_impact_models.json`. If the `utilities` array is
 empty, the app honestly reports that no model is configured rather than showing
-numbers from somewhere else — so it's safe to ship partial.
+numbers from somewhere else, so it's safe to ship partial.

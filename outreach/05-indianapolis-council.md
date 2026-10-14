@@ -1,20 +1,20 @@
-# 05 · Indianapolis City-County Council — **HARD DEADLINE**
+# 05 · Indianapolis City-County Council: **HARD DEADLINE**
 
 ## The vote
 
-**Proposal No. 238, 2026** — introduced 7/6/2026, **sponsored by Councilor Maggie
+**Proposal No. 238, 2026**: introduced 7/6/2026, **sponsored by Councilor Maggie
 Lewis**, drafted by DMD. Creates zoning class SU-47 for data centers.
 
 Heard in the Metropolitan and Economic Development Committee 7/13/26, where a
 **Lewis amendment pausing new data-center approvals through Dec 31, 2027** was
-adopted and the committee advanced it **10–3 on party lines**. Metrobloks, Sabey,
+adopted and the committee advanced it **10-3 on party lines**. Metrobloks, Sabey,
 and DC BLOX are grandfathered. Mayor Hogsett supports it. Over two dozen citizens
 testified; all but one in favor.
 
 > ### Full Council vote: **Monday, August 10, 2026, 7:00 p.m.**
-> (Official calendar. WISH-TV says 7:30 — trust the calendar.)
+> (Official calendar. WISH-TV says 7:30, trust the calendar.)
 
-## How to get material into the record — two documented routes
+## How to get material into the record: two documented routes
 
 **1. Written objections filed with the Clerk.** Because Prop 238 is a *zoning
 ordinance amendment*, the **IC 36-7-4-608** written-objections route applies
@@ -27,9 +27,9 @@ directly. The June 1 Journal recites this procedure.
 presenter materials as Exhibits A/B/C.
 
 **Speaking:** two minutes per speaker, must relate to the agenda item under
-consideration. There is **no general open-comment period** — the President calls
+consideration. There is **no general open-comment period**: the President calls
 for testimony proposal by proposal. No sign-up sheet or remote option is
-published (not found, which is not the same as doesn't exist — call the Clerk).
+published (not found, which is not the same as doesn't exist, call the Clerk).
 
 ## Councillors
 
@@ -41,7 +41,7 @@ Special Resolution No. 12, 2026 (adopted 5/4/26) cites "utility watchdog groups"
 criticizing the SU-47 standards **in its findings**. The Council already absorbs
 outside analysis into the record.
 
-## Draft — to the Clerk, before Aug 10
+## Draft: to the Clerk, before Aug 10
 
 > **Subject:** Written submission re: Proposal No. 238, 2026
 >
@@ -52,12 +52,12 @@ outside analysis into the record.
 >
 > I am a high-school student in Indiana and the author of GridWatch Indiana, a
 > free, open-source, nonpartisan atlas of data centers mapped against the state's
-> electrical grid. Every figure in it links to its source document — IURC
+> electrical grid. Every figure in it links to its source document, IURC
 > filings, utility tariffs, county records.
 >
 > Relevant to Proposal 238: Marion County currently has 8 tracked data-center
-> facilities, and the three the proposal grandfathers — Sabey, Metrobloks and DC
-> Blox — total 377 MW of disclosed capacity. Statewide, tracked data-center load
+> facilities, and the three the proposal grandfathers, Sabey, Metrobloks and DC
+> Blox, total 377 MW of disclosed capacity. Statewide, tracked data-center load
 > is 15,142 MW, roughly 43% of Indiana's peak demand. My dataset records two
 > counties with outright bans (Marshall and Cass) and six with moratoriums, each
 > with a citation.
@@ -69,12 +69,12 @@ outside analysis into the record.
 > Respectfully,
 > [name, address]
 
-⚠️ Use [`prop-238-submission.md`](prop-238-submission.md) — it's the full version
+⚠️ Use [`prop-238-submission.md`](prop-238-submission.md), it's the full version
 with every figure already verified against the dataset. Say nothing you can't
 source: a councillor checking one number and finding it wrong costs more than the
 submission gains.
 
 ## Not confirmed
 
-The amendment's exact text — July MED minutes aren't posted and the proposals
+The amendment's exact text, July MED minutes aren't posted and the proposals
 page still hosts the pre-amendment version. Don't characterize it in detail.

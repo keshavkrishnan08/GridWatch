@@ -1,7 +1,7 @@
 # Prompt: audit a dataset before you publish it
 
 Run this **before** any dataset goes live, and periodically afterwards. Use a
-different model or a fresh session from the one that produced the data — you
+different model or a fresh session from the one that produced the data, you
 want a skeptic, not the author reviewing itself.
 
 LLMs are good at finding candidates and bad at being certain. This prompt is
@@ -19,7 +19,7 @@ verify against current public sources and report problems.
 ## Check every record for
 
 1. **Fabricated or dead sources.** Does each URL resolve, and does the page
-   actually say what the record claims? This is the highest-priority check —
+   actually say what the record claims? This is the highest-priority check, 
    an invented citation is the worst failure mode here.
 2. **Wrong numbers.** Does the megawatt, acreage, or investment figure match the
    cited document? Flag any figure you cannot confirm in a source.
@@ -45,8 +45,8 @@ dataset. Recently announced projects and denied proposals are the usual gaps.
 ## Report format
 
 ```
-## Critical — fix before publishing
-- <facility id>: <what's wrong> — <source proving it> — <suggested correction>
+## Critical - fix before publishing
+- <facility id>: <what's wrong> - <source proving it> - <suggested correction>
 
 ## Likely wrong
 - ...
@@ -68,7 +68,7 @@ journalist cited it?** If not, say exactly what would have to change first.
 
 - Be specific. "This seems off" is useless; give the record, the claim, and the
   source that contradicts it.
-- If you can't verify something either way, say so — that goes in "worth
+- If you can't verify something either way, say so: that goes in "worth
   checking by hand", not "verified clean".
 - Do not invent corrections. If you don't know the right value, say the current
   one is unverified and leave it at that.
@@ -97,5 +97,5 @@ npm run freshness
 
 Anything the audit couldn't confirm should get honest language in `notes`
 ("capacity reported by a trade tracker, not filed") or be dropped to
-`status: "rumored"` — which the app displays behind a CHATTER banner. Being
+`status: "rumored"`: which the app displays behind a CHATTER banner. Being
 visibly unsure is fine. Being confidently wrong is not.

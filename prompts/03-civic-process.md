@@ -1,6 +1,6 @@
 # Prompt: map your region's civic process
 
-This fills the parts of the atlas that turn information into action — how a
+This fills the parts of the atlas that turn information into action, how a
 resident actually weighs in, which cases are live, and where local governments
 have already restricted data centers. It produces `action_items.json`,
 `dockets.json`, `county_restrictions.json`, and the terminology block of
@@ -17,7 +17,7 @@ about data centers and the electrical grid.
 ## Ground rules
 
 - **Nonpartisan.** Describe the process, never advocate a position. No language
-  urging people to oppose or support projects — just how to be heard.
+  urging people to oppose or support projects, just how to be heard.
 - **Cite everything.** Every organization, deadline, and case number needs a
   real URL.
 - **Accuracy over completeness.** An empty section is fine; a wrong deadline or
@@ -38,16 +38,16 @@ about data centers and the electrical grid.
 }
 ```
 
-- **subdivision** — what one clickable local division is called here: county,
+- **subdivision**: what one clickable local division is called here: county,
   parish, borough, council area, département, Kreis, município. Singular,
   lowercase.
-- **regulator** — the body that approves utility rates and large-load
+- **regulator**: the body that approves utility rates and large-load
   agreements.
-- **consumer_advocate** — the office representing ratepayers, if one exists
-  (many countries have none — use `null`). Prefer a direct link to the page
+- **consumer_advocate**: the office representing ratepayers, if one exists
+  (many countries have none, use `null`). Prefer a direct link to the page
   where the public can file a comment.
 
-## 2. How to take part — `action_items.json`
+## 2. How to take part: `action_items.json`
 
 ```json
 {
@@ -57,7 +57,7 @@ about data centers and the electrical grid.
       "type": "comment | decision | howto | org",
       "title": "Short, concrete action",
       "org": "Body or organization responsible",
-      "detail": "What this is and what happens when someone does it. 1–2 sentences.",
+      "detail": "What this is and what happens when someone does it. 1-2 sentences.",
       "action": "Button text, e.g. \"File a consumer comment\"",
       "url": "https://...",
       "deadline": "A real date or window, or null if ongoing",
@@ -71,17 +71,17 @@ about data centers and the electrical grid.
 Include, where they exist:
 
 - **How to file a comment** with the regulator or ratepayer advocate.
-- **Live decisions** with dates — pending rate cases, scheduled votes.
-- **How local land-use approval works here** — who votes on rezoning, whether
+- **Live decisions** with dates: pending rate cases, scheduled votes.
+- **How local land-use approval works here**: who votes on rezoning, whether
   hearings take public testimony, how to find the agenda.
 - **Independent organizations** working on utility/ratepayer issues in the
-  region — consumer advocates, environmental groups, ratepayer coalitions.
+  region, consumer advocates, environmental groups, ratepayer coalitions.
   List them factually with what they do. Include groups across the spectrum
   where they exist; don't curate for one viewpoint.
 
 Sort by `priority`, 1 = most immediately useful.
 
-## 3. Live regulator cases — `dockets.json`
+## 3. Live regulator cases: `dockets.json`
 
 ```json
 {
@@ -104,7 +104,7 @@ Sort by `priority`, 1 = most immediately useful.
 
 Only cases actually related to data centers or large-load growth.
 
-## 4. Local restrictions — `county_restrictions.json`
+## 4. Local restrictions: `county_restrictions.json`
 
 Places that have adopted a moratorium, ban, or significant restriction on data
 centers:
@@ -139,7 +139,7 @@ prose tell me:
 
 ## Self-check
 
-- [ ] Every URL is real and specific — no invented deep links.
+- [ ] Every URL is real and specific: no invented deep links.
 - [ ] Every deadline is a date you actually found, not an assumption.
 - [ ] Restriction `name` values match the map's subdivision names exactly.
 - [ ] Nothing in the copy urges a position for or against data centers.
@@ -149,7 +149,7 @@ prose tell me:
 
 ## After
 
-Save each into `public/data/`. Anything you leave empty degrades gracefully —
+Save each into `public/data/`. Anything you leave empty degrades gracefully, 
 the app shows "not configured for this region" rather than another region's
 process. Then set `terminology` in `public/data/theme.json` from part 1.
 

@@ -11,7 +11,7 @@ subdivisions, grid layers, discovered facilities, computed `meta.json`, and the
 `region.json` the app reads. Publish one with `--activate`, which copies it into
 `public/data/` (backing up whatever was there into `regions/_backup/`).
 
-The bulky generated `.geojson` layers are git-ignored — they're reproducible
+The bulky generated `.geojson` layers are git-ignored, they're reproducible
 from the source at any time. The small JSON files are kept as worked examples.
 
 `ohio-united-states/` is a real run: 88 counties, 293 power plants, 11,095

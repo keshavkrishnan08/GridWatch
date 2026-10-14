@@ -8,7 +8,7 @@ to ask, and a draft message.
 **Lead with what you're giving. Ask for the smallest thing that would help.**
 
 You're a high-school student with a free, open-source, nonpartisan tool. That's a
-strong position — but only if you arrive offering something. Every draft here
+strong position, but only if you arrive offering something. Every draft here
 opens with value delivered and closes with a request small enough to say yes to
 in one reply.
 
@@ -21,24 +21,24 @@ Work top to bottom. The first three are worth more than the rest combined.
 | # | Target | Why first | Ask |
 |---|---|---|---|
 | [01](01-citizens-action-coalition.md) | **Citizens Action Coalition** | Indiana's ratepayer watchdog; already linked from every page of your site. You have a reconciliation report they'd want. | Corrections + a link |
-| [02](02-wfyi-farrah-anderson.md) | **WFYI — Farrah Anderson** | Actively reporting on data centers and confidentiality. A citation here is the single most valuable outcome available. | Use it in a story |
-| [03](03-indiana-capital-chronicle.md) | **Indiana Capital Chronicle** | Nonprofit, syndicated — one citation multiplies across outlets. | Use it in a story |
+| [02](02-wfyi-farrah-anderson.md) | **WFYI, Farrah Anderson** | Actively reporting on data centers and confidentiality. A citation here is the single most valuable outcome available. | Use it in a story |
+| [03](03-indiana-capital-chronicle.md) | **Indiana Capital Chronicle** | Nonprofit, syndicated, one citation multiplies across outlets. | Use it in a story |
 | [04](04-earth-charter-indiana.md) | **Earth Charter Indiana** | Publishes a Data Center Toolkit telling organizers to go find the facts. You are the facts. | Add to the toolkit |
 | [05](05-indianapolis-council.md) | **Indianapolis City-County Council** | A moratorium vote is live. Timing beats everything. | Enter it into the record |
 | [06](06-hoosier-environmental-council.md) | **Hoosier Environmental Council** | Policy staff, bill tracker, statewide reach. | Cite it / link it |
 | [07](07-mirror-indy.md) | **Mirror Indy** | Neighborhood-level reporting matches your county profiles. | Use it in a story |
 | [08](08-legislators.md) | **Bill authors (bipartisan)** | Four data-center bills died in committee. They need evidence for 2027. | Use it in testimony |
 | [09](09-county-officials.md) | **County commissioners** | Deciding rezonings with almost no data. Most underserved audience. | Use it before a vote |
-| [10](10-show-hn-reddit.md) | **Show HN + r/Indiana** | Fastest real numbers: stars, traffic, organic reach. | Technical scrutiny — **never ask for upvotes, it is bannable** |
+| [10](10-show-hn-reddit.md) | **Show HN + r/Indiana** | Fastest real numbers: stars, traffic, organic reach. | Technical scrutiny, **never ask for upvotes, it is bannable** |
 
-## The window: August 5–10, 2026
+## The window: August 5-10, 2026
 
 Everything clusters here, and all three newsrooms will be covering it:
 
 | Date | Event |
 |---|---|
-| **Aug 5–6** | IURC evidentiary hearings, Cause 46394 (AES / Google Monrovia) |
-| **Aug 7** | IURC technical conferences — return on equity, and trackers |
+| **Aug 5-6** | IURC evidentiary hearings, Cause 46394 (AES / Google Monrovia) |
+| **Aug 7** | IURC technical conferences, return on equity, and trackers |
 | **Aug 10, 7:00 p.m.** | **Full Council vote on Prop 238** (Indianapolis moratorium) |
 
 Written material for the Council must reach the Clerk **before** Aug 10.
@@ -47,7 +47,7 @@ Written material for the Council must reach the Clerk **before** Aug 10.
 
 On 2026-07-22 a research pass fabricated county contacts, statute numbers, case
 citations, and comment deadlines, then retracted them. That material had already
-been committed here. It has been removed — not corrected — and this file records
+been committed here. It has been removed, not corrected, and this file records
 the incident so the standard is explicit:
 
 - **Every email in this kit came from a published staff page or contact page.**
@@ -67,15 +67,15 @@ the number yourself.
 1. ~~**Publish it.**~~ ✅ **Live: https://gridwatch-indiana.vercel.app/**
 2. ~~**Turn on analytics.**~~ ✅ PostHog is wired into the deploy and confirmed
    receiving events from the live site. Every link in this kit now resolves.
-3. **Set up Google Search Console** (free, 10 minutes) — it's the one measurement
+3. **Set up Google Search Console** (free, 10 minutes): it's the one measurement
    still missing, and it's what gives you "ranked #N for 'Indiana data centers'"
    plus organic impression counts.
 4. **Optional:** add a `VITE_META_PIXEL_ID` repo variable if you run ads; the
    deploy already passes it through, no code change needed.
-3. Read [`cac-reconciliation.md`](cac-reconciliation.md) — it's the artifact that
+3. Read [`cac-reconciliation.md`](cac-reconciliation.md): it's the artifact that
    makes #01 land, and the credibility proof for #02 and #03.
 
 ## Track it
 
 Keep a simple log: who, when, what you sent, response. Four of these will ignore
-you. That's normal — it's why the list is ten long and not three.
+you. That's normal, it's why the list is ten long and not three.

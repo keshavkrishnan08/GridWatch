@@ -1,4 +1,4 @@
-# 08 · Legislators — and one hard blocker
+# 08 · Legislators: and one hard blocker
 
 ## The 2026 bills, verified on iga.in.gov. All died without a hearing.
 
@@ -22,7 +22,7 @@ a majority of the Personnel Subcommittee."
 
 The committee shows no upcoming meetings.
 
-**So the lever is not signing up to testify — it's persuading a Legislative
+**So the lever is not signing up to testify, it's persuading a Legislative
 Council member to seek a topic assignment.** Members include Garten, Hunley,
 Hamilton, and Soliday. Note **Sen. Ford, the SB 79 author, sits on that
 committee.**
@@ -30,7 +30,7 @@ committee.**
 ## Contact
 
 IGA publishes **no direct legislator emails and no legislative-assistant
-contacts** — only the Statehouse address and caucus lines:
+contacts**, only the Statehouse address and caucus lines:
 
 - Senate: 800-382-9467
 - House: 800-382-9841
@@ -43,7 +43,7 @@ to send written material to the member.
 
 Interim reports are due before **Nov 1, 2026**. Material meant to shape a 2027
 draft needs to land **September–November 2026**, not January. 2027 is a long
-session, adjourning by April 29. Filing deadlines aren't published in advance —
+session, adjourning by April 29. Filing deadlines aren't published in advance, 
 they're set by chamber rules each session.
 
 ## Draft
@@ -57,14 +57,14 @@ they're set by chamber rules each session.
 >
 > I built GridWatch Indiana, a free open-source atlas of every tracked
 > data-center project in the state mapped against the grid. Every figure links to
-> its source — IURC filings, utility tariffs, county records. It's nonpartisan by
+> its source, IURC filings, utility tariffs, county records. It's nonpartisan by
 > design and takes no position on any bill.
 >
 > Two things that might be useful when drafting for 2027:
 >
 > Tracked data-center load is 15,142 MW, roughly 43% of Indiana's peak demand.
 > My dataset records two counties with outright bans (Marshall and Cass) and six
-> with moratoriums, each with a citation — the local response is already
+> with moratoriums, each with a citation, the local response is already
 > substantial, and other trackers put the count higher still.
 >
 > Second, the structures differ sharply in who bears cost. NIPSCO serves Amazon

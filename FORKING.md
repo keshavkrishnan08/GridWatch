@@ -8,7 +8,7 @@ map, the rendering, the color science, the civic-action tooling, and the
 honesty guardrails.
 
 Don't have the data yet? That's the expected case. [`prompts/`](prompts/) has
-LLM research prompts that produce it in the exact schema — see
+LLM research prompts that produce it in the exact schema, see
 [Getting your data](#getting-your-data) below.
 
 ```bash
@@ -19,7 +19,7 @@ npm run dev
 Two things happen automatically: the region is mapped (outline, subdivisions,
 grid infrastructure), and the whole atlas re-tunes to it (units, currency,
 terminology, color scale). Roads, cities, water, and building footprints come
-from the global basemap at render time — they already work everywhere and need
+from the global basemap at render time, they already work everywhere and need
 no configuration at all.
 
 ---
@@ -27,7 +27,7 @@ no configuration at all.
 ## What the toolkit gives you
 
 **Region mapping.** Name any region on Earth. The outline, its subdivisions
-(counties, départements, Kreise, municípios — whatever that country uses), and
+(counties, départements, Kreise, municípios, whatever that country uses), and
 the grid around it resolve from OpenStreetMap. The camera frames itself from the
 boundary; the spotlight mask clips to it.
 
@@ -52,7 +52,7 @@ fetch reports failure instead of writing an empty file.
 
 ## The three files you control
 
-### 1. `region.json` — what and where
+### 1. `region.json`: what and where
 
 ```json
 {
@@ -68,7 +68,7 @@ fetch reports failure instead of writing an empty file.
 `home_center: null` auto-frames from the boundary. Generated for you, editable
 by hand.
 
-### 2. `theme.json` — how it looks and reads
+### 2. `theme.json`: how it looks and reads
 
 ```json
 {
@@ -90,11 +90,11 @@ Change a band color and the nodes, legend, filter chips, and card accents all
 follow. Add a utility and it appears in the filter dropdown, the territory
 colors, and every card. Nothing in the code needs editing.
 
-### 3. `facilities.json` — your data
+### 3. `facilities.json`: your data
 
 Start from [`templates/facilities.template.json`](templates/facilities.template.json),
 which documents every field. Only `id`, `name`, `lat`, `lng`, `status`, and
-`sources` are required — leave anything you can't source as `null`.
+`sources` are required, leave anything you can't source as `null`.
 
 ```bash
 npm run validate -- my_region/facilities.json --subdivisions public/data/subdivisions.geojson
@@ -108,7 +108,7 @@ statuses, and phase capacity exceeding full capacity.
 
 ## Getting your data
 
-The map layers are automatic. The facilities are yours to research — and
+The map layers are automatic. The facilities are yours to research, and
 [`prompts/`](prompts/) turns that from weeks of docket-reading into an
 afternoon:
 
@@ -117,7 +117,7 @@ afternoon:
 | [`01-facilities.md`](prompts/01-facilities.md) | your data centers |
 | [`02-utilities-and-bills.md`](prompts/02-utilities-and-bills.md) | the bill calculator |
 | [`03-civic-process.md`](prompts/03-civic-process.md) | regulator, dockets, local restrictions |
-| [`04-audit.md`](prompts/04-audit.md) | corrections — run before publishing |
+| [`04-audit.md`](prompts/04-audit.md) | corrections, run before publishing |
 
 Replace `{{REGION}}`, paste into an LLM with web search, save the JSON, then
 `npm run validate`. Each prompt is written to stop the model inventing figures:
@@ -146,7 +146,7 @@ unannounced and brand-new sites. So every auto-discovered record is written
 shows it behind a **CHATTER** banner. It's a lead list to verify, never a
 finished dataset.
 
-Merge your researched records over it — curated always wins, and de-duplication
+Merge your researched records over it, curated always wins, and de-duplication
 (proximity + name similarity) means one site never appears twice:
 
 ```bash
@@ -160,10 +160,10 @@ npm run region -- --region "Ohio, United States" --merge-curated my_research.jso
 Civic facts can't be inferred. The bootstrap writes these **empty**, each with a
 `_todo`, so the app shows nothing rather than something false:
 
-- `bill_impact_models.json` — your utilities, rates, filed cost-shifts
-- `action_items.json`, `dockets.json` — your regulator, comment process, hearings
-- `county_restrictions.json` — local bans and moratoriums
-- `meta.json → state_peak_mw` — published by your grid operator
+- `bill_impact_models.json`: your utilities, rates, filed cost-shifts
+- `action_items.json`, `dockets.json`: your regulator, comment process, hearings
+- `county_restrictions.json`: local bans and moratoriums
+- `meta.json → state_peak_mw`: published by your grid operator
 
 Everything else in `meta.json` (generation mix, plant counts, load totals) is
 **computed** from what was actually fetched, so it's accurate on day one.
@@ -188,7 +188,7 @@ Providers are independent modules behind a small protocol. Write a class with
 `key`, `outputs`, and `run(ctx)` (see `pipeline/providers/base.py`), register it
 in `pipeline/providers/__init__.py`, and it joins the pipeline. A national
 regulator's API, a government ArcGIS server, or your own CSV all plug in the
-same way — the core never changes.
+same way, the core never changes.
 
 ## Analytics (optional, off by default)
 
