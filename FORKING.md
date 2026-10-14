@@ -124,8 +124,6 @@ Replace `{{REGION}}`, paste into an LLM with web search, save the JSON, then
 unknowns stay `null`, every number needs a citation, and step 4 is an
 adversarial pass with a fresh model.
 
-Using Claude Code? `.claude/skills/gridwatch-region/` runs the whole flow.
-
 **Verify by hand before publishing.** The validator checks structure, not truth.
 Open a few source links yourself.
 
