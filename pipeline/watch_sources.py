@@ -183,7 +183,7 @@ def main() -> int:
     print("-" * 66)
     print(f"  {len(changed)} changed · {len(dead)} dead · {len(errors)} unreachable · {len(new)} new")
     if changed:
-        print("\n  A changed source does NOT mean the dataset is wrong — it means a page")
+        print("\n  A changed source does NOT mean the dataset is wrong, it means a page")
         print("  the dataset relies on has moved. Check whether the underlying fact")
         print("  changed, then update the record and its last_verified date.")
 

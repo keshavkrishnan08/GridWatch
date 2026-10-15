@@ -57,7 +57,7 @@ class PowerPlantProvider:
              f'(nwr["power"="plant"](area.a););out center tags;')
         res = ov.query(q, cache_key=f"plants:{ctx.osm_area}")
         if res is None:
-            return {"ok": False, "error": "Overpass unavailable; nothing written — re-run to retry"}
+            return {"ok": False, "error": "Overpass unavailable; nothing written, re-run to retry"}
         els = ov.elements(res)
         feats = []
         for el in els:
@@ -94,7 +94,7 @@ class TransmissionProvider:
              f'(way["power"="line"](area.a););out geom tags;')
         res = ov.query(q, cache_key=f"trans:{ctx.osm_area}")
         if res is None:
-            return {"ok": False, "error": "Overpass unavailable; nothing written — re-run to retry"}
+            return {"ok": False, "error": "Overpass unavailable; nothing written, re-run to retry"}
         els = ov.elements(res)
         feats = []
         for el in els:
@@ -131,7 +131,7 @@ class SubstationProvider:
              f'(nwr["power"="substation"](area.a););out center tags;')
         res = ov.query(q, cache_key=f"subs:{ctx.osm_area}")
         if res is None:
-            return {"ok": False, "error": "Overpass unavailable; nothing written — re-run to retry"}
+            return {"ok": False, "error": "Overpass unavailable; nothing written, re-run to retry"}
         els = ov.elements(res)
         feats = []
         for el in els:

@@ -67,7 +67,7 @@ Council member, not a hearing sign-up.
 **Aug 8-12**: CAC, then Mirror Indy, then WFYI + ICC in parallel
 **Aug 10**: the Council vote itself; reporters are writing that week
 **Late Aug**: Show HN + r/Indiana, once you have a citation to point to
-**Sept–Nov**: legislators, aimed at 2027 drafts
+**Sept-Nov**: legislators, aimed at 2027 drafts
 
 ## Track it
 

@@ -33,7 +33,7 @@ export class Timeline {
     this.root.innerHTML = `
       <div class="tl-top">
         <button class="tl-play" id="tl-play" aria-label="Play timeline">▶</button>
-        <div class="tl-legend">GRID BUILD-OUT<span> · drag to scrub 2020–2035</span></div>
+        <div class="tl-legend">GRID BUILD-OUT<span> · drag to scrub 2020-2035</span></div>
         <div class="tl-year-big"><span class="val c-year" id="tl-year">2026</span></div>
       </div>
       <div class="tl-track-wrap" id="tl-wrap">

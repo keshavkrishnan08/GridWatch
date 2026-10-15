@@ -157,9 +157,9 @@ export function openBillCalc(data: AppData, prefillId?: string) {
       const k = Math.max(100, Math.min(5000, +kwh.value || a.typical_household_kwh));
       const p = project(u, k, a);
       const headline = p.dcTotal > 0
-        ? `<div class="bc-headline">+${money(p.low)}–${money(p.high)}<small> / mo</small>
-             <span class="bc-pct">+${p.pctLow.toFixed(1)}–${p.pctHigh.toFixed(1)}%</span></div>
-           <div class="bc-sub">from data-center infrastructure filed to date · ≈ +${money(p.low * 12)}–${money(p.high * 12)} / yr</div>`
+        ? `<div class="bc-headline">+${money(p.low)}-${money(p.high)}<small> / mo</small>
+             <span class="bc-pct">+${p.pctLow.toFixed(1)}-${p.pctHigh.toFixed(1)}%</span></div>
+           <div class="bc-sub">from data-center infrastructure filed to date · ≈ +${money(p.low * 12)}-${money(p.high * 12)} / yr</div>`
         : `<div class="bc-headline" style="color:var(--text-mid);font-size:22px">No DC docket filed yet</div>
            <div class="bc-sub">No single data-center infrastructure cost is broken out for this utility, but rates are climbing (see below).</div>`;
       el.querySelector("#bc-result")!.innerHTML = `
@@ -269,10 +269,10 @@ export function openImpact(data: AppData) {
 
       const headline = p && p.dcTotal > 0
         ? `<div class="im-headline">
-             <div class="imh-main">+${money(p.low)}–${money(p.high)}<small>/mo</small></div>
-             <div class="imh-pct">+${p.pctLow.toFixed(1)}–${p.pctHigh.toFixed(1)}%<small> of your bill</small></div>
+             <div class="imh-main">+${money(p.low)}-${money(p.high)}<small>/mo</small></div>
+             <div class="imh-pct">+${p.pctLow.toFixed(1)}-${p.pctHigh.toFixed(1)}%<small> of your bill</small></div>
            </div>
-           <div class="bc-sub">≈ +${money(p.low * 12)}–${money(p.high * 12)} per year, from data-center infrastructure filed to date</div>`
+           <div class="bc-sub">≈ +${money(p.low * 12)}-${money(p.high * 12)} per year, from data-center infrastructure filed to date</div>`
         : `<div class="im-headline"><div class="imh-main" style="color:var(--text-mid);font-size:22px">No filed DC cost yet</div></div>
            <div class="bc-sub">No data-center infrastructure cost is broken out for ${esc(utilName)} yet, but rates are still climbing.</div>`;
 

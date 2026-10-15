@@ -69,7 +69,7 @@ class SubdivisionsProvider:
             )
             res = ov.query(q, cache_key=f"subdiv:{ctx.osm_area}:{lvl}")
             if res is None:
-                return {"ok": False, "error": "Overpass unavailable; nothing written — re-run to retry"}
+                return {"ok": False, "error": "Overpass unavailable; nothing written, re-run to retry"}
             got = ov.elements(res)
             if 2 <= len(got) <= 1200:
                 chosen, els = lvl, got

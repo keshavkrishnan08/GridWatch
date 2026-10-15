@@ -45,4 +45,4 @@ directory versus an Indiana-native dataset where every record cites its filing.
 ## Timing
 
 Session is over. The live window is **interim prep and local fights**: which
-means September–November, aligned with target 08.
+means September-November, aligned with target 08.

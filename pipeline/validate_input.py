@@ -116,7 +116,7 @@ def main() -> int:
 
         srcs = f.get("sources")
         if not isinstance(srcs, list) or not srcs:
-            errors.append(f"{who}: needs at least one source — every figure must be traceable")
+            errors.append(f"{who}: needs at least one source, every figure must be traceable")
         else:
             for s in srcs:
                 if not isinstance(s, dict) or not s.get("label"):
@@ -134,7 +134,7 @@ def main() -> int:
 
         mw = f.get("mw_full") or f.get("mw_phase1")
         if mw is None and not f.get("acres"):
-            warns.append(f"{who}: no capacity and no acreage — it will render at minimum size")
+            warns.append(f"{who}: no capacity and no acreage, it will render at minimum size")
         if mw is not None and not isinstance(mw, (int, float)):
             errors.append(f"{who}: capacity must be a number or null")
         if f.get("mw_full") and f.get("mw_phase1") and f["mw_phase1"] > f["mw_full"]:
@@ -154,7 +154,7 @@ def main() -> int:
             actual = _locate((lng, lat), sub_features, args.subdivision_key)
             if actual and actual.lower() != cty:
                 warns.append(f"{who}: county says {f.get('county')!r} but its coordinates "
-                             f"fall in {actual!r} — one of the two is wrong")
+                             f"fall in {actual!r}, one of the two is wrong")
 
     print(f"\n  {args.file}")
     print(f"  {len(facs)} facilities\n" + "-" * 50)

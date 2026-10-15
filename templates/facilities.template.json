@@ -1,5 +1,5 @@
 {
-  "_doc": "Copy this to your region and fill in the facilities array. Only id, name, lat, lng, status and sources are required — leave anything you can't source as null. Validate with: python3 -m pipeline.validate_input <yourfile.json>",
+  "_doc": "Copy this to your region and fill in the facilities array. Only id, name, lat, lng, status and sources are required, leave anything you can't source as null. Validate with: python3 -m pipeline.validate_input <yourfile.json>",
 
   "schema_version": "1.0",
   "region": "Your Region, Country",
@@ -13,12 +13,12 @@
     "sources": "REQUIRED. At least one {label, url}. Every figure must be traceable.",
     "developer": "Company, or 'Undisclosed'.",
     "city / county": "county must match a name in your subdivisions file. Leave '' to auto-fill by location.",
-    "geo_precision": "parcel | site | city | county — how exact the coordinates are.",
-    "mw_phase1 / mw_full": "Capacity in MW. null if not disclosed — never estimate silently.",
+    "geo_precision": "parcel | site | city | county, how exact the coordinates are.",
+    "mw_phase1 / mw_full": "Capacity in MW. null if not disclosed, never estimate silently.",
     "mw_estimated": "true if the MW figure came from reporting rather than a filing.",
     "acres / investment_usd": "null if unknown. Acres convert automatically for metric regions.",
     "water_mgd": "Million gallons/day; converts to m³/d for metric regions.",
-    "water_status": "known | redacted | unknown — 'redacted' shows the transparency flag.",
+    "water_status": "known | redacted | unknown, 'redacted' shows the transparency flag.",
     "utility": "Serving utility. Matched against theme.json utilities.",
     "iurc_docket / docket_url": "Regulator case number and portal link, if any.",
     "announced_year / online_year": "null if unknown. A null announce date means the site shows across the whole timeline.",
@@ -54,7 +54,7 @@
       "online_year": 2028,
       "tax_note": null,
       "sources": [
-        { "label": "Local paper — rezoning approved", "url": "https://example.com/article" }
+        { "label": "Local paper, rezoning approved", "url": "https://example.com/article" }
       ],
       "notes": "600 MW at full build. Water use redacted in the filing.",
       "last_verified": "2026-01-01"

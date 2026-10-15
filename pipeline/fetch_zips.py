@@ -89,7 +89,7 @@ def main() -> int:
         r = requests.get(url, headers=UA, timeout=180)
         r.raise_for_status()
     except Exception as e:
-        print(f"  ERROR  fetch failed: {e}\n  Nothing written — re-run to retry.")
+        print(f"  ERROR  fetch failed: {e}\n  Nothing written, re-run to retry.")
         return 2
 
     z = zipfile.ZipFile(io.BytesIO(r.content))
@@ -115,7 +115,7 @@ def main() -> int:
         zips[zc] = [round(lng, 4), round(lat, 4)]
 
     if not zips:
-        print("  ERROR  no ZIPs matched — check --prefixes and the boundary file.")
+        print("  ERROR  no ZIPs matched, check --prefixes and the boundary file.")
         return 2
 
     with open(args.out, "w") as fh:

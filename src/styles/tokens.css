@@ -29,8 +29,8 @@
 
   /* load severity ramp (data centers by MW) */
   --load-low:  #3FB950;   /* < 50 MW  */
-  --load-med:  #E3A72B;   /* 50–250   */
-  --load-high: #F85149;   /* 250–500  */
+  --load-med:  #E3A72B;   /* 50-250   */
+  --load-high: #F85149;   /* 250-500  */
   --load-mega: #FF6BFF;   /* > 500 MW, hyperscalers, off-scale */
 
   /* grid infrastructure */

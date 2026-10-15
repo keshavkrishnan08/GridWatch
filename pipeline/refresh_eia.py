@@ -156,7 +156,7 @@ def main() -> int:
     try:
         sales = load_sales(args.year, args.state)
     except Exception as e:
-        print(f"  ERROR  fetch/parse failed: {e}\n  Nothing changed — re-run to retry.\n")
+        print(f"  ERROR  fetch/parse failed: {e}\n  Nothing changed, re-run to retry.\n")
         return 2
     print(f"  {len(sales)} utilities in the EIA file\n" + "-" * 64)
 
@@ -197,7 +197,7 @@ def main() -> int:
     for name, k, old, new in changes:
         print(f"  update   {name:26} {k:30} {old} -> {new}")
     for name, k, old, new, d in flagged:
-        print(f"  FLAG     {name:26} {k:30} {old} -> {new}  ({d:.0f}% change — review by hand)")
+        print(f"  FLAG     {name:26} {k:30} {old} -> {new}  ({d:.0f}% change: review by hand)")
     for name, why in skipped:
         print(f"  skip     {name:26} {why}")
 
@@ -220,7 +220,7 @@ def main() -> int:
             fh.write("\n")
         print(f"  written -> {os.path.relpath(BILL, ROOT)}")
     elif changes:
-        print("  dry run — re-run with --write to apply")
+        print("  dry run, re-run with --write to apply")
     print()
     return 1 if flagged else 0
 

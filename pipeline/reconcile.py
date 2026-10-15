@@ -151,12 +151,12 @@ def main() -> int:
 
     only_ours = [o for o in ours if o["id"] not in used_ours]
 
-    print(f"\n  THEY HAVE, WE DON'T ({len(only_theirs)}) — candidates to research\n" + "-" * 74)
+    print(f"\n  THEY HAVE, WE DON'T ({len(only_theirs)}), candidates to research\n" + "-" * 74)
     for t in sorted(only_theirs, key=lambda x: -(x["mw"] or 0)):
-        mw = f"{t['mw']:>6.0f} MW" if t["mw"] else "     — MW"
+        mw = f"{t['mw']:>6.0f} MW" if t["mw"] else ", MW"
         print(f"  {mw}  {t['name'][:38]:38} {t['county'][:12]:12} {t['status']}")
 
-    print(f"\n  CONFLICTS ({len(conflicts)}) — one of us is wrong\n" + "-" * 74)
+    print(f"\n  CONFLICTS ({len(conflicts)}), one of us is wrong\n" + "-" * 74)
     for c in sorted(conflicts, key=lambda x: x["ours"]["id"]):
         print(f"  {c['ours']['id'][:34]:34} ({c['miles']} mi apart)")
         for field, a, b in c["diffs"]:
@@ -165,7 +165,7 @@ def main() -> int:
     print(f"\n  WE HAVE, THEY DON'T ({len(only_ours)})\n" + "-" * 74)
     for o in sorted(only_ours, key=lambda x: x["id"]):
         mw = o.get("mw_full") or o.get("mw_phase1")
-        print(f"  {(str(int(mw))+' MW') if mw else '— MW':>8}  {o['id'][:36]:36} {o['status']}")
+        print(f"  {(str(int(mw))+' MW') if mw else 'MW':>8}  {o['id'][:36]:36} {o['status']}")
 
     print("\n" + "=" * 74)
     print(f"  {len(matched)} agree · {len(conflicts)} conflict · "

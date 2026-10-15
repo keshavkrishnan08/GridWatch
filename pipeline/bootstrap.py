@@ -152,7 +152,7 @@ def main() -> int:
     # fill in the subdivision each site sits in
     sub_path = os.path.join(out_dir, "subdivisions.geojson")
     if not os.path.exists(sub_path):
-        print("  WARN  subdivisions missing — every facility will have an empty "
+        print("  WARN  subdivisions missing, every facility will have an empty "
               f"{ctx.subdivision_key!r}, so county profiles and restriction overlays "
               "will not match. Re-run --providers osm_subdivisions.")
     if os.path.exists(sub_path):
@@ -168,7 +168,7 @@ def main() -> int:
             "region": args.region,
             "coverage_note": (
                 "Auto-discovered from OpenStreetMap and merged with any curated records. "
-                "Auto-discovered sites are marked rumored with no capacity figures — they are "
+                "Auto-discovered sites are marked rumored with no capacity figures, they are "
                 "leads to verify against filings, not confirmed projects."),
             "facilities": merged,
         }, fh, indent=1)

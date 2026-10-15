@@ -86,11 +86,11 @@ def main() -> int:
 
     print("-" * 52)
     if level == "stale":
-        print("  STALE — refresh the dataset, or publish the caveat prominently.")
+        print("  STALE, refresh the dataset, or publish the caveat prominently.")
         print("  The app already shows a staleness banner to visitors.\n")
         return 1 if args.strict else 0
     if level == "aging":
-        print("  Aging — worth a pass through recent filings soon.\n")
+        print("  Aging, worth a pass through recent filings soon.\n")
         return 0
     print("  Fresh.\n")
     return 0

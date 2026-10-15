@@ -277,7 +277,7 @@ class App {
     hint.hidden = false;
     hint.innerHTML = `
       <span class="hint-item"><kbd>FILTER</kbd> by status, size &amp; utility</span>
-      <span class="hint-item"><kbd>DRAG</kbd> the timeline to scrub 2020–2035</span>
+      <span class="hint-item"><kbd>DRAG</kbd> the timeline to scrub 2020-2035</span>
       <span class="hint-item"><kbd>CLICK</kbd> a node for details</span>
       <button class="hint-close" aria-label="Dismiss">✕</button>`;
     hint.querySelector(".hint-close")!.addEventListener("click", () => this.dismissHint());

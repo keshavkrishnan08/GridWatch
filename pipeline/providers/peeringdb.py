@@ -70,7 +70,7 @@ class PeeringDBProvider:
         res = get_json(API, params, timeout=90, min_gap=1.0,
                        cache_key=f"pdb:{params.get('state','')}:{params.get('country','')}")
         if res is None:
-            return {"ok": False, "error": "PeeringDB unavailable; nothing written — re-run to retry"}
+            return {"ok": False, "error": "PeeringDB unavailable; nothing written, re-run to retry"}
 
         bb = ctx.bbox
         sites = []
@@ -117,7 +117,7 @@ class PeeringDBProvider:
             json.dump({
                 "generated_by": "pipeline/providers/peeringdb.py",
                 "region": ctx.query,
-                "license": "PeeringDB data is CC-BY 4.0 — attribute it if you republish.",
+                "license": "PeeringDB data is CC-BY 4.0, attribute it if you republish.",
                 "coverage_note": ("Colocation and interconnection facilities. PeeringDB is strong on "
                                   "carrier hotels and blind to single-tenant hyperscale campuses, "
                                   "which do not sell interconnection and so do not register."),

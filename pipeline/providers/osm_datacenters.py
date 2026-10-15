@@ -72,7 +72,7 @@ class DataCenterProvider:
 
         if ok_passes == 0:
             # Never write "no sites here" when we simply couldn't ask.
-            return {"ok": False, "error": "every Overpass pass failed; nothing written — re-run to retry"}
+            return {"ok": False, "error": "every Overpass pass failed; nothing written, re-run to retry"}
         partial = bool(failed)
 
         sites = []
@@ -91,7 +91,7 @@ class DataCenterProvider:
             if raw and not GENERIC_NAME.fullmatch(raw):
                 name = raw
             elif operator and place:
-                name = f"{operator} — {place}"
+                name = f"{operator},{place}"
             elif operator:
                 name = operator
             elif place:
@@ -121,7 +121,7 @@ class DataCenterProvider:
                     "url": f"https://www.openstreetmap.org/{el.get('type')}/{el.get('id')}",
                 }],
                 "notes": ("Discovered in OpenStreetMap. Location is mapped, but capacity, "
-                          "water use, and project stage are not recorded there — treat as an "
+                          "water use, and project stage are not recorded there, treat as an "
                           "unverified lead until a filing or news report confirms it."),
                 "last_verified": None,
                 "_auto": True,
@@ -135,7 +135,7 @@ class DataCenterProvider:
                 "generated_by": "pipeline/providers/osm_datacenters.py",
                 "region": ctx.query,
                 "coverage_note": ("Auto-discovered from OpenStreetMap. A starting inventory, "
-                                  "not a complete one — enrich with filings and reporting."),
+                                  "not a complete one, enrich with filings and reporting."),
                 "facilities": sites,
             }, fh, indent=1)
         return {"ok": True, "count": len(sites), "file": "facilities.auto.json",

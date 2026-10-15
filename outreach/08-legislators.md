@@ -42,7 +42,7 @@ to send written material to the member.
 ## Timing
 
 Interim reports are due before **Nov 1, 2026**. Material meant to shape a 2027
-draft needs to land **September–November 2026**, not January. 2027 is a long
+draft needs to land **September-November 2026**, not January. 2027 is a long
 session, adjourning by April 29. Filing deadlines aren't published in advance, 
 they're set by chamber rules each session.
 
