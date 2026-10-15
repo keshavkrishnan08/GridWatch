@@ -91,7 +91,7 @@ class DataCenterProvider:
             if raw and not GENERIC_NAME.fullmatch(raw):
                 name = raw
             elif operator and place:
-                name = f"{operator},{place}"
+                name = f"{operator} - {place}"
             elif operator:
                 name = operator
             elif place:
